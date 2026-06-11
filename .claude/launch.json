@@ -1,0 +1,16 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "estendifacile",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["server.js"],
+      "port": 3000,
+      "env": {
+        "JWT_SECRET": "dev-chiave-lunga-almeno-32-caratteri-ok!",
+        "ADMIN_PASSWORD": "adminPassword123!",
+        "NODE_ENV": "development"
+      }
+    }
+  ]
+}

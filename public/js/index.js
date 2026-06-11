@@ -108,20 +108,58 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     homeResultsContainer.className = "home-warranty-grid";
-    homeResultsContainer.innerHTML = cards.map((g) => `
-      <article class="home-warranty-card">
-        <div class="home-warranty-brand"><i class="fa-solid fa-building-shield"></i> ${g.brand || "Partner certificato"}</div>
-        <h3 class="home-warranty-title">${g.nome || "Garanzia disponibile"}</h3>
-        <p class="home-warranty-line">${g.copertura || g.descrizione || "Copertura compatibile con il veicolo inserito."}</p>
-        <div class="home-warranty-features">
-          <div class="home-warranty-feature"><span>Durata</span><strong>${g.durata || "—"} mesi</strong></div>
-          <div class="home-warranty-feature"><span>Stato</span><strong>${g.stato || "attiva"}</strong></div>
-        </div>
-        <div class="home-warranty-price">${euro(g.prezzo || 0)}</div>
-        <div class="home-card-lock"><i class="fa-solid fa-lock"></i><span>Dettagli e prezzo offuscati. Azienda visibile: ${g.brand || "Partner"}.</span></div>
-        <button class="btn btn-primary btnHomeSelectWarranty" type="button" data-id="${g.id}">Seleziona garanzia</button>
-      </article>
-    `).join("");
+    homeResultsContainer.innerHTML = "";
+    cards.forEach(function (g) {
+      const article = document.createElement("article");
+      article.className = "home-warranty-card";
+
+      const brand = document.createElement("div");
+      brand.className = "home-warranty-brand";
+      brand.innerHTML = '<i class="fa-solid fa-building-shield"></i> ';
+      brand.appendChild(document.createTextNode(g.brand || "Partner certificato"));
+
+      const title = document.createElement("h3");
+      title.className = "home-warranty-title";
+      title.textContent = g.nome || "Garanzia disponibile";
+
+      const desc = document.createElement("p");
+      desc.className = "home-warranty-line";
+      desc.textContent = g.copertura || g.descrizione || "Copertura compatibile con il veicolo inserito.";
+
+      const features = document.createElement("div");
+      features.className = "home-warranty-features";
+      features.innerHTML =
+        '<div class="home-warranty-feature"><span>Durata</span><strong>' +
+        (Number(g.durata) || "—") + " mesi</strong></div>" +
+        '<div class="home-warranty-feature"><span>Stato</span><strong>' +
+        (g.stato || "attiva") + "</strong></div>";
+
+      const price = document.createElement("div");
+      price.className = "home-warranty-price";
+      price.textContent = euro(g.prezzo || 0);
+
+      const lock = document.createElement("div");
+      lock.className = "home-card-lock";
+      lock.innerHTML = '<i class="fa-solid fa-lock"></i>';
+      const lockText = document.createElement("span");
+      lockText.textContent = "Dettagli e prezzo offuscati. Azienda visibile: " + (g.brand || "Partner") + ".";
+      lock.appendChild(lockText);
+
+      const btn = document.createElement("button");
+      btn.className = "btn btn-primary btnHomeSelectWarranty";
+      btn.type = "button";
+      btn.dataset.id = String(g.id);
+      btn.textContent = "Seleziona garanzia";
+
+      article.appendChild(brand);
+      article.appendChild(title);
+      article.appendChild(desc);
+      article.appendChild(features);
+      article.appendChild(price);
+      article.appendChild(lock);
+      article.appendChild(btn);
+      homeResultsContainer.appendChild(article);
+    });
 
     document.querySelectorAll(".btnHomeSelectWarranty").forEach((btn) => {
       btn.addEventListener("click", function () {

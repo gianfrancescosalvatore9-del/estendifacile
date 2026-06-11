@@ -49,8 +49,11 @@ function validateRuntimeConfig() {
     console.warn("Avviso: STRIPE_SECRET_KEY presente ma STRIPE_WEBHOOK_SECRET mancante.");
   }
 
-  if (process.env.NODE_ENV === "production" && ADMIN_PASSWORD === "admin123") {
-    console.warn("Avviso: cambia ADMIN_PASSWORD prima della messa online.");
+  if (process.env.NODE_ENV === "production" && (ADMIN_PASSWORD === "admin123" || ADMIN_PASSWORD.length < 12)) {
+    throw new Error("ADMIN_PASSWORD non sicura. Imposta una password di almeno 12 caratteri nel file .env prima del deploy.");
+  }
+  if (ADMIN_PASSWORD === "admin123") {
+    console.warn("Avviso: ADMIN_PASSWORD usa il valore di default. Impostane una sicura nel file .env.");
   }
 }
 
@@ -59,7 +62,19 @@ function validateRuntimeConfig() {
 // =========================
 app.use(helmet({
   crossOriginResourcePolicy: false,
-  contentSecurityPolicy: false
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "https://js.stripe.com", "https://cdnjs.cloudflare.com", "https://kit.fontawesome.com"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://cdnjs.cloudflare.com"],
+      fontSrc: ["'self'", "https://fonts.gstatic.com", "https://ka-f.fontawesome.com"],
+      imgSrc: ["'self'", "data:", "https:"],
+      connectSrc: ["'self'", "https://api.stripe.com"],
+      frameSrc: ["https://js.stripe.com"],
+      objectSrc: ["'none'"],
+      upgradeInsecureRequests: []
+    }
+  }
 }));
 app.use(cors({ origin: FRONTEND_URL, credentials: true }));
 
@@ -111,12 +126,13 @@ app.post(
 app.use(express.json({ limit: "2mb" }));
 app.use(express.urlencoded({ extended: true }));
 app.get("/favicon.ico", (req, res) => res.status(204).end());
+app.get("/api/health", (req, res) => res.json({ status: "ok", timestamp: new Date().toISOString() }));
 app.use(express.static(path.join(__dirname, "public")));
 
 const authLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 30,
-  message: { error: "Troppi tentativi. Riprova più tardi." }
+  windowMs: 5 * 60 * 1000,
+  max: 10,
+  message: { error: "Troppi tentativi. Riprova tra qualche minuto." }
 });
 
 // =========================
@@ -183,8 +199,8 @@ function onlyDigits(value) {
 
 function generaNumeroCertificato(ordineId) {
   const anno = new Date().getFullYear();
-  const progressivo = String(ordineId).padStart(6, "0");
-  return `EF-${anno}-${progressivo}`;
+  const random = require("crypto").randomBytes(4).toString("hex").toUpperCase();
+  return `EF-${anno}-${random}`;
 }
 function generaUrlVerificaCertificato(numeroCertificato) {
   const baseUrl = process.env.APP_URL || "http://localhost:3000";
@@ -748,7 +764,7 @@ function generaToken(user) {
       tipo: "concessionario"
     },
     JWT_SECRET,
-    { expiresIn: "7d" }
+    { expiresIn: "24h" }
   );
 }
 
@@ -761,7 +777,7 @@ function generaPrivatoToken(user) {
       tipo: "privato"
     },
     JWT_SECRET,
-    { expiresIn: "7d" }
+    { expiresIn: "24h" }
   );
 }
 
@@ -774,7 +790,7 @@ function generaPartnerToken(partner) {
       tipo: "partner"
     },
     JWT_SECRET,
-    { expiresIn: "7d" }
+    { expiresIn: "24h" }
   );
 }
 
@@ -788,7 +804,7 @@ function generaAdminToken(user) {
       tipo: "admin"
     },
     JWT_SECRET,
-    { expiresIn: "7d" }
+    { expiresIn: "24h" }
   );
 }
 
@@ -1453,8 +1469,8 @@ app.post("/api/register", authLimiter, async (req, res, next) => {
       return res.status(400).json({ error: "Email non valida" });
     }
 
-    if (String(password).length < 6) {
-      return res.status(400).json({ error: "La password deve avere almeno 6 caratteri" });
+    if (String(password).length < 10) {
+      return res.status(400).json({ error: "La password deve avere almeno 10 caratteri" });
     }
 
     const passwordHash = await bcrypt.hash(password, 10);
@@ -1470,7 +1486,7 @@ app.post("/api/register", authLimiter, async (req, res, next) => {
     res.json({ message: "Registrazione completata", token, user });
   } catch (error) {
     if (error.message && error.message.includes("UNIQUE")) {
-      return res.status(409).json({ error: "Email già registrata" });
+      return res.status(409).json({ error: "Registrazione non completata. Verifica i dati inseriti." });
     }
     next(error);
   }
@@ -1532,8 +1548,8 @@ app.post("/api/privati/register", authLimiter, async (req, res, next) => {
       return res.status(400).json({ error: "Email non valida" });
     }
 
-    if (String(password).length < 6) {
-      return res.status(400).json({ error: "La password deve avere almeno 6 caratteri" });
+    if (String(password).length < 10) {
+      return res.status(400).json({ error: "La password deve avere almeno 10 caratteri" });
     }
 
     const passwordHash = await bcrypt.hash(password, 10);
@@ -1559,7 +1575,7 @@ app.post("/api/privati/register", authLimiter, async (req, res, next) => {
     });
   } catch (error) {
     if (error.message && error.message.includes("UNIQUE")) {
-      return res.status(409).json({ error: "Email già registrata" });
+      return res.status(409).json({ error: "Registrazione non completata. Verifica i dati inseriti." });
     }
 
     next(error);
@@ -2314,8 +2330,8 @@ app.post("/api/partner/register", authLimiter, async (req, res, next) => {
       return res.status(400).json({ error: "Email non valida" });
     }
 
-    if (String(password).length < 6) {
-      return res.status(400).json({ error: "La password deve avere almeno 6 caratteri" });
+    if (String(password).length < 10) {
+      return res.status(400).json({ error: "La password deve avere almeno 10 caratteri" });
     }
 
     const passwordHash = await bcrypt.hash(password, 10);
