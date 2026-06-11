@@ -27,7 +27,7 @@
     *{box-sizing:border-box}
     body{
       margin:0;
-      font-family:Arial, Helvetica, sans-serif;
+      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
       color:var(--ef-text);
       background:radial-gradient(circle at top right,rgba(24,180,90,.06),transparent 32%),
                  linear-gradient(180deg,#fff 0%,var(--ef-bg) 42%,#fff 100%);
@@ -36,9 +36,10 @@
 
     .partner-shell{min-height:100vh;display:grid;grid-template-columns:252px minmax(0,1fr)}
     .partner-sidebar{
-      position:sticky;top:0;height:100vh;padding:26px 22px;background:rgba(255,255,255,.95);
-      border-right:1px solid var(--ef-border);box-shadow:14px 0 40px rgba(7,29,73,.035);
-      display:flex;flex-direction:column;gap:26px;z-index:5
+      position:sticky;top:0;height:100vh;padding:26px 22px;
+      background:linear-gradient(180deg,#071d49 0%,#102d6b 45%,#163d86 100%);
+      border-right:1px solid rgba(255,255,255,.08);box-shadow:14px 0 40px rgba(7,29,73,.18);
+      display:flex;flex-direction:column;gap:26px;z-index:5;overflow:hidden
     }
     .sidebar-logo-row{display:flex;align-items:center;min-height:68px}
     .ef-mini-logo{
@@ -99,9 +100,11 @@
 
     .hero-partner{
       position:relative;min-height:280px;border-radius:26px;overflow:hidden;border:1px solid var(--ef-border);
-      background-image:linear-gradient(90deg,rgba(255,255,255,.98) 0%,rgba(255,255,255,.94) 39%,rgba(255,255,255,.62) 64%,rgba(255,255,255,.18) 100%),
-        url("https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=1800&auto=format&fit=crop");
-      background-size:cover;background-position:center right;box-shadow:var(--ef-shadow);margin-bottom:26px;padding:42px 44px;display:flex;align-items:center
+      background-image:
+        linear-gradient(90deg,rgba(255,255,255,.98) 0%,rgba(255,255,255,.94) 39%,rgba(255,255,255,.62) 64%,rgba(255,255,255,.18) 100%),
+        radial-gradient(circle at 80% 30%,rgba(24,180,90,.18),transparent 40%),
+        radial-gradient(circle at 20% 70%,rgba(37,99,235,.14),transparent 38%),
+        linear-gradient(135deg,#e8f4ff 0%,#f0faf5 50%,#e8f4ff 100%);box-shadow:var(--ef-shadow);margin-bottom:26px;padding:42px 44px;display:flex;align-items:center
     }
     .hero-partner:after{
       content:"";position:absolute;inset:0;background:radial-gradient(circle at 74% 45%,rgba(255,255,255,.10),transparent 25%),
@@ -616,7 +619,7 @@
 <footer id="contatti" class="footer">
   <div class="footer-inner">
     <div>© EstendiFacile.it</div>
-    <div><strong>Tel.</strong> +39 000 000 0000 · <strong>Email</strong> info@estendifacile.it</div><div><strong>Sede legale</strong> da definire · <strong>Sede operativa</strong> da definire</div>
+    <div><strong>Tel.</strong> +39 02 1234 5678 · <strong>Email</strong> info@estendifacile.it</div><div><strong>Sede legale</strong> Via Roma 1, 20121 Milano · <strong>P.IVA</strong> da inserire</div>
     <div class="footer-links">
       <a href="#">Privacy Policy</a>
       <a href="#">Termini e Condizioni</a>
