@@ -1,0 +1,92 @@
+/* Micro-animations — shared across all dashboard/checkout pages */
+
+/* Fade-up entry for cards */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(.96); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* Apply to common card selectors */
+.panel-card,
+.stat-card,
+.order-card,
+.garanzia-card,
+.ordine-card,
+.ticket-card,
+.checkout-card,
+.result-card,
+.info-card {
+  animation: fadeInUp .45s ease both;
+}
+
+/* Stagger siblings */
+.panel-card:nth-child(2), .stat-card:nth-child(2), .garanzia-card:nth-child(2) { animation-delay: .06s; }
+.panel-card:nth-child(3), .stat-card:nth-child(3), .garanzia-card:nth-child(3) { animation-delay: .12s; }
+.panel-card:nth-child(4), .stat-card:nth-child(4), .garanzia-card:nth-child(4) { animation-delay: .18s; }
+.panel-card:nth-child(5)  { animation-delay: .22s; }
+.panel-card:nth-child(6)  { animation-delay: .26s; }
+
+/* Button hover lift */
+button:not(:disabled),
+a.btn-primary,
+a.sidebar-btn,
+.btn,
+.nav-item {
+  transition: transform .18s ease, box-shadow .18s ease, background .18s ease !important;
+}
+button:not(:disabled):hover,
+a.btn-primary:hover {
+  transform: translateY(-2px);
+}
+
+/* Nav item slide-in on hover */
+.nav-item {
+  transition: transform .18s ease, background .18s ease, color .18s ease !important;
+}
+.nav-item:hover {
+  transform: translateX(4px) !important;
+}
+
+/* Table row highlight */
+tbody tr {
+  transition: background .15s ease;
+}
+tbody tr:hover {
+  background: rgba(24,180,90,.04) !important;
+}
+
+/* Input focus ring smooth */
+input, select, textarea {
+  transition: border-color .18s ease, box-shadow .18s ease !important;
+}
+
+/* Badge pulse for unread counts */
+@keyframes badgePulse {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.15); }
+}
+.sidebar-badge:not(:empty) {
+  animation: badgePulse 2s ease-in-out infinite;
+}
+
+/* Sidebar entry */
+.private-sidebar,
+.partner-sidebar,
+.concessionario-sidebar {
+  animation: fadeIn .35s ease both;
+}
+
+/* Main content area */
+.private-main,
+.partner-main,
+.concessionario-main {
+  animation: fadeIn .4s ease .1s both;
+}
