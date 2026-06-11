@@ -4,6 +4,8 @@ document.addEventListener("DOMContentLoaded", function () {
 const concessionarioToken = localStorage.getItem("token");
 
   let tuttiGliOrdini = [];
+  let paginaCorrente = 1;
+  const ORDINI_PER_PAGINA = 10;
 
   function showSection(name, btn) {
     const target = document.getElementById("section-" + name);
@@ -498,19 +500,55 @@ const concessionarioToken = localStorage.getItem("token");
     return `<span class="status-pill pending">${o.stato || "creato"}</span>`;
   }
 
+  function renderPaginazione(totale, pagina, onCambiaPagina) {
+    let pag = document.getElementById("ordiniPaginazione");
+    if (!pag) {
+      pag = document.createElement("div");
+      pag.id = "ordiniPaginazione";
+      pag.style.cssText = "display:flex;align-items:center;justify-content:center;gap:8px;margin-top:20px;flex-wrap:wrap;";
+      const container = document.getElementById("ordersContainer");
+      container.parentNode.insertBefore(pag, container.nextSibling);
+    }
+    const totPagine = Math.ceil(totale / ORDINI_PER_PAGINA);
+    if (totPagine <= 1) { pag.innerHTML = ""; return; }
+    let html = "";
+    const btnStyle = "min-width:36px;height:36px;border-radius:10px;border:1.5px solid #dfe8f4;background:#fff;color:#071d49;font-weight:900;cursor:pointer;font-size:13px;transition:.18s;padding:0 10px;";
+    const btnActiveStyle = "min-width:36px;height:36px;border-radius:10px;border:1.5px solid #18b45a;background:#18b45a;color:#fff;font-weight:900;cursor:pointer;font-size:13px;padding:0 10px;";
+    html += `<button style="${pagina===1?"opacity:.4;cursor:not-allowed;"+btnStyle:btnStyle}" data-pg="${pagina-1}" ${pagina===1?"disabled":""}>&#8592;</button>`;
+    for (let i = 1; i <= totPagine; i++) {
+      if (totPagine > 7 && i > 2 && i < totPagine - 1 && Math.abs(i - pagina) > 1) {
+        if (i === 3 || i === totPagine - 2) html += `<span style="color:#94a3b8;">…</span>`;
+        continue;
+      }
+      html += `<button style="${i===pagina?btnActiveStyle:btnStyle}" data-pg="${i}">${i}</button>`;
+    }
+    html += `<button style="${pagina===totPagine?"opacity:.4;cursor:not-allowed;"+btnStyle:btnStyle}" data-pg="${pagina+1}" ${pagina===totPagine?"disabled":""}>&#8594;</button>`;
+    html += `<span style="font-size:12px;color:#64748b;margin-left:8px;">${totale} ordini totali</span>`;
+    pag.innerHTML = html;
+    pag.querySelectorAll("button[data-pg]").forEach(btn => {
+      btn.addEventListener("click", () => onCambiaPagina(Number(btn.dataset.pg)));
+    });
+  }
+
   function renderOrdini(ordini) {
     const container = document.getElementById("ordersContainer");
 
     if (!ordini.length) {
-      container.innerHTML = `
-        <div class="empty-state">
-          Non hai ancora creato richieste di garanzia.
-        </div>
-      `;
+      container.innerHTML = `<div class="empty-state">Non hai ancora creato richieste di garanzia.</div>`;
+      const pag = document.getElementById("ordiniPaginazione");
+      if (pag) pag.innerHTML = "";
       return;
     }
 
-    container.innerHTML = ordini.map((o) => {
+    const inizio = (paginaCorrente - 1) * ORDINI_PER_PAGINA;
+    const paginati = ordini.slice(inizio, inizio + ORDINI_PER_PAGINA);
+    renderPaginazione(ordini.length, paginaCorrente, (nuovaPagina) => {
+      paginaCorrente = nuovaPagina;
+      renderOrdini(ordini);
+      document.getElementById("ordersContainer").scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    container.innerHTML = paginati.map((o) => {
       const supplementi = parseSupplementi(o.supplementi_json);
       const detailId = `details_${o.id}`;
 
@@ -820,6 +858,7 @@ const concessionarioToken = localStorage.getItem("token");
       String(o.proprietario_cognome || "").toLowerCase().includes(query)
     );
 
+    paginaCorrente = 1;
     renderOrdini(filtrati);
   }
 

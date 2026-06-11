@@ -2859,6 +2859,94 @@ app.delete("/api/partner/garanzie/:id", partnerOnly, async (req, res, next) => {
 });
 
 // =========================
+// PASSWORD RESET
+// =========================
+
+const resetTokens = new Map(); // token -> { email, tipo, expires }
+
+app.post("/api/password-reset/request", authLimiter, async (req, res, next) => {
+  try {
+    const { email, tipo } = req.body;
+    const emailNorm = normalizeEmail(email);
+    if (!emailNorm || !isValidEmail(emailNorm)) {
+      return res.status(400).json({ error: "Email non valida" });
+    }
+
+    // Cerca l'utente in base al tipo
+    let user = null;
+    const tipoNorm = String(tipo || "concessionario").toLowerCase();
+    if (tipoNorm === "partner") {
+      user = await getDb(`SELECT id, email FROM partners WHERE email = ?`, [emailNorm]);
+    } else if (tipoNorm === "privato") {
+      user = await getDb(`SELECT id, email FROM users WHERE email = ? AND ruolo = 'privato'`, [emailNorm]);
+    } else {
+      user = await getDb(`SELECT id, email FROM users WHERE email = ? AND ruolo = 'concessionario'`, [emailNorm]);
+    }
+
+    // Risposta generica (non rivela se l'email esiste)
+    if (!user) {
+      return res.json({ message: "Se l'email è registrata, riceverai le istruzioni a breve." });
+    }
+
+    const token = require("crypto").randomBytes(32).toString("hex");
+    resetTokens.set(token, { email: emailNorm, tipo: tipoNorm, expires: Date.now() + 30 * 60 * 1000 });
+
+    const resetUrl = `${APP_URL}/reset-password.html?token=${token}&tipo=${tipoNorm}`;
+    await sendEmail({
+      to: emailNorm,
+      subject: "Reimposta la tua password — EstendiFacile",
+      html: `
+        <div style="font-family:Arial,sans-serif;max-width:560px;margin:0 auto;padding:32px;background:#f7faff;border-radius:16px;">
+          <h2 style="color:#071d49;margin-bottom:8px;">Reimposta la tua password</h2>
+          <p style="color:#475569;">Hai richiesto il reset della password. Clicca il pulsante qui sotto per crearne una nuova. Il link è valido per 30 minuti.</p>
+          <a href="${resetUrl}" style="display:inline-block;margin:24px 0;padding:14px 28px;background:#18b45a;color:#fff;border-radius:12px;text-decoration:none;font-weight:bold;font-size:15px;">Reimposta password</a>
+          <p style="color:#94a3b8;font-size:12px;">Se non hai richiesto tu questo reset, ignora questa email. La tua password rimane invariata.</p>
+          <hr style="border:none;border-top:1px solid #e4ebf5;margin:24px 0;">
+          <p style="color:#94a3b8;font-size:11px;">© EstendiFacile.it</p>
+        </div>
+      `
+    });
+
+    res.json({ message: "Se l'email è registrata, riceverai le istruzioni a breve." });
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.post("/api/password-reset/confirm", authLimiter, async (req, res, next) => {
+  try {
+    const { token, nuova_password } = req.body;
+
+    if (!token || !nuova_password) {
+      return res.status(400).json({ error: "Token e nuova password obbligatori" });
+    }
+    if (String(nuova_password).length < 10) {
+      return res.status(400).json({ error: "La password deve avere almeno 10 caratteri" });
+    }
+
+    const record = resetTokens.get(token);
+    if (!record || record.expires < Date.now()) {
+      resetTokens.delete(token);
+      return res.status(400).json({ error: "Link scaduto o non valido. Richiedi un nuovo reset." });
+    }
+
+    const { email, tipo } = record;
+    const hash = await bcrypt.hash(nuova_password, 10);
+
+    if (tipo === "partner") {
+      await runDb(`UPDATE partners SET password = ? WHERE email = ?`, [hash, email]);
+    } else {
+      await runDb(`UPDATE users SET password = ? WHERE email = ?`, [hash, email]);
+    }
+
+    resetTokens.delete(token);
+    res.json({ message: "Password aggiornata con successo. Puoi ora accedere con la nuova password." });
+  } catch (error) {
+    next(error);
+  }
+});
+
+// =========================
 // UPLOAD PDF PARTNER
 // =========================
 app.post("/api/partner/upload-pdf", partnerOnly, upload.single("pdf"), (req, res) => {
