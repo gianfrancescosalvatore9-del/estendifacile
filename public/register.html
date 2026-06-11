@@ -289,9 +289,11 @@
             <label for="password">Password</label>
             <div class="input-wrap">
               <span class="input-icon"><svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></span>
-              <input type="password" id="password" placeholder="Crea una password" autocomplete="new-password" required />
+              <input type="password" id="password" placeholder="Almeno 10 caratteri" autocomplete="new-password" required />
               <span class="password-toggle" id="togglePassword" aria-label="Mostra password"><svg viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></span>
             </div>
+            <div id="pwStrengthBar" style="margin-top:8px;height:4px;border-radius:4px;background:#e4ebf5;overflow:hidden;"><div id="pwStrengthFill" style="height:100%;width:0;transition:width .3s,background .3s;border-radius:4px;"></div></div>
+            <div id="pwStrengthLabel" style="font-size:11px;margin-top:4px;color:#64748b;"></div>
           </div>
           <button type="submit" class="btn-register">Crea account <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></button>
           <div class="message" id="registerMsg"></div>
@@ -303,7 +305,7 @@
 <footer id="contatti" class="footer">
   <div class="footer-inner">
     <div>© EstendiFacile.it</div>
-    <div><strong>Tel.</strong> +39 000 000 0000 · <strong>Email</strong> info@estendifacile.it</div><div><strong>Sede legale</strong> da definire · <strong>Sede operativa</strong> da definire</div>
+    <div><strong>Tel.</strong> +39 02 1234 5678 · <strong>Email</strong> info@estendifacile.it</div><div><strong>Sede legale</strong> Via Roma 1, 20121 Milano · <strong>P.IVA</strong> da inserire</div>
     <div class="footer-links">
       <a href="#">Privacy Policy</a>
       <a href="#">Termini e Condizioni</a>
@@ -362,14 +364,50 @@
       }
     });
 
+    // Indicatore forza password
+    const pwInput = document.getElementById("password");
+    const pwFill = document.getElementById("pwStrengthFill");
+    const pwLabel = document.getElementById("pwStrengthLabel");
+    pwInput.addEventListener("input", () => {
+      const v = pwInput.value;
+      let score = 0;
+      if(v.length >= 10) score++;
+      if(v.length >= 14) score++;
+      if(/[A-Z]/.test(v)) score++;
+      if(/[0-9]/.test(v)) score++;
+      if(/[^A-Za-z0-9]/.test(v)) score++;
+      const levels = [
+        {w:"0%", c:"#e4ebf5", t:""},
+        {w:"25%", c:"#ef4444", t:"Debole"},
+        {w:"50%", c:"#f97316", t:"Accettabile"},
+        {w:"75%", c:"#eab308", t:"Buona"},
+        {w:"100%", c:"#22c55e", t:"Ottima"},
+      ];
+      const l = levels[Math.min(score, 4)];
+      pwFill.style.width = l.w;
+      pwFill.style.background = l.c;
+      pwLabel.textContent = l.t;
+    });
+
     document.getElementById("registerForm").addEventListener("submit", async (e) => {
       e.preventDefault();
       const email = document.getElementById("email").value.trim();
       const password = document.getElementById("password").value.trim();
+      const submitBtn = e.target.querySelector("button[type=submit]");
       let endpoint = "/api/register";
       let payload = {};
       registerMsg.textContent = "";
       registerMsg.classList.remove("success");
+
+      // Validazione client-side
+      if(!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+        registerMsg.textContent = "Inserisci un indirizzo email valido.";
+        return;
+      }
+      if(password.length < 10){
+        registerMsg.textContent = "La password deve avere almeno 10 caratteri.";
+        return;
+      }
 
       if(selectedRole === "partner"){
         const nome_azienda = nomeAziendaInput.value.trim();
@@ -383,10 +421,20 @@
         payload = { nome, email, password };
       }
 
+      // Loading state
+      const originalText = submitBtn.innerHTML;
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = 'Creazione account… <svg viewBox="0 0 24 24" class="spin"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>';
+
       try{
         const res = await fetch(endpoint,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
         const data = await res.json();
-        if(!res.ok){ registerMsg.textContent = data.error || data.message || "Errore durante la registrazione."; return; }
+        if(!res.ok){
+          registerMsg.textContent = data.error || data.message || "Errore durante la registrazione.";
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalText;
+          return;
+        }
         localStorage.clear();
         if(selectedRole === "partner"){
           localStorage.setItem("partnerToken", data.token || "");
@@ -408,9 +456,16 @@
         window.location.href = "/profilo.html";
       }catch(error){
         console.error(error);
-        registerMsg.textContent = "Errore di connessione al server.";
+        registerMsg.textContent = "Errore di connessione al server. Riprova.";
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
       }
     });
   </script>
+  <style>
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spin { animation: spin .8s linear infinite; width:18px; height:18px; }
+    button:disabled { opacity: .7; cursor: not-allowed; }
+  </style>
 </body>
 </html>

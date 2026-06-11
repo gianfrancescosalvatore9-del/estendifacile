@@ -14,7 +14,11 @@
       "Bash(npm install *)",
       "Bash(JWT_SECRET=test-chiave-lunga-almeno-32-caratteri!! ADMIN_PASSWORD=adminPassword123! node -e ' *)",
       "mcp__Claude_Preview__preview_start",
-      "mcp__Claude_in_Chrome__tabs_context_mcp"
+      "mcp__Claude_in_Chrome__tabs_context_mcp",
+      "Bash(git checkout *)",
+      "Bash(git pull *)",
+      "Bash(git stash *)",
+      "Bash(xargs sed -i 's/+39 000 000 0000/+39 02 1234 5678/g; s/Sede legale\\\\* da definire/Sede legale* Via Roma 1, Milano/g; s/Sede operativa\\\\* da definire/Sede operativa* Via Roma 1, Milano/g; s/<strong>Sede legale<\\\\/strong> da definire · <strong>Sede operativa<\\\\/strong> da definire/<strong>Sede legale<\\\\/strong> Via Roma 1, 20121 Milano · <strong>P.IVA<\\\\/strong> da inserire/g')"
     ]
   }
 }

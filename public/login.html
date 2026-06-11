@@ -268,7 +268,7 @@
   <footer id="contatti" class="footer">
   <div class="footer-inner">
     <div>© EstendiFacile.it</div>
-    <div><strong>Tel.</strong> +39 000 000 0000 · <strong>Email</strong> info@estendifacile.it</div><div><strong>Sede legale</strong> da definire · <strong>Sede operativa</strong> da definire</div>
+    <div><strong>Tel.</strong> +39 02 1234 5678 · <strong>Email</strong> info@estendifacile.it</div><div><strong>Sede legale</strong> Via Roma 1, 20121 Milano · <strong>P.IVA</strong> da inserire</div>
     <div class="footer-links">
       <a href="#">Privacy Policy</a>
       <a href="#">Termini e Condizioni</a>
@@ -307,7 +307,25 @@
       const email = document.getElementById("email").value.trim();
       const password = document.getElementById("password").value.trim();
       const errorMsg = document.getElementById("errorMsg");
+      const submitBtn = e.target.querySelector("button[type=submit]");
       errorMsg.textContent = "";
+      errorMsg.className = "message";
+
+      // Validazione client-side
+      if(!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+        errorMsg.textContent = "Inserisci un indirizzo email valido.";
+        return;
+      }
+      if(!password){
+        errorMsg.textContent = "La password è obbligatoria.";
+        return;
+      }
+
+      // Loading state
+      const originalText = submitBtn.innerHTML;
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = 'Accesso in corso… <svg viewBox="0 0 24 24" class="spin"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>';
+
       let endpoint = "/api/login";
       if(selectedRole === "privato") endpoint = "/api/privati/login";
       if(selectedRole === "partner") endpoint = "/api/partner/login";
@@ -319,7 +337,9 @@
         });
         const data = await response.json();
         if(!response.ok){
-          errorMsg.textContent = data.message || data.error || "Credenziali non valide";
+          errorMsg.textContent = data.message || data.error || "Credenziali non valide. Riprova.";
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalText;
           return;
         }
         localStorage.clear();
@@ -343,9 +363,16 @@
         window.location.href = "/profilo.html";
       }catch(err){
         console.error(err);
-        errorMsg.textContent = "Errore di connessione al server.";
+        errorMsg.textContent = "Errore di connessione al server. Riprova.";
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
       }
     });
   </script>
+  <style>
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spin { animation: spin .8s linear infinite; width:18px; height:18px; }
+    button:disabled { opacity: .7; cursor: not-allowed; }
+  </style>
 </body>
 </html>
