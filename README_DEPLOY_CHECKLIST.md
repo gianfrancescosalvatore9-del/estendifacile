@@ -9,11 +9,11 @@ Prima del deploy:
 5. Configura SMTP se vuoi inviare email automatiche a partner e clienti.
 6. Esegui `npm ci`.
 7. Esegui `npm run check`.
-8. Esegui `npm audit --audit-level=low` e verifica che non segnali vulnerabilita'.
+8. Esegui `npm audit --audit-level=low` e verifica che non segnali vulnerabilità.
 9. Avvia con `NODE_ENV=production npm start`.
 
 Note operative:
 
-- In produzione il server non parte se `JWT_SECRET` e' assente, troppo corto o lasciato al valore segnaposto.
+- In produzione il server non parte se `JWT_SECRET` è assente, troppo corto o lasciato al valore segnaposto.
 - Senza Stripe configurato, il pagamento con carta viene bloccato e non viene segnato come pagato.
 - `database.db`, `.env`, `public/uploads` e `public/certificati` sono dati/runtime: gestiscili con backup separati dal codice.
