@@ -5,7 +5,16 @@
       "Bash(git init *)",
       "Bash(git add *)",
       "Bash(git commit *)",
-      "Bash(git config *)"
+      "Bash(git config *)",
+      "Bash(gh auth *)",
+      "PowerShell(gh auth status 2>&1)",
+      "Bash(Get-ChildItem -Path \"D:\\\\estendifacile_v66_home_stabile\" -Recurse -Name)",
+      "Bash(Select-Object -First 50)",
+      "Bash(node -e ' *)",
+      "Bash(npm install *)",
+      "Bash(JWT_SECRET=test-chiave-lunga-almeno-32-caratteri!! ADMIN_PASSWORD=adminPassword123! node -e ' *)",
+      "mcp__Claude_Preview__preview_start",
+      "mcp__Claude_in_Chrome__tabs_context_mcp"
     ]
   }
 }
