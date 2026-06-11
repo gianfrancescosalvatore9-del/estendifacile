@@ -1,0 +1,1009 @@
+/* ==========================================================
+   ESTENDIFACILE V48 - FINAL HOME POLISH
+   Fix richiesti: header top, logo payoff, icone, targa premium,
+   layout più largo e visual veicoli meglio integrato.
+   ========================================================== */
+
+:root{
+  --ef-navy:#071d49;
+  --ef-green:#18b45a;
+  --ef-border:#dce7f5;
+  --ef-soft:#f8fbff;
+}
+
+html,
+body{
+  margin:0!important;
+  padding:0!important;
+  padding-top:0!important;
+  scroll-padding-top:96px!important;
+  background:#fff!important;
+}
+
+body::before,
+body::after{
+  display:none!important;
+  content:none!important;
+}
+
+/* HEADER sempre in alto, senza spazio vuoto sopra */
+.main-header{
+  position:fixed!important;
+  top:0!important;
+  left:0!important;
+  right:0!important;
+  width:100%!important;
+  height:96px!important;
+  margin:0!important;
+  padding:0!important;
+  z-index:10000!important;
+  background:rgba(255,255,255,.97)!important;
+  border-bottom:1px solid #e8eef7!important;
+  box-shadow:0 12px 38px rgba(7,29,73,.055)!important;
+  backdrop-filter:blur(18px)!important;
+  transform:none!important;
+}
+
+.main-header::before,
+.main-header::after{
+  display:none!important;
+  content:none!important;
+}
+
+main{
+  margin:0!important;
+  padding-top:96px!important;
+}
+
+.main-header .container,
+.container{
+  width:min(1660px,calc(100% - 72px))!important;
+}
+
+.main-header .nav-wrap{
+  height:96px!important;
+  min-height:96px!important;
+  padding:0!important;
+  display:grid!important;
+  grid-template-columns:380px minmax(460px,1fr) auto!important;
+  align-items:center!important;
+  gap:34px!important;
+}
+
+.main-header .brand{
+  width:auto!important;
+  min-width:0!important;
+  display:flex!important;
+  align-items:center!important;
+  overflow:visible!important;
+}
+
+/* Logo: payoff SOLO sotto EstendiFacile.it */
+.ef-logo-wordmark{
+  display:grid!important;
+  grid-template-columns:58px auto!important;
+  grid-template-rows:auto auto!important;
+  grid-template-areas:"symbol text" "symbol payoff"!important;
+  column-gap:12px!important;
+  row-gap:3px!important;
+  align-items:center!important;
+  transform:none!important;
+  line-height:1!important;
+  white-space:nowrap!important;
+}
+
+.ef-logo-symbol{
+  grid-area:symbol!important;
+  width:54px!important;
+  height:54px!important;
+  border-radius:15px!important;
+}
+
+.ef-logo-text{
+  grid-area:text!important;
+  line-height:.92!important;
+}
+
+.brand::after{
+  display:none!important;
+  content:none!important;
+}
+
+.ef-logo-wordmark::after{
+  grid-area:payoff!important;
+  content:none!important;
+  display:block!important;
+  margin:0!important;
+  padding:0!important;
+  color:#071d49!important;
+  font-size:10.5px!important;
+  line-height:1!important;
+  letter-spacing:.16em!important;
+  font-weight:900!important;
+  white-space:nowrap!important;
+}
+
+/* Header nav con icone professionali, niente quadratini vuoti */
+.ef-main-nav{
+  display:flex!important;
+  justify-content:flex-end!important;
+  align-items:center!important;
+  gap:28px!important;
+  margin:0!important;
+  white-space:nowrap!important;
+}
+
+.ef-main-nav a{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:6px!important;
+  min-width:62px!important;
+  padding:0!important;
+  border:0!important;
+  background:transparent!important;
+  color:#071d49!important;
+  text-transform:uppercase!important;
+  font-size:11px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  letter-spacing:-.01em!important;
+  box-shadow:none!important;
+  transition:transform .22s ease,color .22s ease!important;
+}
+
+.ef-main-nav a i{display:none!important;}
+
+.ef-main-nav a::before{
+  content:''!important;
+  width:30px!important;
+  height:30px!important;
+  border-radius:12px!important;
+  display:block!important;
+  border:1px solid #dce7f5!important;
+  background-color:#f8fbff!important;
+  background-repeat:no-repeat!important;
+  background-position:center!important;
+  background-size:18px 18px!important;
+  box-shadow:0 8px 18px rgba(7,29,73,.05)!important;
+  transition:.22s ease!important;
+}
+
+.ef-main-nav a[href*="partner"]::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23071d49' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 11l2.5 2.5a2 2 0 0 0 2.8 0L16 11'/%3E%3Cpath d='M3.5 12.5l4-4a3 3 0 0 1 4.2 0l.3.3.3-.3a3 3 0 0 1 4.2 0l4 4'/%3E%3Cpath d='M7 16l2 2M12 18l1 1M17 16l-2 2'/%3E%3C/svg%3E")!important;}
+.ef-main-nav a[href*="chi-siamo"]::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23071d49' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='8' r='4'/%3E%3Cpath d='M5 21a7 7 0 0 1 14 0'/%3E%3C/svg%3E")!important;}
+.ef-main-nav a[href*="come-funziona"]::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23071d49' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 6h10'/%3E%3Cpath d='M4 12h16'/%3E%3Cpath d='M4 18h7'/%3E%3Ccircle cx='17' cy='6' r='2'/%3E%3Ccircle cx='14' cy='18' r='2'/%3E%3C/svg%3E")!important;}
+.ef-main-nav a[href*="faq"]::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23071d49' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M9.8 9a2.5 2.5 0 0 1 4.4 1.6c0 1.8-2.2 2-2.2 3.7'/%3E%3Cpath d='M12 17h.01'/%3E%3C/svg%3E")!important;}
+.ef-main-nav a[href*="contatti"]::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23071d49' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='5' width='18' height='14' rx='3'/%3E%3Cpath d='M4 7l8 6 8-6'/%3E%3C/svg%3E")!important;}
+
+.ef-main-nav a:hover{
+  color:#18b45a!important;
+  transform:translateY(-2px)!important;
+}
+.ef-main-nav a:hover::before{
+  border-color:#b7f0d0!important;
+  box-shadow:0 12px 26px rgba(24,180,90,.14)!important;
+}
+
+.ef-nav-actions{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+  gap:14px!important;
+  margin:0!important;
+}
+
+.nav-legal,.nav-login,.nav-register{
+  height:54px!important;
+  border-radius:15px!important;
+  padding:0 20px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:10px!important;
+  font-size:12px!important;
+  font-weight:900!important;
+  line-height:1.05!important;
+  box-shadow:0 10px 24px rgba(7,29,73,.04)!important;
+}
+
+/* Hero più larga, proporzioni premium */
+.hero.ef-home-hero,
+.ef-home-hero{
+  margin:0!important;
+  min-height:760px!important;
+  padding:58px 0 40px!important;
+  overflow:hidden!important;
+  background:
+    radial-gradient(circle at 71% 34%, rgba(224,238,255,.70), transparent 31%),
+    radial-gradient(circle at 61% 58%, rgba(24,180,90,.055), transparent 27%),
+    linear-gradient(180deg,#ffffff 0%,#f8fbff 58%,#ffffff 100%)!important;
+}
+
+.ef-hero-grid{
+  width:100%!important;
+  min-height:460px!important;
+  display:grid!important;
+  grid-template-columns:minmax(300px,360px) minmax(450px,520px) minmax(560px,1fr)!important;
+  gap:28px!important;
+  align-items:center!important;
+  padding:0!important;
+}
+
+.ef-hero-copy h1{
+  font-size:clamp(37px,2.75vw,52px)!important;
+  line-height:1.03!important;
+  letter-spacing:-1.35px!important;
+}
+
+.ef-hero-copy .hero-copy{
+  font-size:17px!important;
+  line-height:1.55!important;
+  max-width:340px!important;
+}
+
+.ef-comparator-panel{
+  max-width:520px!important;
+  width:100%!important;
+  border-radius:25px!important;
+  padding:28px 30px!important;
+  box-shadow:0 30px 80px rgba(7,29,73,.12)!important;
+  border:1px solid #dce7f5!important;
+  background:rgba(255,255,255,.96)!important;
+  backdrop-filter:blur(12px)!important;
+}
+
+.ef-comparator-panel h2{
+  font-size:24px!important;
+  letter-spacing:-.5px!important;
+}
+
+/* Targa più professionale */
+.ef-plate-wrap{
+  display:grid!important;
+  grid-template-columns:64px 1fr 52px!important;
+  height:64px!important;
+  overflow:hidden!important;
+  border-radius:18px!important;
+  border:1.5px solid #cfdbea!important;
+  background:linear-gradient(180deg,#ffffff 0%,#fbfdff 100%)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 18px 42px rgba(7,29,73,.075)!important;
+}
+
+.ef-plate-wrap .plate-country,
+.plate-country{
+  height:64px!important;
+  background:linear-gradient(180deg,#1d67df 0%,#1451bd 100%)!important;
+  color:#fff!important;
+  border-radius:0!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  font-weight:900!important;
+  box-shadow:inset -1px 0 0 rgba(255,255,255,.24)!important;
+}
+
+.ef-plate-wrap input{
+  height:64px!important;
+  padding:0 20px!important;
+  border:0!important;
+  outline:0!important;
+  background:transparent!important;
+  color:#758196!important;
+  font-size:22px!important;
+  font-weight:900!important;
+  letter-spacing:.01em!important;
+  text-transform:uppercase!important;
+}
+
+.ef-plate-wrap input::placeholder{
+  color:#8a94a6!important;
+  opacity:1!important;
+}
+
+.ef-input-help{
+  width:52px!important;
+  height:64px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  border:0!important;
+  background:transparent!important;
+  color:#071d49!important;
+  font-size:18px!important;
+}
+
+/* Visual integrato e più largo */
+.ef-vehicle-visual{
+  min-height:560px!important;
+  width:100%!important;
+  align-self:center!important;
+  background:url('/assets/hero-vehicles-premium-clean.png') center center/118% auto no-repeat!important;
+  background-color:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  filter:drop-shadow(0 32px 50px rgba(7,29,73,.13)) saturate(1.06) contrast(1.03)!important;
+  transform:translateX(-18px) translateY(2px) scale(1.08)!important;
+  -webkit-mask-image:radial-gradient(ellipse at 50% 52%, #000 0%, #000 73%, rgba(0,0,0,.78) 84%, transparent 98%)!important;
+  mask-image:radial-gradient(ellipse at 50% 52%, #000 0%, #000 73%, rgba(0,0,0,.78) 84%, transparent 98%)!important;
+  animation:efVehicleFloatV48 7s ease-in-out infinite!important;
+}
+
+.ef-vehicle-visual::before{
+  display:none!important;
+  content:none!important;
+}
+.ef-vehicle-visual::after{
+  content:''!important;
+  position:absolute!important;
+  left:9%!important;
+  right:7%!important;
+  bottom:70px!important;
+  height:42px!important;
+  background:radial-gradient(ellipse at center, rgba(7,29,73,.15), transparent 70%)!important;
+  filter:blur(18px)!important;
+  z-index:-1!important;
+}
+
+@keyframes efVehicleFloatV48{
+  0%,100%{transform:translateX(-18px) translateY(2px) scale(1.08)}
+  50%{transform:translateX(-18px) translateY(-8px) scale(1.095)}
+}
+
+.ef-stats-row{
+  width:min(1480px,calc(100% - 140px))!important;
+  margin:18px auto 0!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:18px!important;
+}
+
+@media(max-width:1280px){
+  .main-header .nav-wrap{grid-template-columns:320px 1fr auto!important;gap:18px!important;}
+  .ef-main-nav{gap:18px!important;}
+  .ef-hero-grid{grid-template-columns:300px 470px 1fr!important;gap:20px!important;}
+  .ef-vehicle-visual{background-size:124% auto!important;transform:translateX(-10px) scale(1.02)!important;}
+}
+
+@media(max-width:1100px){
+  .main-header{position:sticky!important;height:auto!important;}
+  main{padding-top:0!important;}
+  .main-header .nav-wrap{height:auto!important;grid-template-columns:1fr!important;padding:16px 0!important;}
+  .ef-main-nav,.ef-nav-actions{justify-content:center!important;flex-wrap:wrap!important;}
+  .ef-hero-grid{grid-template-columns:1fr!important;}
+  .ef-hero-copy{text-align:center!important;}
+  .ef-hero-copy .hero-copy{max-width:620px!important;margin-left:auto!important;margin-right:auto!important;}
+  .ef-comparator-panel{margin:0 auto!important;}
+  .ef-vehicle-visual{min-height:360px!important;background-size:contain!important;transform:none!important;}
+  .ef-stats-row{width:min(100% - 36px,1480px)!important;grid-template-columns:1fr 1fr!important;}
+}
+
+@media(max-width:680px){
+  .main-header .container,.container{width:min(100% - 24px,1660px)!important;}
+  .ef-logo-wordmark{transform:scale(.92)!important;transform-origin:left center!important;}
+  .ef-stats-row{grid-template-columns:1fr!important;}
+  .ef-plate-wrap{grid-template-columns:58px 1fr 46px!important;height:58px!important;}
+  .ef-plate-wrap .plate-country,.plate-country,.ef-plate-wrap input,.ef-input-help{height:58px!important;}
+}
+
+/* ==========================================================
+   ESTENDIFACILE V49 - TYPOGRAPHY + PREMIUM INPUT FINAL
+   Obiettivo: migliorare font, gerarchia, logo, header, targa,
+   micro-benefit e percezione premium senza cambiare logica JS.
+   ========================================================== */
+
+:root{
+  --ef-font:'Inter',system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --ef-navy:#061b44;
+  --ef-green:#18b45a;
+  --ef-muted:#52627a;
+  --ef-line:#dbe6f4;
+}
+
+html,body{
+  font-family:var(--ef-font)!important;
+  margin:0!important;
+  padding:0!important;
+  padding-top:0!important;
+  background:#fff!important;
+  text-rendering:geometricPrecision!important;
+  -webkit-font-smoothing:antialiased!important;
+  -moz-osx-font-smoothing:grayscale!important;
+}
+
+body *{font-family:var(--ef-font)!important;}
+body::before,body::after{display:none!important;content:none!important;}
+
+.main-header{
+  top:0!important;
+  margin-top:0!important;
+  height:96px!important;
+  background:rgba(255,255,255,.985)!important;
+  box-shadow:0 10px 30px rgba(6,27,68,.045)!important;
+}
+main{padding-top:96px!important;margin-top:0!important;}
+
+/* LOGO: payoff unico, pulito, non duplicato */
+.ef-logo-text:after,
+.brand:after{
+  display:none!important;
+  content:none!important;
+}
+.ef-logo-wordmark{
+  grid-template-columns:60px auto!important;
+  column-gap:13px!important;
+}
+.ef-logo-symbol{
+  width:56px!important;
+  height:56px!important;
+  font-weight:800!important;
+}
+.ef-logo-text{
+  font-size:33px!important;
+  font-weight:850!important;
+  letter-spacing:-1.1px!important;
+  color:#071d49!important;
+}
+.ef-logo-text span{color:var(--ef-green)!important;}
+.ef-logo-text small{font-size:.54em!important;font-weight:800!important;}
+.ef-logo-wordmark::after{
+  content:none!important;
+  display:block!important;
+  grid-area:payoff!important;
+  color:#071d49!important;
+  font-size:10.8px!important;
+  font-weight:650!important;
+  letter-spacing:.18em!important;
+  line-height:1!important;
+  text-transform:uppercase!important;
+  margin-top:1px!important;
+}
+
+/* HEADER: più enterprise, meno pesante */
+.ef-main-nav a{
+  font-weight:650!important;
+  font-size:11px!important;
+  letter-spacing:.02em!important;
+  color:#071d49!important;
+}
+.ef-main-nav a::before{
+  width:31px!important;
+  height:31px!important;
+  border-radius:13px!important;
+  background-color:#ffffff!important;
+  border-color:#d8e3f1!important;
+  box-shadow:0 8px 22px rgba(6,27,68,.06)!important;
+}
+.ef-main-nav a:hover::before{
+  transform:translateY(-2px)!important;
+  border-color:#b9f0d2!important;
+  box-shadow:0 14px 30px rgba(24,180,90,.14)!important;
+}
+.nav-legal,.nav-login,.nav-register{
+  font-weight:750!important;
+  letter-spacing:.01em!important;
+}
+.nav-register{box-shadow:0 16px 34px rgba(24,180,90,.25)!important;}
+
+/* HERO TYPOGRAPHY */
+.ef-hero-copy h1{
+  font-weight:820!important;
+  letter-spacing:-1.55px!important;
+  line-height:1.045!important;
+  color:#061b44!important;
+}
+.ef-hero-copy h1 .green-line{
+  color:#18b45a!important;
+}
+.ef-hero-copy .hero-copy{
+  font-size:18px!important;
+  line-height:1.58!important;
+  font-weight:520!important;
+  color:#31435f!important;
+  letter-spacing:-.15px!important;
+}
+.hero-pill{
+  font-weight:750!important;
+  letter-spacing:.02em!important;
+  box-shadow:0 12px 26px rgba(24,180,90,.08)!important;
+}
+
+/* COMPARATORE: più autorevole */
+.ef-comparator-panel{
+  border-radius:28px!important;
+  box-shadow:0 34px 90px rgba(6,27,68,.13)!important;
+  border:1px solid rgba(199,214,234,.95)!important;
+}
+.ef-comparator-panel h2{
+  font-weight:820!important;
+  font-size:26px!important;
+  letter-spacing:-.75px!important;
+}
+.ef-comparator-subtitle{
+  font-size:14px!important;
+  font-weight:520!important;
+  color:#334864!important;
+}
+.ef-step-label{
+  font-size:11px!important;
+  font-weight:760!important;
+  letter-spacing:.015em!important;
+  color:#183154!important;
+}
+.ef-step-label span{
+  box-shadow:0 8px 18px rgba(24,180,90,.18)!important;
+}
+.ef-vehicle-type-tabs .vehicle-type-btn{
+  font-weight:760!important;
+  border-radius:16px!important;
+  transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease, background .22s ease!important;
+}
+.ef-vehicle-type-tabs .vehicle-type-btn:hover{
+  transform:translateY(-3px)!important;
+  border-color:#b9f0d2!important;
+  box-shadow:0 16px 34px rgba(6,27,68,.08)!important;
+}
+.ef-vehicle-type-tabs .vehicle-type-btn.active{
+  background:linear-gradient(180deg,#ffffff 0%,#f0fbf5 100%)!important;
+  box-shadow:0 18px 40px rgba(24,180,90,.14)!important;
+}
+
+/* INPUT TARGA PREMIUM */
+.ef-plate-wrap{
+  grid-template-columns:68px 1fr 64px!important;
+  height:70px!important;
+  border-radius:22px!important;
+  border:1px solid #cdd9e8!important;
+  background:linear-gradient(180deg,#ffffff 0%,#fbfdff 100%)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.95), 0 22px 52px rgba(6,27,68,.09)!important;
+  margin-bottom:20px!important;
+}
+.ef-plate-wrap .plate-country,
+.plate-country{
+  height:70px!important;
+  background:linear-gradient(180deg,#1d66dd 0%,#134fbd 100%)!important;
+  font-size:13px!important;
+  font-weight:800!important;
+}
+.ef-plate-wrap .plate-country small{font-weight:700!important;letter-spacing:.04em!important;}
+.ef-plate-wrap input{
+  height:70px!important;
+  padding:0 22px!important;
+  font-size:25px!important;
+  font-weight:800!important;
+  letter-spacing:.04em!important;
+  color:#253755!important;
+}
+.ef-plate-wrap input::placeholder{
+  color:#9aa5b6!important;
+  font-weight:750!important;
+  letter-spacing:.02em!important;
+}
+.ef-input-help{
+  width:64px!important;
+  height:70px!important;
+  color:#071d49!important;
+  font-size:20px!important;
+  border-left:1px solid #edf2f8!important;
+}
+.ef-input-help i{font-size:18px!important;}
+.ef-input-help:hover{
+  background:#f0fbf5!important;
+  color:#18b45a!important;
+}
+.ef-plate-wrap:focus-within{
+  border-color:#18b45a!important;
+  box-shadow:0 0 0 5px rgba(24,180,90,.10),0 24px 58px rgba(6,27,68,.11)!important;
+}
+
+.ef-main-compare{
+  min-height:62px!important;
+  border-radius:17px!important;
+  width:100%!important;
+  font-weight:800!important;
+  font-size:14px!important;
+  letter-spacing:.01em!important;
+  box-shadow:0 22px 44px rgba(24,180,90,.24)!important;
+}
+.ef-main-compare:hover{transform:translateY(-2px)!important;box-shadow:0 26px 54px rgba(24,180,90,.30)!important;}
+
+/* Micro-benefit sotto CTA */
+.ef-micro-benefits{
+  display:grid!important;
+  grid-template-columns:repeat(3,1fr)!important;
+  gap:10px!important;
+  margin:15px 0 8px!important;
+}
+.ef-micro-benefits span{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:7px!important;
+  min-height:35px!important;
+  padding:8px 10px!important;
+  border:1px solid #e2ebf6!important;
+  border-radius:999px!important;
+  background:rgba(255,255,255,.86)!important;
+  color:#153154!important;
+  font-size:11px!important;
+  font-weight:680!important;
+  white-space:nowrap!important;
+  box-shadow:0 10px 22px rgba(6,27,68,.045)!important;
+}
+.ef-micro-benefits i{color:#18b45a!important;font-size:13px!important;}
+.secure-note{font-weight:650!important;color:#263d5f!important;}
+
+/* STATISTICHE: numeri più importanti e coerenti */
+.ef-stat-card{
+  border-radius:21px!important;
+  box-shadow:0 24px 58px rgba(6,27,68,.08)!important;
+  transition:transform .22s ease, box-shadow .22s ease!important;
+}
+.ef-stat-card:hover{transform:translateY(-4px)!important;box-shadow:0 30px 70px rgba(6,27,68,.12)!important;}
+.ef-stat-card span{font-weight:740!important;letter-spacing:.01em!important;}
+.ef-stat-card strong{
+  font-size:42px!important;
+  font-weight:820!important;
+  letter-spacing:-1.35px!important;
+}
+.ef-stat-card small{font-weight:650!important;}
+
+/* Visual più integrato, senza effetto box */
+.ef-vehicle-visual{
+  filter:drop-shadow(0 38px 62px rgba(6,27,68,.15)) saturate(1.06) contrast(1.03)!important;
+}
+
+/* Partner strip più premium */
+.ef-trust-strip{box-shadow:0 -1px 0 #edf2f8 inset!important;}
+.ef-trust-row>div,.ef-see-all{font-weight:670!important;letter-spacing:.01em!important;}
+.ef-logo-mini{font-weight:680!important;}
+
+@media(max-width:1100px){
+  main{padding-top:0!important;}
+  .ef-micro-benefits{grid-template-columns:1fr!important;}
+}
+@media(max-width:680px){
+  .ef-plate-wrap{grid-template-columns:58px 1fr 50px!important;height:62px!important;}
+  .ef-plate-wrap .plate-country,.plate-country,.ef-plate-wrap input,.ef-input-help{height:62px!important;}
+  .ef-plate-wrap input{font-size:19px!important;}
+  .ef-micro-benefits span{white-space:normal!important;}
+}
+
+/* ==========================================================
+   V50 - COMPARATORE PREMIUM + ICON SYSTEM + HERO VISUAL FULL
+   Migliorie richieste: comparatore piu premium, simboli piu curati,
+   camper e furgone non tagliati.
+   ========================================================== */
+
+/* Hero piu ampia e visual senza tagli */
+.ef-home-hero,
+.hero.ef-home-hero{
+  min-height:780px!important;
+  padding:54px 0 36px!important;
+  overflow:hidden!important;
+  background:
+    radial-gradient(circle at 67% 38%, rgba(225,239,255,.72), transparent 32%),
+    radial-gradient(circle at 48% 80%, rgba(24,180,90,.06), transparent 30%),
+    linear-gradient(180deg,#ffffff 0%,#f8fbff 54%,#ffffff 100%)!important;
+}
+
+.ef-hero-grid{
+  width:min(1760px,calc(100% - 86px))!important;
+  grid-template-columns:340px 520px minmax(640px,1fr)!important;
+  gap:34px!important;
+  align-items:center!important;
+  overflow:visible!important;
+}
+
+.ef-vehicle-visual{
+  min-height:500px!important;
+  width:100%!important;
+  min-width:0!important;
+  background-image:url('/assets/hero-vehicles-premium-clean.png')!important;
+  background-repeat:no-repeat!important;
+  background-position:center center!important;
+  background-size:96% auto!important;
+  border-radius:0!important;
+  filter:drop-shadow(0 34px 56px rgba(6,27,68,.12)) saturate(1.04) contrast(1.025)!important;
+  transform:translateX(-8px)!important;
+  animation:efHeroFloatV50 6.5s ease-in-out infinite!important;
+}
+
+.ef-vehicle-visual::before,
+.ef-vehicle-visual::after{
+  content:none!important;
+  display:none!important;
+}
+
+@keyframes efHeroFloatV50{
+  0%,100%{transform:translateX(-8px) translateY(0)}
+  50%{transform:translateX(-8px) translateY(-8px)}
+}
+
+/* Comparatore premium: card piu importante e meno gestionale */
+.ef-comparator-panel{
+  position:relative!important;
+  z-index:6!important;
+  width:100%!important;
+  max-width:560px!important;
+  padding:30px!important;
+  border-radius:30px!important;
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.98),rgba(255,255,255,.94))!important;
+  border:1px solid rgba(207,221,239,.92)!important;
+  box-shadow:
+    0 36px 90px rgba(6,27,68,.13),
+    0 1px 0 rgba(255,255,255,.95) inset!important;
+  backdrop-filter:blur(18px)!important;
+  overflow:hidden!important;
+}
+
+.ef-comparator-panel::before{
+  content:''!important;
+  position:absolute!important;
+  inset:0 0 auto 0!important;
+  height:5px!important;
+  background:linear-gradient(90deg,#18b45a,#0d4cc5,#18b45a)!important;
+  opacity:.9!important;
+}
+
+.ef-comparator-panel::after{
+  content:''!important;
+  position:absolute!important;
+  right:-90px!important;
+  top:-90px!important;
+  width:190px!important;
+  height:190px!important;
+  border-radius:50%!important;
+  background:radial-gradient(circle,rgba(24,180,90,.12),transparent 66%)!important;
+  pointer-events:none!important;
+}
+
+.ef-comparator-panel h2{
+  margin:0 0 8px!important;
+  font-size:26px!important;
+  line-height:1.05!important;
+  letter-spacing:-.75px!important;
+  font-weight:850!important;
+  color:#071d49!important;
+}
+.ef-comparator-panel h2 span{color:#18b45a!important;}
+.ef-comparator-subtitle{
+  margin:0 0 22px!important;
+  color:#43556f!important;
+  font-size:14.5px!important;
+  line-height:1.45!important;
+  font-weight:560!important;
+}
+
+.ef-step-label{
+  margin:18px 0 10px!important;
+  color:#071d49!important;
+  font-size:11.5px!important;
+  letter-spacing:.02em!important;
+  font-weight:820!important;
+  text-transform:uppercase!important;
+}
+.ef-step-label span{
+  width:24px!important;
+  height:24px!important;
+  margin-right:8px!important;
+  border-radius:50%!important;
+  display:inline-grid!important;
+  place-items:center!important;
+  background:#18b45a!important;
+  color:white!important;
+  font-size:12px!important;
+  box-shadow:0 10px 20px rgba(24,180,90,.24)!important;
+}
+
+/* Pulsanti tipo veicolo: icone piu eleganti, state premium */
+.ef-vehicle-type-tabs{
+  display:grid!important;
+  grid-template-columns:repeat(4,1fr)!important;
+  gap:12px!important;
+  margin-bottom:18px!important;
+}
+.ef-vehicle-type-tabs .vehicle-type-btn{
+  position:relative!important;
+  height:82px!important;
+  border-radius:18px!important;
+  border:1.5px solid #dfe9f5!important;
+  background:linear-gradient(180deg,#fff,#fbfdff)!important;
+  color:#071d49!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:8px!important;
+  padding:10px 8px!important;
+  box-shadow:0 12px 26px rgba(6,27,68,.045)!important;
+  transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease,background .2s ease!important;
+}
+.ef-vehicle-type-tabs .vehicle-type-btn i{
+  width:34px!important;
+  height:34px!important;
+  border-radius:13px!important;
+  display:grid!important;
+  place-items:center!important;
+  background:#f1f6fd!important;
+  color:#071d49!important;
+  font-size:17px!important;
+  line-height:1!important;
+  transition:.2s ease!important;
+}
+.ef-vehicle-type-tabs .vehicle-type-btn strong{
+  font-size:11px!important;
+  line-height:1.05!important;
+  font-weight:850!important;
+  letter-spacing:.01em!important;
+}
+.ef-vehicle-type-tabs .vehicle-type-btn:hover{
+  transform:translateY(-3px)!important;
+  border-color:#bcefd0!important;
+  box-shadow:0 18px 38px rgba(24,180,90,.11)!important;
+}
+.ef-vehicle-type-tabs .vehicle-type-btn.active{
+  background:linear-gradient(180deg,#f0fbf5,#ffffff)!important;
+  border-color:#18b45a!important;
+  box-shadow:0 20px 44px rgba(24,180,90,.15)!important;
+}
+.ef-vehicle-type-tabs .vehicle-type-btn.active i{
+  background:#18b45a!important;
+  color:#fff!important;
+}
+.ef-vehicle-type-tabs .vehicle-type-btn.active::after{
+  content:'✓'!important;
+  position:absolute!important;
+  right:9px!important;
+  top:9px!important;
+  width:20px!important;
+  height:20px!important;
+  border-radius:50%!important;
+  display:grid!important;
+  place-items:center!important;
+  background:#18b45a!important;
+  color:#fff!important;
+  font-size:12px!important;
+  font-weight:900!important;
+  box-shadow:0 8px 16px rgba(24,180,90,.24)!important;
+}
+
+/* Campo targa: da input tecnico a modulo premium */
+.ef-plate-wrap{
+  height:74px!important;
+  display:grid!important;
+  grid-template-columns:72px 1fr 58px!important;
+  align-items:center!important;
+  border-radius:20px!important;
+  border:1.5px solid #d7e2f1!important;
+  background:linear-gradient(180deg,#ffffff,#fdfefe)!important;
+  overflow:hidden!important;
+  box-shadow:
+    0 18px 42px rgba(6,27,68,.075),
+    0 1px 0 rgba(255,255,255,.95) inset!important;
+  transition:border-color .2s ease, box-shadow .2s ease, transform .2s ease!important;
+}
+.ef-plate-wrap:hover{
+  transform:translateY(-1px)!important;
+  box-shadow:0 22px 52px rgba(6,27,68,.095)!important;
+}
+.ef-plate-wrap:focus-within{
+  border-color:#18b45a!important;
+  box-shadow:0 0 0 6px rgba(24,180,90,.10),0 24px 58px rgba(6,27,68,.11)!important;
+}
+.ef-plate-wrap .plate-country,
+.plate-country{
+  width:72px!important;
+  height:74px!important;
+  background:linear-gradient(180deg,#1e64d8,#1455c7)!important;
+  color:#fff!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  font-size:15px!important;
+  font-weight:850!important;
+  letter-spacing:.02em!important;
+}
+.ef-plate-wrap .plate-country small,
+.plate-country small{
+  font-size:9px!important;
+  letter-spacing:.08em!important;
+  opacity:.9!important;
+}
+.ef-plate-wrap input{
+  height:74px!important;
+  padding:0 22px!important;
+  border:none!important;
+  outline:none!important;
+  background:transparent!important;
+  color:#071d49!important;
+  font-size:24px!important;
+  letter-spacing:.025em!important;
+  font-weight:820!important;
+  text-transform:uppercase!important;
+}
+.ef-plate-wrap input::placeholder{
+  color:#8d9aab!important;
+  font-weight:760!important;
+  letter-spacing:.01em!important;
+}
+.ef-input-help{
+  width:42px!important;
+  height:42px!important;
+  margin-right:12px!important;
+  border-radius:16px!important;
+  border:1px solid #dce7f5!important;
+  background:#f7fbff!important;
+  color:#071d49!important;
+  display:grid!important;
+  place-items:center!important;
+  transition:.2s ease!important;
+}
+.ef-input-help:hover{
+  background:#eaf8f0!important;
+  color:#18b45a!important;
+  border-color:#bcefd0!important;
+  transform:scale(1.04)!important;
+}
+
+/* CTA e micro benefit piu raffinati */
+.ef-main-compare{
+  margin-top:20px!important;
+  min-height:66px!important;
+  border-radius:19px!important;
+  background:linear-gradient(135deg,#18b45a,#0f9f49)!important;
+  box-shadow:0 25px 52px rgba(24,180,90,.25)!important;
+}
+.ef-micro-benefits{
+  grid-template-columns:repeat(3,1fr)!important;
+  gap:9px!important;
+  margin-top:16px!important;
+}
+.ef-micro-benefits span{
+  min-height:38px!important;
+  border-radius:999px!important;
+  font-size:10.5px!important;
+  font-weight:700!important;
+  color:#273d5f!important;
+  background:rgba(255,255,255,.92)!important;
+}
+.secure-note{
+  margin-top:10px!important;
+  font-size:12px!important;
+  font-weight:720!important;
+  color:#223957!important;
+}
+
+/* Header icon system piu coerente */
+.ef-main-nav a::before{
+  width:36px!important;
+  height:36px!important;
+  border-radius:15px!important;
+  background-color:#f7fbff!important;
+  background-size:19px 19px!important;
+  box-shadow:0 10px 22px rgba(7,29,73,.06)!important;
+}
+.ef-main-nav a:hover::before{
+  background-color:#eefbf3!important;
+  border-color:#bcefd0!important;
+}
+
+@media(max-width:1380px){
+  .ef-hero-grid{grid-template-columns:315px 500px minmax(520px,1fr)!important;gap:26px!important;}
+  .ef-comparator-panel{max-width:530px!important;padding:26px!important;}
+  .ef-vehicle-visual{min-height:460px!important;background-size:98% auto!important;}
+}
+
+@media(max-width:1100px){
+  .ef-hero-grid{grid-template-columns:1fr!important;}
+  .ef-vehicle-visual{min-height:360px!important;background-position:center!important;background-size:contain!important;}
+  .ef-comparator-panel{max-width:680px!important;margin:0 auto!important;}
+}
+
+@media(max-width:680px){
+  .ef-plate-wrap{grid-template-columns:64px 1fr 52px!important;height:68px!important;}
+  .ef-plate-wrap .plate-country,.plate-country,.ef-plate-wrap input{height:68px!important;}
+  .ef-plate-wrap input{font-size:20px!important;padding:0 14px!important;}
+}

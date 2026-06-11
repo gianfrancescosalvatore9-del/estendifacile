@@ -1,0 +1,2062 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard Concessionario - EstendiFacile.it</title>
+
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="/urgent-fix.css" />
+  <link rel="stylesheet" href="/visual-final.css?v=20260519" />
+  <link rel="stylesheet" href="/approved-ui.css?v=20260519-final" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+  <style>
+    :root {
+      --ef-blue: #071d49;
+      --ef-blue-2: #0b2b66;
+      --ef-green: #18b45a;
+      --ef-green-dark: #0fa34f;
+      --ef-bg: #f6f9fd;
+      --ef-text: #071d49;
+      --ef-muted: #64748b;
+      --ef-border: #e4ebf5;
+      --ef-card: #ffffff;
+      --ef-soft-green: #eafaf1;
+      --ef-shadow: 0 18px 45px rgba(7, 29, 73, 0.08);
+      --ef-shadow-soft: 0 10px 28px rgba(7, 29, 73, 0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0 !important;
+      padding-top: 0 !important;
+      background:
+        radial-gradient(circle at top right, rgba(24, 180, 90, 0.06), transparent 32%),
+        linear-gradient(180deg, #ffffff 0%, var(--ef-bg) 42%, #ffffff 100%);
+      color: var(--ef-text);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    button,
+    input {
+      font-family: inherit;
+    }
+
+    .dealer-shell {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 252px minmax(0, 1fr);
+      background: transparent;
+    }
+
+    .dealer-sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding: 26px 22px;
+      background: linear-gradient(180deg,#071d49 0%, #102d6b 45%, #163d86 100%);
+      border-right: 1px solid var(--ef-border);
+      box-shadow: 14px 0 40px rgba(7, 29, 73, 0.035);
+      display: flex;
+      flex-direction: column;
+      gap: 26px;
+      z-index: 5;
+    }
+
+    .sidebar-logo-row {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 68px;
+    }
+
+    .ef-mini-logo {
+      width: 66px;
+      height: 66px;
+      border-radius: 18px;
+      background: linear-gradient(135deg,#7b61ff,#4f8cff);
+      color: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 950;
+      font-size: 21px;
+      letter-spacing: -0.6px;
+      position: relative;
+      box-shadow: 0 14px 24px rgba(7, 29, 73, 0.18);
+      flex: 0 0 auto;
+    }
+
+    .ef-mini-logo::after {
+      content: "";
+      position: absolute;
+      right: -5px;
+      bottom: -5px;
+      width: 21px;
+      height: 21px;
+      border-radius: 50%;
+      background: var(--ef-green);
+      border: 4px solid #ffffff;
+    }
+
+    .dealer-nav {
+      display: grid;
+      gap: 9px;
+    }
+
+    .nav-item {
+      width: 100%;
+      border: 0;
+      background: transparent;
+      color: rgba(255,255,255,0.88);
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      padding: 13px 14px;
+      border-radius: 14px;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 850;
+      cursor: pointer;
+      transition: background 0.16s ease, color 0.16s ease, transform 0.16s ease;
+      text-align: left;
+    }
+
+    .nav-item:hover {
+      background: rgba(255,255,255,0.12);
+      color:#ffffff;
+      transform: translateX(4px);
+    }
+
+    .nav-item.active {
+      background: linear-gradient(135deg, #6ea8ff, #7b61ff);
+      color: #ffffff;
+      box-shadow: 0 12px 28px rgba(123,97,255,0.28);
+    }
+
+    .nav-icon {
+      width: 23px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: inherit;
+      font-size: 15px;
+    }
+
+    .sidebar-actions {
+      margin-top: auto;
+      display: grid;
+      gap: 13px;
+    }
+
+    .sidebar-btn {
+      width: 100%;
+      min-height: 48px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border-radius: 13px;
+      font-size: 14px;
+      font-weight: 900;
+      text-decoration: none;
+      cursor: pointer;
+      border: 1px solid var(--ef-border);
+      background: #ffffff;
+      color: var(--ef-text);
+      transition: transform 0.16s ease, box-shadow 0.16s ease;
+    }
+
+    .sidebar-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--ef-shadow-soft);
+    }
+
+    .sidebar-btn.primary {
+      background: linear-gradient(135deg, var(--ef-green), #11bf63);
+      border-color: var(--ef-green);
+      color: #ffffff;
+      box-shadow: 0 14px 26px rgba(24, 180, 90, 0.20);
+    }
+
+    .dealer-main {
+      min-width: 0;
+      padding: 0 38px 38px;
+    }
+
+    .dealer-topbar {
+      display: none !important;
+    }
+
+    .account-pill {
+      min-width: 220px;
+      border: 1px solid var(--ef-border);
+      background: rgba(255, 255, 255, 0.92);
+      border-radius: 16px;
+      padding: 11px 16px;
+      box-shadow: var(--ef-shadow-soft);
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .account-pill small {
+      display: block;
+      color: var(--ef-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-size: 11px;
+      font-weight: 900;
+      margin-bottom: 2px;
+    }
+
+    .account-pill strong {
+      display: block;
+      color: var(--ef-text);
+      font-size: 16px;
+      font-weight: 950;
+      line-height: 1.1;
+      max-width: 150px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+    }
+
+    .top-icon {
+      width: 42px;
+      height: 42px;
+      border: 1px solid var(--ef-border);
+      background: #ffffff;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--ef-text);
+      position: relative;
+      box-shadow: var(--ef-shadow-soft);
+      font-size: 15px;
+    }
+
+    .top-icon .dot {
+      position: absolute;
+      top: -4px;
+      right: -2px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--ef-green);
+      color: white;
+      font-size: 10px;
+      font-weight: 900;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid white;
+    }
+
+    .hero-dealer {
+      position: relative;
+      min-height: 280px;
+      border-radius: 26px;
+      overflow: hidden;
+      border: 1px solid var(--ef-border);
+      background-image:
+        linear-gradient(
+          90deg,
+          rgba(255,255,255,0.98) 0%,
+          rgba(255,255,255,0.94) 38%,
+          rgba(255,255,255,0.62) 64%,
+          rgba(255,255,255,0.20) 100%
+        ),
+        url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1800&auto=format&fit=crop");
+      background-size: cover;
+      background-position: center right;
+      box-shadow: var(--ef-shadow);
+      margin-bottom: 18px;
+      padding: 34px 38px;
+      display: flex;
+      align-items: center;
+    }
+
+    .hero-dealer::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 75% 48%, rgba(255,255,255,0.10), transparent 25%),
+        linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.16) 100%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      background: var(--ef-soft-green);
+      color: var(--ef-green-dark);
+      padding: 8px 13px;
+      font-size: 12px;
+      font-weight: 950;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      margin-bottom: 15px;
+    }
+
+    .hero-dealer h1 {
+      margin: 0 0 12px;
+      font-size: 42px;
+      line-height: 1.02;
+      color: var(--ef-text);
+      letter-spacing: -1.4px;
+      font-weight: 950;
+    }
+
+    .hero-dealer p {
+      margin: 0;
+      max-width: 620px;
+      color: #3f5575;
+      font-size: 16px;
+      line-height: 1.7;
+      font-weight: 650;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 26px;
+    }
+
+    .hero-btn {
+      min-height: 48px;
+      padding: 0 22px;
+      border-radius: 13px;
+      border: 1px solid var(--ef-border);
+      background: #ffffff;
+      color: var(--ef-text);
+      font-weight: 920;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      cursor: pointer;
+      box-shadow: 0 12px 24px rgba(7, 29, 73, 0.06);
+      transition: 0.16s ease;
+    }
+
+    .hero-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--ef-shadow-soft);
+    }
+
+    .hero-btn.primary {
+      background: linear-gradient(135deg, var(--ef-green), #11bf63);
+      color: #ffffff;
+      border-color: var(--ef-green);
+      box-shadow: 0 18px 28px rgba(24, 180, 90, 0.20);
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .kpi-card {
+      min-height: 92px;
+      background: var(--ef-card);
+      border: 1px solid var(--ef-border);
+      border-radius: 16px;
+      box-shadow: 0 8px 18px rgba(7, 29, 73, 0.05);
+      padding: 14px;
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      column-gap: 18px;
+      align-items: start;
+      transition: transform 0.16s ease, box-shadow 0.16s ease;
+    }
+
+    .kpi-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--ef-shadow);
+    }
+
+    .kpi-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--ef-soft-green);
+      color: var(--ef-green-dark);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+    }
+
+    .kpi-label {
+      color: #60708c;
+      font-size: 12px;
+      font-weight: 950;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      margin-bottom: 10px;
+    }
+
+    .kpi-value {
+      color: var(--ef-text);
+      font-size: 24px;
+      line-height: 1;
+      font-weight: 950;
+      margin-bottom: 6px;
+      letter-spacing: -0.6px;
+    }
+
+    .kpi-note {
+      color: var(--ef-green-dark);
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .section {
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    .panel-card {
+      background: rgba(255,255,255,0.96);
+      border: 1px solid var(--ef-border);
+      border-radius: 24px;
+      box-shadow: var(--ef-shadow-soft);
+      padding: 28px;
+      margin-bottom: 26px;
+    }
+
+    .panel-head {
+      margin-bottom: 22px;
+    }
+
+    .panel-head h2 {
+      margin: 0 0 8px;
+      color: var(--ef-text);
+      font-size: 28px;
+      line-height: 1.12;
+      letter-spacing: -0.45px;
+      font-weight: 950;
+    }
+
+    .panel-head p {
+      margin: 0;
+      color: var(--ef-muted);
+      font-size: 15px;
+      line-height: 1.7;
+      max-width: 780px;
+    }
+
+    .operation-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .operation-card {
+      border: 1px solid var(--ef-border);
+      background: #fbfdff;
+      border-radius: 19px;
+      padding: 20px 22px;
+      min-height: 104px;
+      display: grid;
+      grid-template-columns: 54px 1fr 24px;
+      align-items: center;
+      gap: 17px;
+      cursor: pointer;
+      transition: 0.16s ease;
+    }
+
+    .operation-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--ef-shadow-soft);
+      border-color: #d3e0ee;
+    }
+
+    .operation-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: var(--ef-soft-green);
+      color: var(--ef-green-dark);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+    .operation-card h3 {
+      margin: 0 0 6px;
+      color: var(--ef-text);
+      font-size: 18px;
+      font-weight: 950;
+    }
+
+    .operation-card p {
+      margin: 0;
+      color: var(--ef-muted);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .operation-arrow {
+      color: var(--ef-text);
+      font-size: 28px;
+      line-height: 1;
+      opacity: 0.7;
+    }
+
+    .search-panel {
+      background:
+        radial-gradient(circle at 94% 10%, rgba(24,180,90,0.10), transparent 28%),
+        linear-gradient(135deg, var(--ef-blue), var(--ef-blue-2));
+      border-radius: 24px;
+      padding: 28px;
+      color: white;
+      box-shadow: var(--ef-shadow);
+    }
+
+    .search-panel h2 {
+      color: white;
+      margin: 0 0 8px;
+      font-size: 30px;
+      font-weight: 950;
+    }
+
+    .search-panel p {
+      margin: 0 0 18px;
+      color: #dbe7f9;
+      line-height: 1.6;
+    }
+
+    .plate-wrap {
+      display: flex;
+      align-items: stretch;
+      border-radius: 16px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.96);
+      border: 1px solid rgba(255,255,255,0.22);
+      margin-bottom: 14px;
+      max-width: 620px;
+    }
+
+    .plate-country {
+      background: #1d5fd1;
+      color: white;
+      font-size: 12px;
+      font-weight: 900;
+      padding: 16px 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 52px;
+      letter-spacing: 0.4px;
+    }
+
+    .plate-wrap input {
+      border: none;
+      outline: none;
+      flex: 1;
+      padding: 18px 16px;
+      font-size: 22px;
+      font-weight: 950;
+      color: #475569;
+      background: transparent;
+      text-transform: uppercase;
+    }
+
+    .search-fields {
+      display: none;
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .search-fields.open {
+      display: grid;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      max-width: 920px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-group label {
+      color: #334155;
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .search-panel .form-group label {
+      color: #dbe7f9;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #d6deea;
+      border-radius: 14px;
+      background: white;
+      font-size: 15px;
+      outline: none;
+    }
+
+    .search-error {
+      min-height: 22px;
+      color: #fecaca;
+      font-size: 14px;
+      font-weight: 900;
+      margin-top: 10px;
+    }
+
+
+
+    .comparatore-panel {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 92% 8%, rgba(123, 97, 255, 0.22), transparent 28%),
+        radial-gradient(circle at 12% 92%, rgba(24, 180, 90, 0.16), transparent 32%),
+        linear-gradient(135deg, #ffffff 0%, #f7fbff 52%, #edf5ff 100%);
+      color: var(--ef-text);
+      border: 1px solid #d8e5f5;
+      box-shadow: 0 18px 45px rgba(7, 29, 73, 0.10);
+    }
+
+    .comparatore-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 7px;
+      background: linear-gradient(180deg, #7b61ff, #4f8cff, var(--ef-green));
+    }
+
+    .comparatore-panel > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .comparatore-panel h2 {
+      color: var(--ef-text);
+    }
+
+    .comparatore-panel p {
+      color: #52657f;
+    }
+
+    .comparatore-panel .badge {
+      background: linear-gradient(135deg, rgba(123,97,255,0.14), rgba(79,140,255,0.14));
+      color: #4f46e5;
+    }
+
+    .comparatore-panel .plate-wrap {
+      border: 1px solid #cbdcf1;
+      box-shadow: 0 16px 30px rgba(7, 29, 73, 0.08);
+    }
+
+    .comparatore-panel .form-group label {
+      color: #263b5e;
+    }
+
+    .comparatore-panel .search-error {
+      color: #b42318;
+    }
+
+    .orders-list {
+      display: grid;
+      gap: 16px;
+    }
+
+    .table-tools input {
+      min-width: 260px;
+      padding: 13px 14px;
+      border: 1px solid #d6deea;
+      border-radius: 14px;
+      background: white;
+      outline: none;
+    }
+
+    .order-card {
+      background: #f8fbff;
+      border: 1px solid #e5edf7;
+      border-radius: 22px;
+      padding: 18px;
+    }
+
+    .order-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .order-title {
+      font-size: 22px;
+      font-weight: 950;
+      color: var(--ef-text);
+      margin-bottom: 5px;
+    }
+
+    .order-subtitle {
+      color: var(--ef-muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 7px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 900;
+      background: #eef7f1;
+      color: #15803d;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .status-pill.pending {
+      background: #fff7ed;
+      color: #9a3412;
+    }
+
+    .order-mini-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .mini-box {
+      background: white;
+      border: 1px solid #e5edf7;
+      border-radius: 16px;
+      padding: 13px;
+    }
+
+    .mini-label {
+      color: var(--ef-muted);
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .mini-value {
+      color: var(--ef-text);
+      font-size: 17px;
+      font-weight: 900;
+      line-height: 1.25;
+      word-break: break-word;
+    }
+
+    .order-details {
+      display: none;
+      margin-top: 14px;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .order-details.open {
+      display: grid;
+    }
+
+    .detail-box {
+      background: white;
+      border: 1px solid #e5edf7;
+      border-radius: 18px;
+      padding: 16px;
+    }
+
+    .detail-box h3 {
+      font-size: 18px;
+      margin: 0 0 12px;
+      color: var(--ef-text);
+    }
+
+    .profile-list,
+    .detail-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .profile-row,
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #edf2f7;
+      font-size: 14px;
+    }
+
+    .profile-row:last-child,
+    .detail-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .profile-row strong,
+    .detail-row strong {
+      color: #334155;
+    }
+
+    .profile-row span,
+    .detail-row span {
+      color: var(--ef-text);
+      font-weight: 800;
+      text-align: right;
+    }
+
+    .empty-state {
+      background: white;
+      border: 1px dashed #cbd5e1;
+      border-radius: 22px;
+      padding: 34px;
+      text-align: center;
+      color: var(--ef-muted);
+      line-height: 1.7;
+    }
+
+    @media (max-width: 1180px) {
+      .dealer-shell {
+        grid-template-columns: 1fr;
+      }
+
+      .dealer-sidebar {
+        position: static;
+        height: auto;
+        flex-direction: row;
+        align-items: center;
+        overflow-x: auto;
+      }
+
+      .dealer-nav {
+        grid-auto-flow: column;
+        grid-auto-columns: max-content;
+        overflow-x: auto;
+      }
+
+      .sidebar-actions {
+        margin-top: 0;
+        display: flex;
+        min-width: max-content;
+      }
+
+      .kpi-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .dealer-main {
+        padding: 20px;
+      }
+
+      .dealer-topbar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .hero-dealer {
+        padding: 28px 22px;
+        min-height: auto;
+        background-image:
+          linear-gradient(90deg, rgba(255,255,255,0.98), rgba(255,255,255,0.88)),
+          url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1600&auto=format&fit=crop");
+        background-size: cover;
+        background-position: center;
+      }
+
+      .hero-dealer h1 {
+        font-size: 32px;
+      }
+
+      .hero-actions,
+      .topbar-actions {
+        width: 100%;
+      }
+
+      .hero-btn,
+      .top-icon {
+        flex: 1;
+      }
+
+      .kpi-grid,
+      .operation-grid,
+      .form-row,
+      .order-details,
+      .order-mini-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .table-tools input {
+        min-width: 100%;
+      }
+    }
+
+
+    /* Dashboard concessionario: annulla header pubblico globale e spazio superiore */
+    html body {
+      padding-top: 0 !important;
+      margin-top: 0 !important;
+    }
+
+    body > .main-header,
+    body > .premium-header,
+    body > .topbar {
+      display: none !important;
+      height: 0 !important;
+      min-height: 0 !important;
+    }
+
+    .dealer-shell {
+      margin-top: 0 !important;
+    }
+
+    /* KPI più compatti: solo riepilogo dashboard, non tab fissi */
+    .kpi-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px !important;
+      margin-bottom: 18px !important;
+    }
+
+    .kpi-card {
+      min-height: 82px !important;
+      padding: 13px 15px !important;
+      border-radius: 15px !important;
+      grid-template-columns: 36px 1fr !important;
+      gap: 12px !important;
+      align-items: center !important;
+    }
+
+    .kpi-icon {
+      width: 36px !important;
+      height: 36px !important;
+      font-size: 14px !important;
+    }
+
+    .kpi-label {
+      font-size: 10px !important;
+      margin-bottom: 5px !important;
+    }
+
+    .kpi-value {
+      font-size: 22px !important;
+      margin-bottom: 3px !important;
+    }
+
+    .kpi-note {
+      font-size: 10px !important;
+    }
+
+    /* Comparatore con più carattere e migliore delimitazione */
+    .comparatore-panel {
+      padding: 34px !important;
+      border: 1px solid rgba(79, 140, 255, 0.34) !important;
+      background:
+        linear-gradient(120deg, rgba(7,29,73,0.96) 0%, rgba(12,44,103,0.94) 45%, rgba(38,95,180,0.88) 100%),
+        radial-gradient(circle at 84% 18%, rgba(24,180,90,0.35), transparent 34%) !important;
+      color: #ffffff !important;
+      box-shadow: 0 26px 70px rgba(7,29,73,0.18) !important;
+    }
+
+    .comparatore-panel::before {
+      width: 9px !important;
+      background: linear-gradient(180deg, #18b45a, #4f8cff, #7b61ff) !important;
+    }
+
+    .comparatore-panel h2,
+    .comparatore-panel .form-group label {
+      color: #ffffff !important;
+    }
+
+    .comparatore-panel p {
+      color: rgba(255,255,255,0.78) !important;
+    }
+
+    .comparatore-panel .badge {
+      background: rgba(255,255,255,0.12) !important;
+      color: #ffffff !important;
+      border: 1px solid rgba(255,255,255,0.18) !important;
+    }
+
+    .comparatore-panel .plate-wrap,
+    .comparatore-panel .form-group input {
+      border-color: rgba(255,255,255,0.22) !important;
+      box-shadow: 0 18px 35px rgba(0,0,0,0.16) !important;
+    }
+
+
+    /* Coerenza pagine interne dashboard */
+    .dealer-main { padding-top: 28px !important; }
+    .section:not(#section-overview) { padding-top: 0; }
+    .section-banner {
+      position: relative;
+      overflow: hidden;
+      border-radius: 24px;
+      padding: 26px 28px;
+      margin-bottom: 18px;
+      color: #ffffff;
+      background:
+        radial-gradient(circle at 88% 20%, rgba(24,180,90,0.36), transparent 30%),
+        linear-gradient(135deg, #071d49 0%, #123477 56%, #255fba 100%);
+      box-shadow: 0 22px 55px rgba(7,29,73,0.16);
+    }
+    .section-banner::after {
+      content: "";
+      position: absolute;
+      right: -70px;
+      top: -70px;
+      width: 230px;
+      height: 230px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.09);
+    }
+    .section-banner .badge {
+      background: rgba(255,255,255,0.13);
+      border: 1px solid rgba(255,255,255,0.18);
+      color: #ffffff;
+    }
+    .section-banner h2 {
+      margin: 0 0 8px;
+      font-size: 32px;
+      line-height: 1.05;
+      font-weight: 950;
+      letter-spacing: -0.7px;
+      color: #ffffff;
+    }
+    .section-banner p {
+      margin: 0;
+      max-width: 760px;
+      color: rgba(255,255,255,0.78);
+      font-weight: 650;
+      line-height: 1.65;
+    }
+    .section-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+    .quick-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+    .quick-stat {
+      background: #ffffff;
+      border: 1px solid #e2eaf5;
+      border-left: 5px solid #18b45a;
+      border-radius: 18px;
+      padding: 16px 18px;
+      box-shadow: 0 10px 24px rgba(7,29,73,0.06);
+    }
+    .quick-stat.blue { border-left-color: #2563eb; }
+    .quick-stat.purple { border-left-color: #7b61ff; }
+    .quick-stat.orange { border-left-color: #f97316; }
+    .quick-stat small {
+      display: block;
+      color: #64748b;
+      font-size: 11px;
+      font-weight: 950;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 7px;
+    }
+    .quick-stat strong {
+      color: #071d49;
+      font-size: 24px;
+      font-weight: 950;
+      line-height: 1;
+    }
+    .inner-card-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .feature-card {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #ffffff 0%, #f8fbff 100%);
+      border: 1px solid #e2eaf5;
+      border-radius: 22px;
+      padding: 22px;
+      box-shadow: 0 12px 28px rgba(7,29,73,0.06);
+    }
+    .feature-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 4px;
+      background: linear-gradient(90deg, #18b45a, #4f8cff, #7b61ff);
+    }
+    .feature-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 15px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #eafaf1;
+      color: #0fa34f;
+      margin-bottom: 14px;
+      font-size: 18px;
+    }
+    .feature-card h3 { margin: 0 0 8px; font-size: 20px; font-weight: 950; color: #071d49; }
+    .feature-card p { margin: 0; color: #64748b; line-height: 1.6; }
+    .feature-card .hero-btn { margin-top: 16px; min-height: 42px; }
+    .data-list { display: grid; gap: 12px; }
+    .data-row-card {
+      display: grid;
+      grid-template-columns: 46px 1fr auto;
+      gap: 14px;
+      align-items: center;
+      background: #ffffff;
+      border: 1px solid #e2eaf5;
+      border-radius: 18px;
+      padding: 15px;
+      box-shadow: 0 8px 20px rgba(7,29,73,0.045);
+    }
+    .data-row-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 15px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #eef6ff;
+      color: #2563eb;
+    }
+    .data-row-card h3 { margin: 0 0 4px; color: #071d49; font-size: 16px; font-weight: 950; }
+    .data-row-card p { margin: 0; color: #64748b; font-size: 13px; line-height: 1.45; }
+    .page-action-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 18px; }
+    @media (max-width: 900px) {
+      .quick-stats, .inner-card-grid { grid-template-columns: 1fr; }
+      .data-row-card { grid-template-columns: 46px 1fr; }
+      .data-row-card .status-pill { grid-column: 1 / -1; justify-self: start; }
+    }
+
+  
+    /* Risultati comparatore integrati nella dashboard */
+    .inline-results { display:none; margin-top:18px; }
+    .inline-results.open { display:block; }
+    .inline-results-head {
+      display:flex; align-items:flex-end; justify-content:space-between; gap:18px; flex-wrap:wrap;
+      padding:24px 26px; margin-bottom:14px; border-radius:24px; color:#fff;
+      background:radial-gradient(circle at 92% 18%, rgba(24,180,90,.30), transparent 32%), linear-gradient(135deg,#071d49 0%,#123477 55%,#255fba 100%);
+      box-shadow:0 22px 55px rgba(7,29,73,.16);
+    }
+    .inline-results-head h2 { margin:0 0 6px; color:#fff; font-size:28px; font-weight:950; }
+    .inline-results-head p { margin:0; color:rgba(255,255,255,.78); font-weight:750; }
+    .inline-results-head .badge.light { background:rgba(255,255,255,.14)!important; color:#fff!important; border:1px solid rgba(255,255,255,.18)!important; }
+    .inline-loader { font-weight:950; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.18); border-radius:999px; padding:10px 14px; }
+    .inline-results-grid { display:grid; gap:14px; }
+    .inline-warranty-card {
+      display:grid; grid-template-columns:minmax(0,1fr) 220px; gap:18px; align-items:stretch;
+      background:linear-gradient(135deg,#fff 0%,#f8fbff 100%); border:1px solid #e2eaf5; border-radius:24px;
+      padding:20px; box-shadow:0 14px 32px rgba(7,29,73,.07); position:relative; overflow:hidden;
+    }
+    .inline-warranty-card::before { content:""; position:absolute; inset:0 auto 0 0; width:5px; background:linear-gradient(180deg,#18b45a,#4f8cff,#7b61ff); }
+    .warranty-topline { display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:10px; }
+    .compatibility,.brand-pill { display:inline-flex; border-radius:999px; padding:7px 10px; font-size:12px; font-weight:950; }
+    .compatibility { background:#eafaf1; color:#0fa34f; }
+    .brand-pill { background:#eef6ff; color:#2563eb; }
+    .inline-warranty-card h3 { margin:0 0 8px; color:#071d49; font-size:22px; font-weight:950; }
+    .inline-warranty-card p { margin:0 0 14px; color:#64748b; line-height:1.55; }
+    .warranty-mini-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+    .warranty-mini-grid span { background:#fff; border:1px solid #edf2f7; border-radius:15px; padding:11px; }
+    .warranty-mini-grid small { display:block; color:#64748b; font-size:10px; font-weight:950; text-transform:uppercase; margin-bottom:5px; }
+    .warranty-mini-grid strong { color:#071d49; font-weight:950; }
+    .warranty-price-box { display:flex; flex-direction:column; justify-content:space-between; gap:12px; padding:16px; border-radius:20px; background:#071d49; color:#fff; }
+    .warranty-price-box small { color:#cfe0ff; font-weight:900; text-transform:uppercase; }
+    .warranty-price-box strong { font-size:28px; font-weight:950; }
+    @media(max-width:800px){ .inline-warranty-card{grid-template-columns:1fr}.warranty-mini-grid{grid-template-columns:1fr}.warranty-price-box{background:#f8fbff;color:#071d49;border:1px solid #e2eaf5} }
+
+    .value-recommended-badge {
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      background:linear-gradient(135deg,#fff7ed,#ffedd5);
+      color:#ea580c;
+      border:1px solid #fed7aa;
+      box-shadow:0 10px 24px rgba(234,88,12,.14);
+      font-size:12px;
+      font-weight:950;
+      text-transform:uppercase;
+      letter-spacing:.02em;
+    }
+    .inline-warranty-card.recommended {
+      border-color:#fdba74;
+      box-shadow:0 20px 44px rgba(234,88,12,.16), 0 14px 32px rgba(7,29,73,.07);
+    }
+    .inline-warranty-card.recommended::after {
+      content:"";
+      position:absolute;
+      inset:0 0 auto 0;
+      height:5px;
+      background:linear-gradient(90deg,#f97316,#18b45a,#4f8cff);
+    }
+
+
+    /* Premium certificate viewer */
+    .certificate-stage {
+      background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(246,249,253,.98));
+      border: 1px solid var(--ef-border);
+      border-radius: 28px;
+      padding: 28px;
+      box-shadow: 0 30px 80px rgba(7, 29, 73, .10);
+    }
+    .certificate-toolbar {
+      display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:22px;
+    }
+    .certificate-breadcrumb { display:flex; align-items:center; gap:10px; color:var(--ef-muted); font-weight:800; }
+    .certificate-breadcrumb strong { color:var(--ef-blue); }
+    .premium-certificate {
+      background:#fff; border:1px solid #dfe8f3; border-radius:24px; padding:32px;
+      box-shadow:0 22px 65px rgba(7,29,73,.10); max-width:1120px; margin:0 auto;
+    }
+    .cert-head { display:flex; justify-content:space-between; align-items:flex-start; gap:24px; margin-bottom:28px; }
+    .cert-brand { display:flex; align-items:center; gap:16px; }
+    .cert-logo { width:58px; height:58px; border-radius:16px; background:#071d49; color:#fff; font-weight:950; font-size:22px; display:grid; place-items:center; position:relative; box-shadow:0 15px 30px rgba(7,29,73,.20); }
+    .cert-logo:after { content:""; position:absolute; right:-5px; bottom:-5px; width:18px; height:18px; background:#18b45a; border-radius:50%; border:4px solid #fff; }
+    .cert-brand h2 { margin:0; font-size:30px; letter-spacing:-1px; color:#071d49; }
+    .cert-brand h2 span { color:#18b45a; }
+    .cert-brand p { margin:4px 0 0; color:#64748b; font-weight:700; }
+    .cert-active-badge { display:inline-flex; align-items:center; gap:10px; padding:12px 18px; border-radius:16px; background:#eafaf1; color:#0fa34f; font-weight:950; border:1px solid #bfeccb; text-transform:uppercase; font-size:13px; }
+    .cert-meta { position:relative; overflow:hidden; display:grid; grid-template-columns:1.4fr 1fr 1fr 110px; gap:20px; align-items:center; border:1px solid #dfe8f3; border-radius:18px; padding:24px 28px; margin-bottom:22px; background:linear-gradient(135deg,#fff,#f9fcff); }
+    .cert-meta:after { content:""; position:absolute; right:60px; top:18px; width:110px; height:80px; opacity:.18; background-image: radial-gradient(#18b45a 1.3px, transparent 1.3px); background-size:12px 12px; }
+    .cert-label { display:block; color:#64748b; font-size:11px; font-weight:950; text-transform:uppercase; letter-spacing:.04em; margin-bottom:8px; }
+    .cert-value { display:block; color:#071d49; font-size:20px; font-weight:950; }
+    .cert-value.green { color:#0fa34f; }
+    .cert-shield { width:76px; height:76px; border-radius:22px; color:#0fa34f; display:grid; place-items:center; font-size:44px; z-index:1; }
+    .cert-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
+    .cert-info-card { border:1px solid #dfe8f3; border-radius:18px; background:#fff; padding:22px; box-shadow:0 12px 35px rgba(7,29,73,.055); min-height:162px; min-width:0; }
+    .cert-card-title { display:flex; align-items:center; gap:12px; margin:0 0 22px; color:#071d49; font-size:16px; font-weight:950; text-transform:uppercase; }
+    .cert-card-title i { width:34px; height:34px; border-radius:50%; background:#eafaf1; color:#0fa34f; display:grid; place-items:center; }
+    .cert-fields { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+    .cert-fields.single { grid-template-columns:1fr; }
+    .cert-field small { display:block; color:#64748b; font-size:10px; font-weight:950; text-transform:uppercase; margin-bottom:6px; }
+    .cert-field strong { display:block; color:#071d49; font-size:14px; line-height:1.35; overflow-wrap:anywhere; }
+    .cert-amount-row { display:flex; align-items:end; justify-content:space-between; border-top:1px solid #e4ebf5; margin-top:18px; padding-top:16px; }
+    .cert-total { color:#0fa34f; font-size:32px; font-weight:950; letter-spacing:-1px; }
+    .cert-validity { grid-column:span 2; display:grid; grid-template-columns:1fr 170px; gap:22px; align-items:center; }
+    .cert-qr { border-left:1px solid #e4ebf5; display:grid; place-items:center; min-height:130px; }
+    .cert-qr-box { width:112px; height:112px; border-radius:14px; border:1px solid #dfe8f3; background: repeating-linear-gradient(45deg,#111 0 3px,#fff 3px 7px); box-shadow:0 10px 25px rgba(7,29,73,.08); }
+    .cert-note { margin-top:16px; display:flex; align-items:center; gap:16px; padding:16px 20px; border:1px solid #dfe8f3; border-radius:16px; color:#51627a; background:#fbfdff; font-weight:700; }
+    .cert-note i { width:42px; height:42px; border-radius:50%; display:grid; place-items:center; background:#eef5ff; color:#2762d9; font-size:20px; }
+    .cert-footer { text-align:center; margin-top:18px; color:#51627a; font-weight:800; }
+    .cert-footer strong { color:#18b45a; }
+    @media (max-width: 1100px) { .cert-grid { grid-template-columns:1fr; } .cert-validity { grid-column:auto; } .cert-meta { grid-template-columns:1fr 1fr; } }
+
+    /* Certificate print / responsive hardening */
+    .cert-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .cert-validity { grid-column: 1 / -1; }
+    .cert-field strong { word-break: break-word; hyphens: auto; }
+    @media (min-width: 1250px) { .cert-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 900px) {
+      .premium-certificate { padding: 22px; }
+      .cert-head, .cert-validity { grid-template-columns: 1fr; display: block; }
+      .cert-meta { grid-template-columns: 1fr; gap: 14px; }
+      .cert-grid, .cert-fields { grid-template-columns: 1fr; }
+      .cert-qr { border-left: 0; border-top: 1px solid #e4ebf5; padding-top: 18px; margin-top: 18px; }
+    }
+    @media print {
+      body { background: #fff !important; }
+      body * { visibility: hidden !important; }
+      .premium-certificate, .premium-certificate * { visibility: visible !important; }
+      .premium-certificate { position: absolute; left: 0; top: 0; width: 100% !important; max-width: none !important; margin: 0 !important; padding: 18mm !important; border: 0 !important; box-shadow: none !important; border-radius: 0 !important; }
+      .cert-head { margin-bottom: 18px !important; }
+      .cert-brand h2 { font-size: 26px !important; }
+      .cert-meta { grid-template-columns: 1.3fr 1fr .8fr !important; padding: 18px !important; margin-bottom: 16px !important; }
+      .cert-shield, .cert-meta:after { display: none !important; }
+      .cert-grid { grid-template-columns: 1fr 1fr !important; gap: 12px !important; }
+      .cert-info-card { box-shadow: none !important; padding: 16px !important; min-height: auto !important; page-break-inside: avoid !important; }
+      .cert-card-title { font-size: 13px !important; margin-bottom: 14px !important; }
+      .cert-fields { grid-template-columns: 1fr 1fr !important; gap: 12px !important; }
+      .cert-field small { font-size: 8px !important; }
+      .cert-field strong { font-size: 10.5px !important; line-height: 1.25 !important; overflow-wrap: anywhere !important; }
+      .cert-validity { grid-column: 1 / -1 !important; grid-template-columns: 1fr 120px !important; display: grid !important; }
+      .cert-qr-box { width: 90px !important; height: 90px !important; }
+      .cert-total { font-size: 25px !important; }
+      .cert-note { padding: 12px 14px !important; font-size: 9px !important; }
+      .cert-footer { font-size: 10px !important; }
+    }
+
+
+
+    /* Selettore AUTO / MOTO comparatore */
+    .vehicle-type-selector,
+    .vehicle-type-selector-v6 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin: 22px 0 18px;
+      max-width: 560px;
+    }
+    .vehicle-type-option,
+    .vehicle-type-option-v6 {
+      position: relative;
+      cursor: pointer;
+    }
+    .vehicle-type-option input,
+    .vehicle-type-option-v6 input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .vehicle-type-card,
+    .vehicle-type-card-v6 {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 18px;
+      border: 1px solid rgba(15, 43, 90, .12);
+      border-radius: 18px;
+      background: rgba(255,255,255,.82);
+      box-shadow: 0 14px 36px rgba(11,31,68,.08);
+      color: #071f4f;
+      font-weight: 900;
+      transition: .22s ease;
+    }
+    .vehicle-type-card i,
+    .vehicle-type-card-v6 i {
+      width: 38px;
+      height: 38px;
+      border-radius: 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #eafff2;
+      color: #13b760;
+    }
+    .vehicle-type-option input:checked + .vehicle-type-card,
+    .vehicle-type-option-v6 input:checked + .vehicle-type-card-v6 {
+      border-color: rgba(18,183,96,.55);
+      background: linear-gradient(135deg, #f2fff7, #ffffff);
+      box-shadow: 0 18px 45px rgba(18,183,96,.16);
+      transform: translateY(-1px);
+    }
+    .vehicle-type-option input:checked + .vehicle-type-card::after,
+    .vehicle-type-option-v6 input:checked + .vehicle-type-card-v6::after {
+      content: "✓";
+      margin-left: auto;
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #13b760;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+  
+
+/* ===== Comparatore dashboard premium allineato alla homepage - v55 ===== */
+.dashboard-home-comparator,
+.comparatore-panel-v6,
+.comparatore-panel{
+  position:relative !important;
+  background:rgba(255,255,255,.96) !important;
+  border:1px solid rgba(205,219,238,.95) !important;
+  border-radius:28px !important;
+  padding:30px !important;
+  box-shadow:0 30px 90px rgba(7,29,73,.12) !important;
+  overflow:hidden !important;
+  max-width:760px !important;
+}
+.dashboard-home-comparator::before,
+.comparatore-panel-v6::before,
+.comparatore-panel::before{
+  content:"" !important;
+  position:absolute !important;
+  inset:0 0 auto 0 !important;
+  height:5px !important;
+  background:linear-gradient(90deg,#18b45a,#2563eb) !important;
+}
+.dashboard-home-comparator .badge-v6,
+.dashboard-home-comparator .badge,
+.comparatore-panel-v6 .badge-v6,
+.comparatore-panel .badge{
+  display:inline-flex !important;
+  align-items:center !important;
+  gap:8px !important;
+  padding:8px 13px !important;
+  border-radius:999px !important;
+  border:1px solid #bbf7d0 !important;
+  background:#ecfdf3 !important;
+  color:#07813e !important;
+  font-size:12px !important;
+  font-weight:900 !important;
+  text-transform:uppercase !important;
+  letter-spacing:.04em !important;
+  margin-bottom:14px !important;
+}
+.dashboard-home-comparator h2,
+.comparatore-panel-v6 h2,
+.comparatore-panel h2{
+  margin:0 0 8px !important;
+  color:#071d49 !important;
+  font-size:30px !important;
+  line-height:1.05 !important;
+  letter-spacing:-.8px !important;
+  font-weight:900 !important;
+  text-transform:uppercase !important;
+}
+.dashboard-home-comparator h2 span,
+.comparatore-panel-v6 h2 span,
+.comparatore-panel h2 span{color:#18b45a !important;}
+.dashboard-home-comparator p,
+.comparatore-panel-v6 p,
+.comparatore-panel p{
+  margin:0 0 20px !important;
+  color:#334155 !important;
+  font-weight:650 !important;
+  line-height:1.55 !important;
+}
+.ef-step-label-dash{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  margin:16px 0 10px;
+  color:#071d49;
+  font-size:12px;
+  font-weight:900;
+  text-transform:uppercase;
+}
+.ef-step-label-dash span{
+  width:24px;height:24px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;
+  color:#fff;background:#18b45a;box-shadow:0 8px 18px rgba(24,180,90,.22);
+}
+.vehicle-type-selector-v6,
+.vehicle-type-selector{
+  display:grid !important;
+  grid-template-columns:repeat(4,minmax(0,1fr)) !important;
+  gap:12px !important;
+  margin-bottom:16px !important;
+}
+.vehicle-type-option-v6,
+.vehicle-type-option{display:block !important;}
+.vehicle-type-option-v6 input,
+.vehicle-type-option input{position:absolute !important;opacity:0 !important;pointer-events:none !important;}
+.vehicle-type-card-v6,
+.vehicle-type-card{
+  min-height:74px !important;
+  border:1.5px solid #dce7f5 !important;
+  border-radius:16px !important;
+  background:linear-gradient(180deg,#fff,#f8fbff) !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:7px !important;
+  color:#071d49 !important;
+  font-size:12px !important;
+  font-weight:900 !important;
+  text-align:center !important;
+  line-height:1.05 !important;
+  cursor:pointer !important;
+  transition:.22s ease !important;
+  box-shadow:0 10px 24px rgba(7,29,73,.04) !important;
+}
+.vehicle-type-card-v6 i,
+.vehicle-type-card i{font-size:20px !important;color:#071d49 !important;}
+.vehicle-type-option-v6 input:checked + .vehicle-type-card-v6,
+.vehicle-type-option input:checked + .vehicle-type-card{
+  border-color:#18b45a !important;
+  background:#f0fdf4 !important;
+  color:#07813e !important;
+  box-shadow:0 16px 34px rgba(24,180,90,.14) !important;
+  transform:translateY(-1px) !important;
+}
+.vehicle-type-option-v6 input:checked + .vehicle-type-card-v6 i,
+.vehicle-type-option input:checked + .vehicle-type-card i{color:#07813e !important;}
+.vehicle-type-card-v6:hover,
+.vehicle-type-card:hover{transform:translateY(-2px);box-shadow:0 18px 38px rgba(7,29,73,.10) !important;}
+.plate-wrap-v6,
+.plate-wrap{
+  display:grid !important;
+  grid-template-columns:70px 1fr 58px !important;
+  align-items:stretch !important;
+  overflow:hidden !important;
+  border:1.5px solid #d7e4f4 !important;
+  border-radius:18px !important;
+  background:#fff !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.8),0 15px 36px rgba(7,29,73,.06) !important;
+  min-height:68px !important;
+  transition:.2s ease !important;
+}
+.plate-wrap-v6:focus-within,
+.plate-wrap:focus-within{
+  border-color:#18b45a !important;
+  box-shadow:0 0 0 5px rgba(24,180,90,.10),0 18px 44px rgba(7,29,73,.08) !important;
+}
+.plate-country-v6,
+.plate-country{
+  background:linear-gradient(180deg,#2563eb,#1852c6) !important;
+  color:#fff !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+  font-weight:900 !important;
+  letter-spacing:.04em !important;
+  font-size:15px !important;
+}
+.plate-country-v6::before,
+.plate-country::before{content:"EU";font-size:9px;font-weight:800;opacity:.9;margin-bottom:2px;}
+.plate-wrap-v6 input,
+.plate-wrap input{
+  border:none !important;
+  outline:none !important;
+  padding:0 22px !important;
+  background:#fff !important;
+  color:#071d49 !important;
+  font-size:26px !important;
+  font-weight:850 !important;
+  letter-spacing:.02em !important;
+  text-transform:uppercase !important;
+  min-width:0 !important;
+}
+.plate-wrap-v6 input::placeholder,
+.plate-wrap input::placeholder{color:#9aa7b8 !important;font-weight:800 !important;}
+.plate-search-icon-dash{
+  display:flex;align-items:center;justify-content:center;
+  color:#18b45a;background:#f8fbff;border-left:1px solid #e5edf7;font-size:20px;
+}
+.dashboard-home-comparator .hero-btn.primary,
+.comparatore-panel-v6 .hero-btn.primary,
+.comparatore-panel .hero-btn.primary{
+  width:100% !important;
+  min-height:58px !important;
+  border-radius:16px !important;
+  background:linear-gradient(135deg,#18b45a,#0f9f4d) !important;
+  color:#fff !important;
+  border:0 !important;
+  box-shadow:0 18px 38px rgba(24,180,90,.24) !important;
+  font-weight:900 !important;
+  text-transform:uppercase !important;
+  letter-spacing:.02em !important;
+  margin-top:16px !important;
+}
+.search-fields-v6,
+.search-fields{margin-top:18px !important;}
+.search-fields-v6.open,
+.search-fields.open{display:block !important;}
+.search-error-v6,
+.search-error{color:#b91c1c !important;font-weight:800 !important;margin-top:10px !important;}
+.ef-comparator-benefits-dash{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:14px;}
+.ef-comparator-benefits-dash span{display:inline-flex;align-items:center;gap:7px;padding:8px 12px;border-radius:999px;background:#f8fbff;border:1px solid #e5edf7;color:#334155;font-size:12px;font-weight:800;}
+@media(max-width:900px){
+  .vehicle-type-selector-v6,.vehicle-type-selector{grid-template-columns:repeat(2,1fr) !important;}
+  .dashboard-home-comparator,.comparatore-panel-v6,.comparatore-panel{padding:22px !important;}
+}
+@media(max-width:560px){
+  .vehicle-type-selector-v6,.vehicle-type-selector{grid-template-columns:1fr !important;}
+  .plate-wrap-v6,.plate-wrap{grid-template-columns:64px 1fr 50px !important;}
+}
+
+</style>
+  <link rel="stylesheet" href="/premium-uniform.css?v=29" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/home-master-header-footer.css?v=63">
+</head>
+
+<body>
+  <div class="dealer-shell">
+    <aside class="dealer-sidebar">
+      <div class="sidebar-logo-row">
+        <span class="ef-mini-logo" aria-label="EstendiFacile">EF</span>
+      </div>
+
+      <nav class="dealer-nav">
+        <button class="nav-item active sidebar-section-btn" type="button" data-section="overview">
+          <span class="nav-icon"><i class="fa-solid fa-house"></i></span>
+          Dashboard
+        </button>
+
+        <button class="nav-item sidebar-section-btn" type="button" data-section="orders">
+          <span class="nav-icon"><i class="fa-solid fa-folder-open"></i></span>
+          Le mie pratiche
+        </button>
+
+        <button class="nav-item sidebar-section-btn" type="button" data-section="payments">
+          <span class="nav-icon"><i class="fa-solid fa-credit-card"></i></span>
+          Ordini e pagamenti
+        </button>
+
+        <button class="nav-item sidebar-section-btn" type="button" data-section="vehicles">
+          <span class="nav-icon"><i class="fa-solid fa-car-side"></i></span>
+          Veicoli
+        </button>
+
+        <button class="nav-item sidebar-section-btn" type="button" data-section="partner">
+          <span class="nav-icon"><i class="fa-solid fa-handshake"></i></span>
+          Partner
+        </button>
+
+        <button class="nav-item sidebar-section-btn" type="button" data-section="comparatore">
+          <span class="nav-icon"><i class="fa-solid fa-scale-balanced"></i></span>
+          Comparatore
+        </button>
+
+        <button class="nav-item sidebar-section-btn" type="button" data-section="tickets">
+          <span class="nav-icon"><i class="fa-solid fa-ticket"></i></span>
+          Ticket
+        </button>
+
+        <button class="nav-item sidebar-section-btn" type="button" data-section="documents">
+          <span class="nav-icon"><i class="fa-solid fa-file-lines"></i></span>
+          Documenti
+        </button>
+
+        <button class="nav-item sidebar-section-btn" type="button" data-section="settings">
+          <span class="nav-icon"><i class="fa-solid fa-gear"></i></span>
+          Profilo utente
+        </button>
+
+        <button class="nav-item sidebar-section-btn" type="button" data-section="help">
+          <span class="nav-icon"><i class="fa-solid fa-circle-question"></i></span>
+          Assistenza e FAQ
+        </button>
+      </nav>
+
+      <div class="sidebar-actions">
+        <a href="/index.html" class="sidebar-btn">
+          Torna al sito <i class="fa-solid fa-arrow-up-right-from-square"></i>
+        </a>
+
+        <button class="sidebar-btn primary" type="button" id="btnLogout">
+          Esci <i class="fa-solid fa-arrow-right-from-bracket"></i>
+        </button>
+      </div>
+    </aside>
+
+    <main class="dealer-main">
+      <header class="main-header">
+    <div class="container nav-wrap">
+      <a href="/index.html" class="brand">
+        <span class="ef-logo-wordmark" aria-label="EstendiFacile.it">
+          <span class="ef-logo-symbol">EF</span>
+          <span class="ef-logo-stack">
+            <span class="ef-logo-text">Estendi<span>Facile</span><small>.it</small></span>
+            <span class="ef-logo-payoff">ESTENDI LA TUA SICUREZZA</span>
+          </span>
+        </span>
+      </a>
+
+      <nav class="nav-menu ef-main-nav">
+        <a href="/partner.html"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v5M5 19v-4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v4"/><circle cx="12" cy="4" r="2"/><circle cx="5" cy="20" r="2"/><circle cx="19" cy="20" r="2"/></svg><span>Partner</span></a>
+        <a href="/chi-siamo.html"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v4"/><path d="M8 7h4M8 11h4M8 15h2"/><path d="M18 22s4-2 4-6v-3l-4-2-4 2v3c0 4 4 6 4 6Z"/><path d="m16.8 16 1 1 2.2-2.4"/></svg><span>Chi siamo</span></a>
+        <a href="/come-funziona.html"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="19" r="3"/><circle cx="18" cy="5" r="3"/><path d="M8.2 16.8 15.8 7.2"/></svg><span>Come funziona</span></a>
+        <a href="/faq.html"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.7 9a2.8 2.8 0 0 1 5.3 1.3c0 2.2-3 2.1-3 4"/><path d="M12 18h.01"/></svg><span>FAQ</span></a>
+        <a href="/contatti.html"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13a8 8 0 0 1 16 0"/><path d="M4 13v4a2 2 0 0 0 2 2h1v-7H6a2 2 0 0 0-2 2Z"/><path d="M20 13v4a2 2 0 0 1-2 2h-1v-7h1a2 2 0 0 1 2 2Z"/><path d="M16 19c0 1.1-1.8 2-4 2"/></svg><span>Contatti</span></a>
+      </nav>
+
+      <div class="nav-actions ef-nav-actions" id="navActions">
+        <a href="/normativa.html" class="nav-legal"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M5 6h14M7 6l-4 7h8L7 6ZM17 6l-4 7h8l-4-7Z"/><path d="M8 21h8"/></svg><span>Codice del consumo<br>Normativa vigente</span></a>
+        <a href="/login.html" class="nav-login"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="7" r="4"/><path d="M2.5 21a6.5 6.5 0 0 1 10.8-4.9"/><path d="M18 22s4-2 4-6v-3l-4-2-4 2v3c0 4 4 6 4 6Z"/></svg><span>Accedi</span></a>
+        <a href="/register.html" class="nav-register"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="7" r="4"/><path d="M2.5 21a6.5 6.5 0 0 1 11.7-3.9"/><path d="M19 8v6M16 11h6"/></svg><span>Crea account</span></a>
+      </div>
+
+     
+    </div>
+  </header>
+      <section id="section-overview" class="section active">
+
+
+      <section class="hero-dealer">
+        <div class="hero-content">
+          <div class="badge">Gestionale concessionario</div>
+
+          <h1>Ciao <span id="heroDealerName">concessionario</span></h1>
+
+          <p>
+            Gestisci ricerche, richieste di garanzia, dati veicolo, supplementi
+            e stato delle pratiche in un’unica area professionale.
+          </p>
+
+          <div class="hero-actions">
+            <button class="hero-btn primary sidebar-section-btn" type="button" data-section="comparatore">
+              <i class="fa-solid fa-scale-balanced"></i>
+              Apri comparatore
+            </button>
+
+            <button class="hero-btn sidebar-section-btn" type="button" data-section="orders">
+              <i class="fa-regular fa-folder-open"></i>
+              Le mie pratiche
+            </button>
+
+            <button class="hero-btn sidebar-section-btn" type="button" data-section="payments">
+              <i class="fa-regular fa-credit-card"></i>
+              Ordini e pagamenti
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-icon"><i class="fa-regular fa-clipboard"></i></div>
+          <div>
+            <div class="kpi-label">Ordini totali</div>
+            <div class="kpi-value" id="kpiTotali">0</div>
+            <div class="kpi-note">Storico richieste →</div>
+          </div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-icon"><i class="fa-solid fa-check"></i></div>
+          <div>
+            <div class="kpi-label">Pagati</div>
+            <div class="kpi-value" id="kpiPagati">0</div>
+            <div class="kpi-note">Pratiche completate →</div>
+          </div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-icon"><i class="fa-regular fa-clock"></i></div>
+          <div>
+            <div class="kpi-label">In attesa</div>
+            <div class="kpi-value" id="kpiAttesa">0</div>
+            <div class="kpi-note">Bonifico / verifica →</div>
+          </div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-icon"><i class="fa-solid fa-arrow-trend-up"></i></div>
+          <div>
+            <div class="kpi-label">Ultima pratica</div>
+            <div class="kpi-value" id="kpiUltima">—</div>
+            <div class="kpi-note">Aggiornamento rapido →</div>
+          </div>
+        </div>
+      </section>
+        <div class="panel-card">
+          <div class="panel-head">
+            <h2>Panoramica operativa</h2>
+            <p>
+              Da qui puoi avviare nuove ricerche, controllare le pratiche e verificare lo stato degli ordini.
+            </p>
+          </div>
+
+          <div class="operation-grid">
+            <article class="operation-card sidebar-section-btn" data-section="comparatore">
+              <div class="operation-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+              <div>
+                <h3>Comparatore garanzie</h3>
+                <p>Inserisci la targa e completa i dati veicolo per confrontare le garanzie compatibili.</p>
+              </div>
+              <div class="operation-arrow">›</div>
+            </article>
+
+            <article class="operation-card sidebar-section-btn" data-section="orders">
+              <div class="operation-icon"><i class="fa-regular fa-folder-open"></i></div>
+              <div>
+                <h3>Pratiche ordinate</h3>
+                <p>Ogni ordine mostra veicolo, proprietario, supplementi selezionati e prezzo finale.</p>
+              </div>
+              <div class="operation-arrow">›</div>
+            </article>
+
+            <article class="operation-card sidebar-section-btn" data-section="payments">
+              <div class="operation-icon"><i class="fa-regular fa-credit-card"></i></div>
+              <div>
+                <h3>Pagamento</h3>
+                <p>Gli ordini possono risultare pagati o in attesa, in base al metodo selezionato nel checkout.</p>
+              </div>
+              <div class="operation-arrow">›</div>
+            </article>
+
+            <article class="operation-card sidebar-section-btn" data-section="partner">
+              <div class="operation-icon"><i class="fa-solid fa-chart-simple"></i></div>
+              <div>
+                <h3>Flusso professionale</h3>
+                <p>Dashboard, checkout e area partner sono organizzati come una vera piattaforma gestionale.</p>
+              </div>
+              <div class="operation-arrow">›</div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="section-orders" class="section">
+        <div class="panel-card">
+          <div class="panel-head" style="display:flex;justify-content:space-between;gap:18px;align-items:flex-end;flex-wrap:wrap;">
+            <div>
+              <h2>Le mie pratiche</h2>
+              <p>Storico completo delle richieste create dal tuo account concessionario.</p>
+            </div>
+
+            <div class="table-tools">
+              <input id="ordersSearchInput" type="text" placeholder="Cerca pratica..." />
+            </div>
+          </div>
+
+          <div id="ordersContainer" class="orders-list">
+            <div class="empty-state">Caricamento pratiche...</div>
+          </div>
+        </div>
+      </section>
+
+      
+      <section id="section-comparatore" class="section">
+        <div class="search-panel comparatore-panel dashboard-home-comparator">
+          <div class="badge"><i class="fa-solid fa-shield-halved"></i> Comparatore garanzie</div>
+          <h2><span>Comparatore</span> garanzie e servizi</h2>
+          <p>Confronta le migliori garanzie e servizi per il veicolo del cliente, mantenendo il flusso nella dashboard concessionario.</p>
+
+          <div class="ef-step-label-dash"><span>1</span> Seleziona il tipo di veicolo</div>
+          <div class="vehicle-type-selector" role="radiogroup" aria-label="Tipologia veicolo">
+            <label class="vehicle-type-option"><input type="radio" name="cmpVehicleType" value="auto" checked /><span class="vehicle-type-card"><i class="fa-solid fa-car-side"></i> Auto</span></label>
+            <label class="vehicle-type-option"><input type="radio" name="cmpVehicleType" value="moto" /><span class="vehicle-type-card"><i class="fa-solid fa-motorcycle"></i> Moto</span></label>
+            <label class="vehicle-type-option"><input type="radio" name="cmpVehicleType" value="commerciale" /><span class="vehicle-type-card"><i class="fa-solid fa-truck"></i> Veicoli<br>commerciali</span></label>
+            <label class="vehicle-type-option"><input type="radio" name="cmpVehicleType" value="ricreazionale" /><span class="vehicle-type-card"><i class="fa-solid fa-van-shuttle"></i> Ricreazionali</span></label>
+          </div>
+
+          <div class="ef-step-label-dash"><span>2</span> Inserisci la targa del veicolo</div>
+          <div class="plate-wrap">
+            <div class="plate-country">IT</div>
+            <input id="cmpTargaInput" type="text" placeholder="ES. AB123CD" maxlength="8" />
+            <div class="plate-search-icon-dash"><i class="fa-solid fa-magnifying-glass"></i></div>
+          </div>
+
+          <button class="hero-btn primary" type="button" id="btnApriComparatoreDashboard">Continua</button>
+
+          <div class="search-fields" id="cmpExtraFields">
+            <div class="form-row">
+              <div class="form-group"><label id="cmpModelloLabel" for="cmpModelloInput">Modello autoveicolo</label><input id="cmpModelloInput" type="text" placeholder="Es. Fiat Panda" /></div>
+              <div class="form-group"><label for="cmpAnnoInput">Anno immatricolazione</label><input id="cmpAnnoInput" type="number" placeholder="Es. 2019" /></div>
+            </div>
+            <div class="form-row">
+              <div class="form-group"><label for="cmpKmInput">Chilometraggio</label><input id="cmpKmInput" type="number" placeholder="Es. 65000" /></div>
+              <div class="form-group"><label>&nbsp;</label><button class="hero-btn primary" type="button" id="btnVaiAiRisultatiComparatore">Confronta garanzie</button></div>
+            </div>
+          </div>
+          <div class="ef-comparator-benefits-dash"><span><i class="fa-solid fa-bolt"></i> Attivazione immediata</span><span><i class="fa-solid fa-certificate"></i> Partner certificati</span><span><i class="fa-solid fa-headset"></i> Assistenza dedicata</span></div>
+          <div id="cmpSearchError" class="search-error"></div>
+        </div>
+        <div id="cmpInlineResults" class="inline-results"></div>
+      </section>
+
+      <section id="section-tickets" class="section">
+        <div class="section-banner">
+          <div class="badge">Preventivi partner</div>
+          <h2>Ticket preventivi</h2>
+          <p>Segui le richieste aperte verso i partner quando un veicolo richiede valutazione dedicata.</p>
+        </div>
+        <div class="panel-card">
+          <div class="section-toolbar">
+            <div class="panel-head" style="margin:0;"><h2>Richieste aperte</h2><p>Qui trovi stato, risposta e prezzo preventivato dal partner.</p></div>
+            <button class="hero-btn primary" type="button" id="btnRefreshTickets"><i class="fa-solid fa-rotate"></i> Aggiorna</button>
+          </div>
+          <div id="ticketsContainer" class="data-list"><div class="empty-state">Caricamento ticket...</div></div>
+        </div>
+      </section>
+
+      <section id="section-payments" class="section">
+        <div class="section-banner">
+          <div class="badge">Area economica</div>
+          <h2>Ordini e pagamenti</h2>
+          <p>Una vista dedicata per controllare incassi, pratiche in attesa e ordini completati senza uscire dalla dashboard.</p>
+        </div>
+
+        <div class="quick-stats">
+          <div class="quick-stat blue"><small>Ordini totali</small><strong id="payTotali">0</strong></div>
+          <div class="quick-stat"><small>Pagati</small><strong id="payPagati">0</strong></div>
+          <div class="quick-stat orange"><small>In attesa</small><strong id="payAttesa">0</strong></div>
+        </div>
+
+        <div class="panel-card">
+          <div class="section-toolbar">
+            <div class="panel-head" style="margin:0;">
+              <h2>Riepilogo pagamenti</h2>
+              <p>Gli stati vengono letti dalle pratiche presenti nel tuo account concessionario.</p>
+            </div>
+            <button class="hero-btn primary sidebar-section-btn" type="button" data-section="orders"><i class="fa-solid fa-folder-open"></i> Apri pratiche</button>
+          </div>
+          <div id="paymentsContainer" class="data-list"><div class="empty-state">Caricamento pagamenti...</div></div>
+        </div>
+      </section>
+
+      <section id="section-vehicles" class="section">
+        <div class="section-banner">
+          <div class="badge">Parco veicoli</div>
+          <h2>Veicoli</h2>
+          <p>Consulta i veicoli già collegati alle pratiche e avvia rapidamente un nuovo confronto garanzie.</p>
+        </div>
+
+        <div class="panel-card">
+          <div class="section-toolbar">
+            <div class="panel-head" style="margin:0;">
+              <h2>Veicoli in pratica</h2>
+              <p>Elenco ricavato dalle richieste create dal tuo account.</p>
+            </div>
+            <button class="hero-btn primary sidebar-section-btn" type="button" data-section="comparatore"><i class="fa-solid fa-scale-balanced"></i> Nuovo confronto</button>
+          </div>
+          <div id="vehiclesContainer" class="data-list"><div class="empty-state">Caricamento veicoli...</div></div>
+        </div>
+      </section>
+
+      <section id="section-partner" class="section">
+        <div class="section-banner">
+          <div class="badge">Network</div>
+          <h2>Partner</h2>
+          <p>Strumenti e materiali pensati per supportare il concessionario nella gestione quotidiana delle pratiche.</p>
+        </div>
+        <div class="inner-card-grid">
+          <article class="feature-card"><div class="feature-icon"><i class="fa-solid fa-handshake"></i></div><h3>Supporto operativo</h3><p>Area pensata per raccogliere comunicazioni, procedure e materiali dedicati ai partner.</p></article>
+          <article class="feature-card"><div class="feature-icon"><i class="fa-solid fa-chart-simple"></i></div><h3>Flusso professionale</h3><p>Dashboard, ordini e comparatore restano nello stesso ambiente, con una UX coerente.</p></article>
+        </div>
+      </section>
+
+      <section id="section-documents" class="section">
+        <div class="section-banner">
+          <div class="badge">Archivio</div>
+          <h2>Documenti</h2>
+          <p>Un’area ordinata per ritrovare certificati, riepiloghi pratica e materiali collegati agli ordini.</p>
+        </div>
+        <div class="panel-card">
+          <div class="section-toolbar">
+            <div class="panel-head" style="margin:0;"><h2>Documentazione pratiche</h2><p>I documenti saranno collegati alle pratiche completate.</p></div>
+            <button class="hero-btn sidebar-section-btn" type="button" data-section="orders"><i class="fa-solid fa-folder-open"></i> Vai alle pratiche</button>
+          </div>
+          <div id="documentsContainer" class="data-list"><div class="empty-state">Nessun documento disponibile al momento.</div></div>
+        </div>
+      </section>
+
+
+      <section id="section-certificate" class="section">
+        <div class="certificate-stage">
+          <div class="certificate-toolbar">
+            <div class="certificate-breadcrumb"><i class="fa-solid fa-folder-open"></i><strong>Le mie garanzie</strong><span>/</span><span>Certificato</span></div>
+            <button class="hero-btn sidebar-section-btn" type="button" data-section="documents"><i class="fa-solid fa-arrow-left"></i> Torna ai documenti</button>
+          </div>
+          <div id="certificateViewer"><div class="empty-state">Seleziona un certificato dalla sezione Documenti.</div></div>
+        </div>
+      </section>
+
+      <section id="section-settings" class="section">
+        <div class="section-banner">
+          <div class="badge">Configurazione</div>
+          <h2>Profilo utente</h2>
+          <p>Gestisci profilo, preferenze operative e profilo utente della tua area concessionario.</p>
+        </div>
+        <div class="inner-card-grid">
+          <article class="feature-card"><div class="feature-icon"><i class="fa-regular fa-user"></i></div><h3>Profilo concessionario</h3><p>Consulta dati account, ruolo e stato operativo.</p><button class="hero-btn primary sidebar-section-btn" type="button" data-section="profile">Apri profilo</button></article>
+          <article class="feature-card"><div class="feature-icon"><i class="fa-solid fa-shield-halved"></i></div><h3>Sicurezza account</h3><p>Accesso protetto e sessione concessionario separata dall’area pubblica.</p></article>
+        </div>
+      </section>
+
+      <section id="section-help" class="section">
+        <div class="section-banner">
+          <div class="badge">Supporto</div>
+          <h2>Assistenza e FAQ</h2>
+          <p>Risposte rapide e percorsi guidati per utilizzare dashboard, comparatore e pratiche.</p>
+        </div>
+        <div class="inner-card-grid">
+          <article class="feature-card"><div class="feature-icon"><i class="fa-solid fa-scale-balanced"></i></div><h3>Come usare il comparatore</h3><p>Inserisci la targa, completa modello, anno e chilometraggio, poi confronta le garanzie disponibili.</p></article>
+          <article class="feature-card"><div class="feature-icon"><i class="fa-solid fa-folder-open"></i></div><h3>Dove trovo le pratiche?</h3><p>La sezione “Le mie pratiche” raccoglie storico, dettagli veicolo, proprietario e stato pagamento.</p></article>
+        </div>
+      </section>
+
+      <section id="section-profile" class="section">
+        <div class="section-banner">
+          <div class="badge">Account</div>
+          <h2>Profilo concessionario</h2>
+          <p>Informazioni principali del tuo account e stato operativo.</p>
+        </div>
+        <div class="panel-card">
+          <div class="profile-list" id="profileList">
+            <div class="profile-row"><strong>Caricamento profilo</strong><span>...</span></div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/js/auth-guard.js"></script>
+  <script src="/js/dashboard-concessionario.js"></script>
+  <script src="/js/ai-assistant.js?v=20260519"></script>
+  <script src="/js/approved-ui.js?v=20260519-final"></script>
+
+  <script>
+    (function syncDealerHeroName() {
+      const sidebarName = document.getElementById("sidebarUserName");
+      const heroName = document.getElementById("heroDealerName");
+      if (!sidebarName || !heroName) return;
+
+      const update = () => {
+        const value = (sidebarName.textContent || "").trim();
+        if (value && value !== "Caricamento...") {
+          heroName.textContent = value;
+        }
+      };
+
+      update();
+      const observer = new MutationObserver(update);
+      observer.observe(sidebarName, { childList: true, subtree: true, characterData: true });
+    })();
+  </script>
+<footer id="contatti" class="footer">
+  <div class="footer-inner">
+    <div>© EstendiFacile.it</div>
+    <div><strong>Tel.</strong> +39 000 000 0000 · <strong>Email</strong> info@estendifacile.it</div><div><strong>Sede legale</strong> da definire · <strong>Sede operativa</strong> da definire</div>
+    <div class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Termini e Condizioni</a>
+    </div>
+  </div>
+</footer>
+
+</html>

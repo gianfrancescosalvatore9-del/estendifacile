@@ -1,0 +1,64 @@
+/* V66 HOME STABLE - definitive homepage stabilization */
+html,body{
+  margin:0!important;
+  padding:0!important;
+  padding-top:0!important;
+  top:0!important;
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;
+  background:#fff!important;
+}
+body::before,body::after,.top-strip,.header-top,.pre-header,.preheader,.upper-header{
+  display:none!important;content:none!important;height:0!important;min-height:0!important;margin:0!important;padding:0!important;
+}
+.main-header{
+  position:sticky!important;
+  top:0!important;
+  left:0!important;
+  right:0!important;
+  margin:0!important;
+  transform:none!important;
+  z-index:99999!important;
+  background:rgba(255,255,255,.985)!important;
+  backdrop-filter:blur(16px)!important;
+  border-bottom:1px solid rgba(226,232,240,.95)!important;
+  box-shadow:0 10px 30px rgba(7,29,73,.045)!important;
+}
+.nav-wrap{min-height:86px!important;}
+main{margin-top:0!important;padding-top:0!important;}
+.hero,.ef-home-hero{margin-top:0!important;padding-top:48px!important;}
+/* single payoff only: use HTML .ef-logo-payoff */
+.ef-logo-text::after,.ef-logo-text:after,.ef-logo-wordmark::after,.ef-logo-wordmark:after,.brand::after,.brand:after{
+  display:none!important;content:none!important;width:0!important;height:0!important;opacity:0!important;
+}
+.main-header .ef-logo-payoff{
+  display:block!important;
+  margin-top:5px!important;
+  font-size:10.5px!important;
+  line-height:1!important;
+  font-weight:750!important;
+  letter-spacing:1.55px!important;
+  color:#071d49!important;
+  opacity:.86!important;
+  text-transform:uppercase!important;
+  white-space:nowrap!important;
+}
+.main-header .ef-logo-symbol,.ef-logo-symbol{
+  width:50px!important;height:50px!important;border-radius:16px!important;
+  background:linear-gradient(135deg,#071d49 0%,#0b2d6c 62%,#18b45a 100%)!important;
+  color:#fff!important;border:none!important;box-shadow:0 14px 28px rgba(7,29,73,.16)!important;
+  display:inline-flex!important;align-items:center!important;justify-content:center!important;
+  font-weight:950!important;font-size:17px!important;letter-spacing:-.06em!important;position:relative!important;flex:0 0 50px!important;
+}
+.main-header .ef-logo-symbol::after,.ef-logo-symbol::after{content:""!important;position:absolute!important;right:-5px!important;bottom:-5px!important;width:16px!important;height:16px!important;border-radius:999px!important;background:#18b45a!important;border:4px solid #fff!important;box-shadow:0 8px 18px rgba(24,180,90,.24)!important;}
+/* footer final */
+.footer{display:block!important;background:linear-gradient(135deg,#071d49,#0b2d6c)!important;color:#fff!important;padding:28px!important;margin-top:0!important;}
+.footer-inner{max-width:1480px!important;margin:0 auto!important;display:flex!important;justify-content:space-between!important;align-items:center!important;gap:20px!important;flex-wrap:wrap!important;}
+.footer-links{display:flex!important;gap:16px!important;flex-wrap:wrap!important;}
+.footer a{color:#fff!important;opacity:.88!important;text-decoration:none!important;font-weight:650!important;}
+.footer a:hover{opacity:1!important;color:#18b45a!important;}
+@media(max-width:900px){
+  .nav-wrap{min-height:auto!important;padding:14px 0!important;}
+  .hero,.ef-home-hero{padding-top:30px!important;}
+  .main-header .ef-logo-payoff{font-size:9px!important;letter-spacing:1.05px!important;}
+  .footer-inner{flex-direction:column!important;text-align:center!important;}
+}

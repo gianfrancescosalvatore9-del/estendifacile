@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Operazione completata - EstendiFacile.it</title>
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="/urgent-fix.css" />
+  <link rel="stylesheet" href="/visual-final.css?v=20260519" />
+  <link rel="stylesheet" href="/approved-ui.css?v=20260519-final" />
+  <link rel="stylesheet" href="/premium-uniform.css?v=20260521" />
+  <style>
+    :root{--ef-blue:#071d49;--ef-blue2:#0b2d6c;--ef-green:#18b45a;--ef-green2:#0fa34f;--ef-bg:#f4f8fc;--ef-text:#081b3f;--ef-muted:#64748b;--ef-border:#dfe8f3;--ef-card:#ffffff;}
+    *{box-sizing:border-box} body{margin:0;min-height:100vh;background:radial-gradient(circle at 8% 0%,rgba(24,180,90,.12),transparent 34%),linear-gradient(135deg,#f7fbff 0%,#eef4fb 100%);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ef-text);}
+    .success-page{min-height:100vh;display:grid;grid-template-columns:300px 1fr;}
+    .success-sidebar{background:linear-gradient(180deg,#061b42 0%,#08275d 100%);color:#fff;padding:30px 24px;display:flex;flex-direction:column;gap:24px;position:relative;overflow:hidden;}
+    .success-sidebar:before{content:"";position:absolute;right:-80px;top:-60px;width:220px;height:220px;border-radius:50%;background:rgba(24,180,90,.18)}
+    .brand-row{display:flex;gap:14px;align-items:center;position:relative;z-index:1}.brand-mark{width:58px;height:58px;border-radius:16px;background:#fff;color:var(--ef-blue);display:grid;place-items:center;font-weight:950;font-size:21px;position:relative}.brand-mark:after{content:"";position:absolute;right:-5px;bottom:-5px;width:18px;height:18px;border-radius:50%;background:var(--ef-green);border:4px solid #09265a}.brand-text{font-size:26px;font-weight:950;letter-spacing:-.9px}.brand-text span{color:var(--ef-green)}.brand-sub{font-size:13px;color:#c6d4e9;font-weight:700;margin-top:2px}
+    .side-panel{border:1px solid rgba(255,255,255,.12);background:linear-gradient(135deg,rgba(255,255,255,.08),rgba(24,180,90,.10));border-radius:24px;padding:20px;position:relative;z-index:1}.side-panel h3{margin:0 0 10px;font-size:18px}.side-panel p{margin:0;color:#cdd9ea;line-height:1.55;font-size:14px}.side-step{display:flex;gap:12px;margin-top:16px;align-items:flex-start}.side-step span{width:28px;height:28px;border-radius:50%;background:var(--ef-green);display:grid;place-items:center;font-weight:950;flex:0 0 auto}.side-step div{font-weight:850}.side-step small{display:block;color:#c7d3e7;font-weight:650;margin-top:3px}
+    .side-actions{margin-top:auto;display:grid;gap:12px;position:relative;z-index:1}.side-link{display:flex;align-items:center;justify-content:center;gap:10px;text-decoration:none;border-radius:16px;padding:14px 16px;font-weight:950}.side-link.primary{background:var(--ef-green);color:#fff;box-shadow:0 18px 35px rgba(24,180,90,.22)}.side-link.ghost{border:1px solid rgba(255,255,255,.28);color:#fff;background:rgba(255,255,255,.06)}
+    .success-main{padding:34px clamp(24px,4vw,56px) 48px;}.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:26px}.crumb{display:flex;align-items:center;gap:12px;color:var(--ef-muted);font-weight:850}.crumb .back{width:44px;height:44px;border-radius:14px;background:#fff;border:1px solid var(--ef-border);display:grid;place-items:center;box-shadow:0 10px 24px rgba(7,29,73,.06);color:var(--ef-blue);text-decoration:none}.secure-pill{display:inline-flex;align-items:center;gap:10px;border:1px solid #bfeccb;background:#eafaf1;color:var(--ef-green2);font-weight:950;border-radius:999px;padding:10px 16px}
+    .success-hero{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--ef-blue),#0c4074);border-radius:30px;padding:34px;box-shadow:0 30px 80px rgba(7,29,73,.17);color:#fff;margin-bottom:22px}.success-hero:after{content:"";position:absolute;right:-80px;top:-90px;width:300px;height:300px;border-radius:50%;background:rgba(24,180,90,.23)}.hero-inner{position:relative;z-index:1;display:grid;grid-template-columns:auto 1fr auto;gap:22px;align-items:center}.success-icon{width:78px;height:78px;border-radius:50%;background:#dffbe9;color:var(--ef-green2);font-size:40px;font-weight:950;display:grid;place-items:center;box-shadow:0 18px 35px rgba(24,180,90,.28)}.success-hero h1{margin:0;font-size:42px;letter-spacing:-1.5px}.success-hero p{margin:8px 0 0;color:#dbe7f9;font-weight:700}.success-badge{border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.10);border-radius:18px;padding:14px 18px;font-weight:950;text-transform:uppercase;font-size:12px;letter-spacing:.04em}
+    .layout{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:22px;align-items:start}.card,.side-card,.next-steps{background:rgba(255,255,255,.92);border:1px solid var(--ef-border);border-radius:24px;padding:24px;box-shadow:0 18px 50px rgba(7,29,73,.07)}.card h2,.side-card h3,.next-steps h3{margin:0 0 16px;color:var(--ef-blue);font-size:22px;letter-spacing:-.4px}.detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.detail-item{border:1px solid #e6edf6;background:linear-gradient(180deg,#fff,#fbfdff);border-radius:16px;padding:14px 16px}.detail-item small{display:block;text-transform:uppercase;font-size:10px;color:var(--ef-muted);font-weight:950;margin-bottom:7px;letter-spacing:.04em}.detail-item strong{display:block;color:var(--ef-text);font-size:15px;line-height:1.25;overflow-wrap:anywhere}.status{display:inline-flex;align-items:center;gap:6px;padding:7px 10px;border-radius:999px;font-size:12px;font-weight:950;background:#eafaf1;color:#15803d}.status.pending{background:#fff7ed;color:#9a3412}.next-steps{margin-top:20px}.step{display:flex;gap:10px;align-items:flex-start;color:var(--ef-muted);font-weight:750;margin:10px 0}.step:before{content:"✓";width:22px;height:22px;border-radius:50%;background:#eafaf1;color:var(--ef-green2);display:grid;place-items:center;font-size:12px;font-weight:950;flex:0 0 auto}.total-box{position:sticky;top:24px;background:linear-gradient(135deg,#071d49 0%,#0b2d6c 78%,#0b7a6e 100%);color:white;border-radius:26px;padding:26px;margin-bottom:18px;box-shadow:0 30px 70px rgba(7,29,73,.18)}.total-box h3{margin:0;color:#d9e7fb;font-size:15px}.total{font-size:42px;font-weight:950;color:#22c55e;letter-spacing:-1px;margin-top:10px}.muted{color:var(--ef-muted);font-size:14px;line-height:1.7;margin:0}.actions{margin-top:20px;display:flex;gap:12px;flex-wrap:wrap}.btn-success{display:inline-flex;align-items:center;justify-content:center;gap:9px;border-radius:14px;padding:14px 18px;text-decoration:none;font-weight:950;border:1px solid var(--ef-border)}.btn-success.primary{background:var(--ef-green);color:#fff;border-color:var(--ef-green);box-shadow:0 16px 30px rgba(24,180,90,.20)}.btn-success.ghost{background:#fff;color:var(--ef-blue)}
+    @media(max-width:1050px){.success-page{grid-template-columns:1fr}.success-sidebar{display:none}.layout{grid-template-columns:1fr}.hero-inner{grid-template-columns:1fr;text-align:center}.success-icon{margin:auto}.success-badge{justify-self:center}.total-box{position:relative;top:auto}.detail-grid{grid-template-columns:1fr}}@media(max-width:640px){.success-main{padding:18px}.success-hero h1{font-size:30px}.success-hero{padding:24px}.topbar{align-items:flex-start;gap:14px;flex-direction:column}.secure-pill{font-size:13px}.total{font-size:34px}}
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/home-master-header-footer.css?v=63">
+</head>
+<body>
+<header class="main-header">
+    <div class="container nav-wrap">
+      <a href="/index.html" class="brand">
+        <span class="ef-logo-wordmark" aria-label="EstendiFacile.it">
+          <span class="ef-logo-symbol">EF</span>
+          <span class="ef-logo-stack">
+            <span class="ef-logo-text">Estendi<span>Facile</span><small>.it</small></span>
+            <span class="ef-logo-payoff">ESTENDI LA TUA SICUREZZA</span>
+          </span>
+        </span>
+      </a>
+
+      <nav class="nav-menu ef-main-nav">
+        <a href="/partner.html"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v5M5 19v-4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v4"/><circle cx="12" cy="4" r="2"/><circle cx="5" cy="20" r="2"/><circle cx="19" cy="20" r="2"/></svg><span>Partner</span></a>
+        <a href="/chi-siamo.html"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v4"/><path d="M8 7h4M8 11h4M8 15h2"/><path d="M18 22s4-2 4-6v-3l-4-2-4 2v3c0 4 4 6 4 6Z"/><path d="m16.8 16 1 1 2.2-2.4"/></svg><span>Chi siamo</span></a>
+        <a href="/come-funziona.html"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="19" r="3"/><circle cx="18" cy="5" r="3"/><path d="M8.2 16.8 15.8 7.2"/></svg><span>Come funziona</span></a>
+        <a href="/faq.html"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.7 9a2.8 2.8 0 0 1 5.3 1.3c0 2.2-3 2.1-3 4"/><path d="M12 18h.01"/></svg><span>FAQ</span></a>
+        <a href="/contatti.html"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13a8 8 0 0 1 16 0"/><path d="M4 13v4a2 2 0 0 0 2 2h1v-7H6a2 2 0 0 0-2 2Z"/><path d="M20 13v4a2 2 0 0 1-2 2h-1v-7h1a2 2 0 0 1 2 2Z"/><path d="M16 19c0 1.1-1.8 2-4 2"/></svg><span>Contatti</span></a>
+      </nav>
+
+      <div class="nav-actions ef-nav-actions" id="navActions">
+        <a href="/normativa.html" class="nav-legal"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M5 6h14M7 6l-4 7h8L7 6ZM17 6l-4 7h8l-4-7Z"/><path d="M8 21h8"/></svg><span>Codice del consumo<br>Normativa vigente</span></a>
+        <a href="/login.html" class="nav-login"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="7" r="4"/><path d="M2.5 21a6.5 6.5 0 0 1 10.8-4.9"/><path d="M18 22s4-2 4-6v-3l-4-2-4 2v3c0 4 4 6 4 6Z"/></svg><span>Accedi</span></a>
+        <a href="/register.html" class="nav-register"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="7" r="4"/><path d="M2.5 21a6.5 6.5 0 0 1 11.7-3.9"/><path d="M19 8v6M16 11h6"/></svg><span>Crea account</span></a>
+      </div>
+
+     
+    </div>
+  </header>
+  <div class="success-page">
+    <aside class="success-sidebar">
+      <div class="brand-row"><div class="brand-mark">EF</div><div><div class="brand-text">Estendi<span>Facile</span><small>.it</small></div><div class="brand-sub">Pratica completata</div></div></div>
+      <div class="side-panel"><h3>Ordine protetto</h3><p>La richiesta è stata registrata. Potrai seguirne lo stato dalla dashboard e scaricare il certificato appena disponibile.</p><div class="side-step"><span>1</span><div>Pagamento confermato<small>Ordine acquisito correttamente</small></div></div><div class="side-step"><span>2</span><div>Emissione certificato<small>Gestione dalla piattaforma partner</small></div></div><div class="side-step"><span>3</span><div>Documentazione<small>Disponibile nella tua area riservata</small></div></div></div>
+      <div class="side-actions"><a class="side-link primary" href="#" data-dashboard-link>Vai alla dashboard</a><a class="side-link ghost" href="#" data-new-practice-link>Nuova pratica</a></div>
+    </aside>
+    <main class="success-main">
+      <div class="topbar"><div class="crumb"><a class="back" href="#" data-dashboard-link>←</a><span>Checkout / <strong>Conferma ordine</strong></span></div><div class="secure-pill">✓ Pagamento sicuro</div></div>
+      <section class="success-hero"><div class="hero-inner"><div class="success-icon">✓</div><div><h1>Operazione completata</h1><p>La richiesta di garanzia è stata registrata correttamente.</p></div><div class="success-badge">Pratica attiva</div></div></section>
+      <div class="layout"><div><section class="card"><h2>Dettaglio pratica</h2><div id="orderDetails" class="detail-grid"></div></section><section class="next-steps"><h3>Prossimi step</h3><div id="nextSteps"></div></section><div class="actions"><a href="#" data-dashboard-link class="btn-success primary">Vai alla dashboard</a><a href="#" data-new-practice-link class="btn-success ghost">Nuova pratica</a></div></div><aside><div class="total-box"><h3>Totale ordine</h3><div class="total" id="totalFinale">€ 0,00</div></div><div class="side-card"><h3>Documentazione</h3><p class="muted">Il partner potrà visualizzare l’ordine e procedere con l’emissione del certificato dalla propria area riservata. La documentazione sarà verificabile tramite QR e numero certificato.</p></div></aside></div>
+    </main>
+  </div>
+  <script src="/js/success.js"></script>
+  <script src="/js/ai-assistant.js?v=20260519"></script>
+<footer id="contatti" class="footer">
+  <div class="footer-inner">
+    <div>© EstendiFacile.it</div>
+    <div><strong>Tel.</strong> +39 000 000 0000 · <strong>Email</strong> info@estendifacile.it</div><div><strong>Sede legale</strong> da definire · <strong>Sede operativa</strong> da definire</div>
+    <div class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Termini e Condizioni</a>
+    </div>
+  </div>
+</footer>
+
+</html>

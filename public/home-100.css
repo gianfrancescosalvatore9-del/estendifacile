@@ -1,0 +1,263 @@
+/* EstendiFacile - HOME 100% APPROVATA
+   Override caricato per ultimo: replica il render approvato della homepage. */
+:root{
+  --ef-navy:#071d49;
+  --ef-navy-2:#0c2f73;
+  --ef-green:#18b45a;
+  --ef-green-dark:#109648;
+  --ef-border:#e5edf6;
+  --ef-muted:#53647d;
+  --ef-shadow:0 22px 55px rgba(7,29,73,.10);
+}
+body.home-page,
+body:has(.hero){
+  background:#fff!important;
+  padding-top:94px!important;
+}
+/* Header più vicino al render: compatto, premium, CTA evidenti */
+.main-header{
+  height:94px!important;
+  box-shadow:0 10px 28px rgba(7,29,73,.045)!important;
+}
+.main-header .container{
+  width:min(1840px,calc(100% - 118px))!important;
+}
+.main-header .nav-wrap{
+  min-height:94px!important;
+  height:94px!important;
+  gap:32px!important;
+}
+.ef-logo-symbol{
+  width:56px!important;
+  height:56px!important;
+  flex-basis:56px!important;
+  border-radius:16px!important;
+  font-size:18px!important;
+}
+.ef-logo-symbol::after{
+  width:19px!important;
+  height:19px!important;
+  right:-5px!important;
+  bottom:-5px!important;
+  border-width:4px!important;
+}
+.ef-logo-text{
+  font-size:31px!important;
+  letter-spacing:-.06em!important;
+}
+.ef-logo-wordmark{gap:13px!important;}
+.main-header .nav-menu{
+  gap:27px!important;
+}
+.main-header .nav-menu a{
+  font-size:14px!important;
+  padding:18px 0 16px!important;
+}
+.main-header .nav-menu a[href$="login.html"]{
+  margin-left:12px!important;
+  padding:19px 27px!important;
+  min-width:150px!important;
+  justify-content:center!important;
+  border-radius:15px!important;
+  border:1.5px solid var(--ef-navy)!important;
+}
+.main-header .nav-menu a[href$="register.html"]{
+  padding:20px 30px!important;
+  min-width:165px!important;
+  justify-content:center!important;
+  border-radius:15px!important;
+}
+/* Home hero: proporzioni, spazi e overlay come render approvato */
+body:has(.hero) .hero{
+  min-height:744px!important;
+  margin-top:0!important;
+  overflow:hidden!important;
+  background:
+    linear-gradient(90deg,
+      rgba(255,255,255,1) 0%,
+      rgba(255,255,255,.98) 24%,
+      rgba(255,255,255,.86) 37%,
+      rgba(255,255,255,.34) 52%,
+      rgba(255,255,255,.02) 72%,
+      rgba(255,255,255,0) 100%),
+    url('/assets/hero-vehicles-premium-clean.png') right center/auto 92% no-repeat!important;
+}
+body:has(.hero) .hero::after{
+  height:205px!important;
+  background:linear-gradient(180deg,rgba(255,255,255,0),rgba(255,255,255,.98) 76%,#fff 100%)!important;
+}
+body:has(.hero) .hero .container{
+  width:min(1780px,calc(100% - 118px))!important;
+}
+body:has(.hero) .hero-grid{
+  min-height:744px!important;
+  grid-template-columns:minmax(620px,760px) minmax(520px,1fr)!important;
+  gap:28px!important;
+  align-items:center!important;
+  padding:42px 0 86px!important;
+}
+body:has(.hero) .hero-content{
+  max-width:740px!important;
+  transform:translateY(-10px)!important;
+}
+body:has(.hero) .hero h1{
+  max-width:750px!important;
+  font-size:42px!important;
+  line-height:1.08!important;
+  letter-spacing:-1.25px!important;
+  margin:0 0 25px!important;
+  color:var(--ef-navy)!important;
+}
+body:has(.hero) .hero h1 .green-line{
+  display:block!important;
+  color:var(--ef-green)!important;
+  margin-top:4px!important;
+}
+body:has(.hero) .hero-copy{
+  max-width:625px!important;
+  font-size:22px!important;
+  line-height:1.45!important;
+  font-weight:850!important;
+  margin:0 0 32px!important;
+  color:#0b2449!important;
+}
+body:has(.hero) .floating-proof{
+  top:142px!important;
+  left:55.5%!important;
+  transform:none!important;
+  border-radius:18px!important;
+  padding:19px 29px!important;
+  min-width:330px!important;
+  box-shadow:0 22px 55px rgba(7,29,73,.14)!important;
+}
+body:has(.hero) .floating-proof-icon{
+  width:58px!important;
+  height:58px!important;
+  border-width:2px!important;
+  color:var(--ef-navy)!important;
+  background:#fff!important;
+}
+body:has(.hero) .floating-proof strong{
+  font-size:22px!important;
+  letter-spacing:-.02em!important;
+}
+body:has(.hero) .floating-proof span{
+  font-size:17px!important;
+  color:var(--ef-green)!important;
+}
+/* Card ricerca: più premium, floating e proporzionata */
+body:has(.hero) .hero-search-panel{
+  max-width:690px!important;
+  padding:34px 34px 28px!important;
+  border-radius:24px!important;
+  border:1px solid var(--ef-border)!important;
+  box-shadow:0 30px 74px rgba(7,29,73,.115)!important;
+  background:rgba(255,255,255,.98)!important;
+  backdrop-filter:blur(8px)!important;
+}
+body:has(.hero) .hero-search-panel h2{
+  font-size:26px!important;
+  line-height:1!important;
+  letter-spacing:-.03em!important;
+  margin:0 0 24px!important;
+}
+body:has(.hero) .vehicle-type-tabs{
+  gap:14px!important;
+  margin-bottom:20px!important;
+}
+body:has(.hero) .vehicle-type-btn{
+  height:62px!important;
+  border-radius:14px!important;
+  font-size:15px!important;
+  border-width:1.5px!important;
+}
+body:has(.hero) .vehicle-type-btn.active{
+  border-color:var(--ef-green)!important;
+  background:#eefbf3!important;
+  color:#0b8c43!important;
+}
+body:has(.hero) .plate-wrap{
+  grid-template-columns:76px 1fr 220px!important;
+  min-height:72px!important;
+  border-radius:14px!important;
+  border:1px solid #d9e3ef!important;
+}
+body:has(.hero) .plate-country{
+  background:#1d5fd1!important;
+  font-size:15px!important;
+}
+body:has(.hero) .plate-wrap input{
+  font-size:26px!important;
+  padding:0 25px!important;
+  letter-spacing:.01em!important;
+  color:#6e7480!important;
+}
+body:has(.hero) .plate-search-btn{
+  width:220px!important;
+  min-width:220px!important;
+  font-size:15px!important;
+  border-radius:0!important;
+}
+body:has(.hero) .secure-note{
+  margin-top:16px!important;
+  font-size:13px!important;
+}
+/* Cards inferiori esattamente in stile render */
+.hero-benefits{
+  margin-top:-74px!important;
+  padding-bottom:42px!important;
+  position:relative!important;
+  z-index:8!important;
+}
+.hero-benefits .container{
+  width:min(1600px,calc(100% - 150px))!important;
+}
+.hero-benefits-grid{
+  grid-template-columns:repeat(4,minmax(220px,1fr))!important;
+  gap:32px!important;
+}
+.mini-benefit{
+  min-height:106px!important;
+  border-radius:16px!important;
+  padding:18px 24px!important;
+  border:1px solid var(--ef-border)!important;
+  box-shadow:0 18px 38px rgba(7,29,73,.065)!important;
+}
+.mini-benefit-icon{
+  width:58px!important;
+  height:58px!important;
+  border-width:2px!important;
+  background:#fff!important;
+  color:var(--ef-green)!important;
+}
+.mini-benefit strong{
+  font-size:15px!important;
+  color:var(--ef-navy)!important;
+  letter-spacing:-.02em!important;
+}
+.mini-benefit span{
+  font-size:13px!important;
+  color:var(--ef-muted)!important;
+}
+.ef-assistant-button{
+  right:32px!important;
+  bottom:28px!important;
+  padding:15px 22px!important;
+  border-radius:14px!important;
+  font-size:15px!important;
+}
+@media(max-width:1200px){
+  .main-header .nav-menu{gap:16px!important;}
+  .main-header .nav-menu a{font-size:12px!important;}
+  body:has(.hero) .hero-grid{grid-template-columns:1fr!important;}
+  body:has(.hero) .floating-proof{display:none!important;}
+  body:has(.hero) .hero{background:linear-gradient(90deg,rgba(255,255,255,.97),rgba(255,255,255,.76)),url('/assets/hero-vehicles-premium-clean.png') center/cover no-repeat!important;}
+}
+@media(max-width:760px){
+  body:has(.hero) .hero .container,.main-header .container{width:min(100% - 32px,1780px)!important;}
+  body:has(.hero) .hero h1{font-size:34px!important;}
+  body:has(.hero) .hero-copy{font-size:18px!important;}
+  body:has(.hero) .plate-wrap{grid-template-columns:64px 1fr!important;}
+  body:has(.hero) .plate-search-btn{grid-column:1/-1;width:100%!important;min-width:0!important;height:58px!important;}
+  .hero-benefits .container{width:min(100% - 32px,1600px)!important;}
+}

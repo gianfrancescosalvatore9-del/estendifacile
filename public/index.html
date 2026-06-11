@@ -1,0 +1,1584 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>EstendiFacile.it - Garanzie Auto e Moto</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="preload" href="/assets/hero-vehicles-premium-clean.png" as="image"/>
+  <link rel="stylesheet" href="/style.css"/>
+
+  <style>
+    :root{
+      --navy:#071d49;
+      --green:#18b45a;
+      --text:#0b1c39;
+      --muted:#64748b;
+      --border:#e7edf5;
+      --soft:#f7faff;
+      --danger:#b91c1c;
+    }
+
+    *{box-sizing:border-box;}
+
+    html,body{
+      margin:0;
+      padding:0;
+      padding-top:0;
+      overflow-x:hidden;
+      font-family:'Inter',sans-serif;
+      background:#fff;
+      color:var(--text);
+    }
+
+    a{text-decoration:none;color:inherit;}
+
+    .container{
+      width:min(1480px, calc(100% - 80px));
+      margin:0 auto;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border:none;
+      border-radius:14px;
+      padding:14px 22px;
+      font-weight:900;
+      cursor:pointer;
+      font-size:15px;
+    }
+
+    .btn-primary{
+      background:var(--green);
+      color:white;
+      box-shadow:0 14px 28px rgba(24,180,90,.22);
+    }
+
+    .btn-outline{
+      background:white;
+      color:var(--navy);
+      border:1px solid var(--green);
+    }
+
+   .main-header{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  background:#fff;
+  border-bottom:1px solid #edf2f7;
+  z-index:9999;
+}
+
+    .nav-wrap{
+      min-height:54px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:28px;
+    }
+
+    .brand{
+      width:460px;
+      min-width:460px;
+      display:flex;
+      align-items:center;
+      overflow:visible;
+    }
+
+    .brand img{
+      width:285px;
+      height:auto;
+      display:block;
+      object-fit:contain;
+    }
+
+    .nav-menu{
+      display:flex;
+      align-items:center;
+      gap:34px;
+      margin-left:auto;
+      white-space:nowrap;
+    }
+
+    .nav-menu a{
+      padding:16px 0 12px;
+      font-size:14px;
+      font-weight:950;
+      text-transform:uppercase;
+      color:var(--navy);
+      border-bottom:3px solid transparent;
+    }
+
+    .nav-menu a.active{
+      color:var(--green);
+      border-bottom-color:var(--green);
+    }
+
+    
+
+    .hero{
+      position:relative;
+      min-height:720px;
+      overflow:hidden;
+      background:
+        linear-gradient(90deg,
+          rgba(255,255,255,.98) 0%,
+          rgba(255,255,255,.90) 30%,
+          rgba(255,255,255,.35) 55%,
+          rgba(255,255,255,.06) 100%
+        ),
+        none;
+    }
+
+    .hero::after{
+      content:"";
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:0;
+      height:130px;
+      background:linear-gradient(180deg,rgba(255,255,255,0),#fff 88%);
+      pointer-events:none;
+    }
+
+    .hero-grid{
+      position:relative;
+      z-index:2;
+      min-height:720px;
+      display:grid;
+      grid-template-columns:600px 1fr;
+      gap:36px;
+      align-items:center;
+      padding:24px 0 90px;
+    }
+
+    .hero-content{
+      max-width:600px;
+    }
+
+    .hero h1{
+      margin:0 0 22px;
+      color:var(--navy);
+      font-size:38px;
+      line-height:1.08;
+      letter-spacing:-.8px;
+      font-weight:950;
+      max-width:760px;
+    }
+
+    .hero h1 .green-line{
+      display:block;
+      color:var(--green);
+      margin-top:6px;
+    }
+
+    .hero-copy{
+      margin:0 0 30px;
+      max-width:560px;
+      color:#13294b;
+      font-size:18px;
+      line-height:1.55;
+      font-weight:800;
+    }
+
+    .green-text{color:var(--green);}
+
+    .floating-proof{
+      position:absolute;
+      top:132px;
+      left:50%;
+      transform:translateX(-4%);
+      z-index:5;
+      display:flex;
+      align-items:center;
+      gap:16px;
+      background:#fff;
+      padding:18px 26px;
+      border-radius:18px;
+      box-shadow:0 20px 60px rgba(7,29,73,.12);
+    }
+
+    .floating-proof-icon{
+      width:48px;
+      height:48px;
+      border-radius:50%;
+      border:2px solid var(--navy);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:22px;
+    }
+
+    .floating-proof strong{
+      display:block;
+      color:var(--navy);
+      font-size:22px;
+      line-height:1.05;
+    }
+
+    .floating-proof span{
+      display:block;
+      margin-top:4px;
+      color:var(--green);
+      font-size:17px;
+      font-weight:900;
+    }
+
+    .hero-search-panel{
+      position:relative;
+      z-index:50;
+      width:100%;
+      max-width:560px;
+      background:#fff;
+      border-radius:24px;
+      padding:26px;
+      box-shadow:0 28px 70px rgba(7,29,73,.12);
+      border:1px solid #edf2f7;
+    }
+
+    .hero-search-panel h2{
+      margin:0 0 18px;
+      color:var(--navy);
+      font-size:24px;
+      font-weight:950;
+      text-transform:uppercase;
+    }
+
+    .vehicle-type-tabs{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+      margin-bottom:18px;
+    }
+
+    .vehicle-type-btn{
+      height:54px;
+      border-radius:16px;
+      border:2px solid #dce5f0;
+      background:#fff;
+      color:#334155;
+      font-size:15px;
+      font-weight:900;
+      cursor:pointer;
+    }
+
+    .vehicle-type-btn.active{
+      background:#eefbf3;
+      border-color:var(--green);
+      color:#0d8f47;
+    }
+
+    .plate-wrap{
+      display:grid;
+      grid-template-columns:64px 1fr 70px;
+      width:100%;
+      overflow:hidden;
+      border-radius:16px;
+      border:1px solid #dce5f0;
+      background:white;
+    }
+
+    .plate-country{
+      background:#1d5fd1;
+      color:white;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      font-weight:900;
+      font-size:13px;
+    }
+
+    .plate-country small{
+      font-size:8px;
+      opacity:.9;
+      margin-bottom:2px;
+    }
+
+    .plate-wrap input{
+      min-width:0;
+      width:100%;
+      border:none;
+      outline:none;
+      padding:20px 18px;
+      font-size:24px;
+      font-weight:950;
+      color:#64748b;
+      text-transform:uppercase;
+      background:white;
+    }
+
+    .plate-search-btn{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-width:70px;
+      width:70px;
+      padding:0 16px;
+      background:var(--green);
+      color:white;
+      border:none;
+      font-size:14px;
+      font-weight:900;
+      white-space:nowrap;
+      cursor:pointer;
+    }
+
+    
+    .plate-wrap{
+      box-shadow:0 8px 24px rgba(7,29,73,.08);
+    }
+    .plate-wrap:focus-within{
+      border-color:var(--green);
+      box-shadow:0 0 0 4px rgba(24,180,90,.15);
+    }
+
+    .vehicle-extra{
+      display:none;
+      gap:14px;
+      margin-top:18px;
+      padding-top:18px;
+      border-top:1px solid #edf2f7;
+    }
+
+    .vehicle-extra.open{
+      display:grid;
+    }
+
+    .form-row{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+    }
+
+    .form-group{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+
+    .form-group label{
+      color:#334155;
+      font-size:14px;
+      font-weight:900;
+    }
+
+    .form-group input{
+      width:100%;
+      padding:14px;
+      border:1px solid #d6deea;
+      border-radius:14px;
+      outline:none;
+      font-size:15px;
+    }
+
+    .secure-note{
+      margin-top:14px;
+      color:var(--navy);
+      font-size:13px;
+      font-weight:800;
+    }
+
+    .search-error{
+      min-height:20px;
+      margin-top:8px;
+      color:var(--danger);
+      font-size:14px;
+      font-weight:900;
+    }
+
+    .hero-benefits{
+      position:relative;
+      z-index:5;
+      margin-top:-44px;
+      padding-bottom:32px;
+    }
+
+    .hero-benefits-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:20px;
+    }
+
+    .mini-benefit{
+      min-height:104px;
+      background:#fff;
+      border:1px solid #edf2f7;
+      border-radius:18px;
+      padding:18px;
+      display:flex;
+      gap:14px;
+      align-items:center;
+      box-shadow:0 14px 34px rgba(11,28,57,.06);
+    }
+
+    .mini-benefit-icon{
+      width:52px;
+      height:52px;
+      border-radius:50%;
+      border:2px solid var(--green);
+      color:var(--green);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:24px;
+      flex-shrink:0;
+    }
+
+    .mini-benefit strong{
+      display:block;
+      font-size:14px;
+      font-weight:950;
+      margin-bottom:4px;
+    }
+
+    .mini-benefit span{
+      font-size:13px;
+      color:#475569;
+    }
+
+    .partners-strip{
+      background:#fff;
+      border-top:1px solid var(--border);
+      border-bottom:1px solid var(--border);
+      padding:26px 0;
+    }
+
+    .partners-row{
+      display:grid;
+      grid-template-columns:1.2fr repeat(5,1fr) 1.4fr;
+      gap:24px;
+      align-items:center;
+      text-align:center;
+      color:#344563;
+    }
+
+    .partners-label{
+      text-align:left;
+      color:#334155;
+      font-size:15px;
+      font-weight:800;
+    }
+
+    .fake-logo{
+      font-weight:950;
+      color:#344563;
+      font-size:20px;
+      opacity:.86;
+    }
+
+    .rating{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      gap:10px;
+      font-weight:900;
+    }
+
+    .stars{
+      color:#00b67a;
+      letter-spacing:2px;
+      font-size:20px;
+    }
+
+    .benefits{
+      background:#fff;
+      padding:54px 0;
+    }
+
+    .benefit-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+    }
+
+    .benefit-item{
+      text-align:center;
+      padding:26px 30px;
+      border-right:1px solid var(--border);
+    }
+
+    .benefit-item:last-child{border-right:none;}
+
+    .benefit-icon{
+      width:76px;
+      height:76px;
+      margin:0 auto 18px;
+      color:var(--green);
+    }
+
+    .benefit-icon svg{
+      width:100%;
+      height:100%;
+      stroke:currentColor;
+      fill:none;
+      stroke-width:2.4;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+    }
+
+    .benefit-item h3{
+      margin:0 0 12px;
+      color:#07813e;
+      font-size:15px;
+      font-weight:950;
+      text-transform:uppercase;
+    }
+
+    .benefit-item p{
+      margin:0 auto;
+      max-width:220px;
+      color:#1e293b;
+      font-size:14px;
+      line-height:1.65;
+    }
+
+    .how{
+      background:var(--soft);
+      padding:74px 0;
+      border-top:1px solid var(--border);
+      border-bottom:1px solid var(--border);
+    }
+
+    .section-head{
+      text-align:center;
+      max-width:760px;
+      margin:0 auto 42px;
+    }
+
+    .section-kicker{
+      display:inline-flex;
+      padding:8px 20px;
+      border:1px solid var(--green);
+      border-radius:999px;
+      color:#07813e;
+      background:#fff;
+      font-size:13px;
+      font-weight:950;
+      text-transform:uppercase;
+      margin-bottom:18px;
+    }
+
+    .section-head h2{
+      margin:0 0 14px;
+      font-size:38px;
+      line-height:1.12;
+    }
+
+    .section-head h2 span{color:var(--green);}
+
+    .section-head p{
+      margin:0;
+      color:#334155;
+      font-size:16px;
+      line-height:1.6;
+    }
+
+    .steps-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:62px;
+    }
+
+    .step-card{
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius:18px;
+      box-shadow:0 12px 34px rgba(11,28,57,.06);
+      padding:28px;
+      display:grid;
+      grid-template-columns:74px 1fr;
+      gap:18px;
+      align-items:center;
+      position:relative;
+      min-height:140px;
+    }
+
+    .step-card::after{
+      content:"";
+      position:absolute;
+      left:100%;
+      top:50%;
+      width:62px;
+      border-top:1px dashed var(--green);
+    }
+
+    .step-card:last-child::after{display:none;}
+
+    .step-number{
+      position:absolute;
+      left:calc(100% + 18px);
+      top:50%;
+      transform:translateY(-50%);
+      width:32px;
+      height:32px;
+      border-radius:50%;
+      background:#fff;
+      border:1px solid var(--green);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#07813e;
+      font-weight:950;
+      z-index:2;
+    }
+
+    .step-card:last-child .step-number{display:none;}
+
+    .step-icon{
+      width:64px;
+      height:64px;
+      color:var(--green);
+    }
+
+    .step-icon svg{
+      width:100%;
+      height:100%;
+      stroke:currentColor;
+      fill:none;
+      stroke-width:2.2;
+      stroke-linecap:round;
+      stroke-linejoin:round;
+    }
+
+    .step-card h3{
+      margin:0 0 8px;
+      font-size:18px;
+    }
+
+    .step-card p{
+      margin:0;
+      color:#1e293b;
+      font-size:14px;
+      line-height:1.55;
+    }
+
+    .partner-section{
+      background:#fff;
+      padding:58px 0 28px;
+    }
+
+    .partner-box{
+      border-radius:28px;
+      overflow:hidden;
+      background:
+        radial-gradient(circle at 94% 48%, rgba(24,180,90,.30), transparent 28%),
+        linear-gradient(135deg,#061832 0%,#071d49 55%,#08713a 100%);
+      display:grid;
+      grid-template-columns:365px 1fr;
+      align-items:center;
+      color:#fff;
+      min-height:260px;
+      box-shadow:0 18px 48px rgba(11,28,57,.18);
+      position:relative;
+    }
+
+    .partner-box::after{
+      content:"";
+      position:absolute;
+      right:36px;
+      top:50%;
+      transform:translateY(-50%);
+      width:210px;
+      height:210px;
+      opacity:.22;
+      background:url("/images/logo-estendifacile.svg") center/contain no-repeat;
+    }
+
+    .partner-photo{
+      height:100%;
+      min-height:260px;
+      background:
+        linear-gradient(90deg, rgba(7,29,73,.02), rgba(7,29,73,.36)),
+        url("/assets/cta-partner.png") center/cover no-repeat;
+    }
+
+    .partner-content{
+      padding:42px 48px;
+      position:relative;
+      z-index:2;
+    }
+
+    .partner-content h2{
+      margin:0 0 12px;
+      font-size:32px;
+      line-height:1.12;
+    }
+
+    .partner-content p{
+      margin:0 0 24px;
+      max-width:620px;
+      color:#dbe7f9;
+      font-size:16px;
+      line-height:1.65;
+    }
+
+    .partner-actions{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+
+    .partner-actions .btn-outline{
+      color:white;
+      background:transparent;
+      border-color:rgba(255,255,255,.38);
+    }
+
+    .trust{
+      background:#fff;
+      padding:26px 0 54px;
+    }
+
+    .trust h3{
+      margin:0 0 24px;
+      text-align:center;
+      color:#334155;
+      font-size:13px;
+      text-transform:uppercase;
+      letter-spacing:2px;
+    }
+
+    .trust-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:18px;
+      text-align:center;
+      color:#334155;
+      font-weight:800;
+    }
+
+    .trust-grid div{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      gap:10px;
+    }
+
+    .trust-grid span{
+      color:var(--green);
+      font-size:28px;
+    }
+
+
+
+    /* Home comparator inline results - v17 */
+    .home-results-section{
+      display:none;
+      background:linear-gradient(180deg,#ffffff 0%,#f6f9ff 100%);
+      padding:46px 0 62px;
+      border-top:1px solid var(--border);
+    }
+    .home-results-section.open{display:block;}
+    .home-results-shell{
+      background:#fff;
+      border:1px solid #dfe8f4;
+      border-radius:28px;
+      padding:28px;
+      box-shadow:0 26px 70px rgba(7,29,73,.10);
+      position:relative;
+      overflow:hidden;
+    }
+    .home-results-shell::before{
+      content:"";
+      position:absolute;
+      inset:0 0 auto 0;
+      height:5px;
+      background:linear-gradient(90deg,#18b45a,#2563eb,#7c3aed,#f97316);
+    }
+    .home-results-head{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:22px;
+      margin-bottom:22px;
+    }
+    .home-results-kicker{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 14px;
+      border-radius:999px;
+      background:#ecfdf3;
+      color:#07813e;
+      border:1px solid #bbf7d0;
+      font-weight:950;
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:.3px;
+      margin-bottom:10px;
+    }
+    .home-results-head h2{
+      margin:0 0 8px;
+      color:var(--navy);
+      font-size:32px;
+      line-height:1.08;
+      letter-spacing:-.5px;
+      font-weight:950;
+    }
+    .home-results-head p{
+      margin:0;
+      color:#475569;
+      font-weight:700;
+      line-height:1.55;
+      max-width:820px;
+    }
+    .home-results-vehicle{
+      min-width:260px;
+      border:1px solid #dfe8f4;
+      border-radius:20px;
+      padding:16px 18px;
+      background:linear-gradient(135deg,#f8fbff,#fff);
+      box-shadow:0 12px 30px rgba(11,28,57,.06);
+    }
+    .home-results-vehicle span{
+      display:block;
+      color:#64748b;
+      font-size:12px;
+      font-weight:950;
+      text-transform:uppercase;
+      margin-bottom:6px;
+    }
+    .home-results-vehicle strong{
+      display:block;
+      color:var(--navy);
+      font-size:18px;
+      font-weight:950;
+    }
+    .home-warranty-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:18px;
+    }
+    .home-warranty-card{
+      position:relative;
+      min-height:310px;
+      border:1px solid #dfe8f4;
+      border-radius:24px;
+      padding:22px;
+      background:linear-gradient(180deg,#ffffff 0%,#fbfdff 100%);
+      box-shadow:0 18px 42px rgba(11,28,57,.07);
+      overflow:hidden;
+    }
+    .home-warranty-card::after{
+      content:"";
+      position:absolute;
+      right:-36px;
+      top:-36px;
+      width:120px;
+      height:120px;
+      border-radius:50%;
+      background:rgba(24,180,90,.10);
+    }
+    .home-warranty-brand{
+      position:relative;
+      z-index:1;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      background:#eefbf3;
+      border:1px solid #bbf7d0;
+      color:#07813e;
+      border-radius:999px;
+      padding:9px 13px;
+      font-size:13px;
+      font-weight:950;
+      margin-bottom:18px;
+    }
+    .home-warranty-title{
+      margin:0 0 10px;
+      color:var(--navy);
+      font-size:22px;
+      font-weight:950;
+      filter:blur(5px);
+      user-select:none;
+    }
+    .home-warranty-line,
+    .home-warranty-price,
+    .home-warranty-feature{
+      filter:blur(5px);
+      user-select:none;
+    }
+    .home-warranty-line{
+      color:#475569;
+      font-weight:800;
+      line-height:1.45;
+      margin:0 0 16px;
+    }
+    .home-warranty-features{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      margin:18px 0;
+    }
+    .home-warranty-feature{
+      border:1px solid #e5edf7;
+      border-radius:16px;
+      padding:12px;
+      background:#fff;
+    }
+    .home-warranty-feature span{
+      display:block;
+      color:#64748b;
+      font-size:11px;
+      font-weight:950;
+      text-transform:uppercase;
+      margin-bottom:5px;
+    }
+    .home-warranty-feature strong{
+      color:var(--navy);
+      font-weight:950;
+    }
+    .home-warranty-price{
+      color:#07813e;
+      font-size:30px;
+      font-weight:950;
+      margin:12px 0 18px;
+    }
+    .home-card-lock{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      color:#334155;
+      font-size:13px;
+      font-weight:850;
+      margin:12px 0 18px;
+    }
+    .home-card-lock i{
+      width:34px;
+      height:34px;
+      border-radius:12px;
+      background:#ecfdf3;
+      color:#07813e;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .home-warranty-card .btn{width:100%;}
+    .home-auth-panel{
+      display:none;
+      margin-top:22px;
+      border:1px solid #bbf7d0;
+      background:linear-gradient(135deg,#ecfdf3 0%,#ffffff 55%,#eff6ff 100%);
+      border-radius:24px;
+      padding:22px;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      box-shadow:0 16px 36px rgba(24,180,90,.10);
+    }
+    .home-auth-panel.open{display:flex;}
+    .home-auth-panel h3{margin:0 0 6px;color:var(--navy);font-size:22px;font-weight:950;}
+    .home-auth-panel p{margin:0;color:#334155;font-weight:750;line-height:1.5;}
+    .home-auth-actions{display:flex;gap:12px;flex-wrap:wrap;justify-content:flex-end;}
+    .home-results-loading,.home-results-empty{
+      border:1px dashed #cbd5e1;
+      border-radius:22px;
+      padding:28px;
+      background:#f8fbff;
+      color:#334155;
+      font-weight:850;
+      text-align:center;
+    }
+    @media (max-width:1100px){
+      .home-warranty-grid{grid-template-columns:1fr;}
+      .home-results-head,.home-auth-panel{flex-direction:column;align-items:stretch;}
+      .home-results-vehicle{min-width:0;}
+    }
+
+    .footer-simple{
+      background:#071d49;
+      color:#cbd5e1;
+      padding:28px 0;
+      font-size:14px;
+    }
+
+    .footer-simple .container{
+      display:flex;
+      justify-content:space-between;
+      gap:18px;
+      flex-wrap:wrap;
+    }
+
+    @media(max-width:1180px){
+      .container{
+        width:min(100% - 36px, 1480px);
+      }
+
+      .hero-grid{
+        grid-template-columns:1fr;
+        min-height:auto;
+        padding:44px 0 90px;
+      }
+
+      .floating-proof{
+        display:none;
+      }
+
+      .partners-row{
+        grid-template-columns:repeat(3,1fr);
+      }
+
+      .benefit-grid,
+      .trust-grid{
+        grid-template-columns:1fr 1fr;
+      }
+
+      .steps-grid{
+        grid-template-columns:1fr;
+        gap:20px;
+      }
+
+      .step-card::after,
+      .step-number,
+      .partner-box::after{
+        display:none;
+      }
+    }
+
+    @media(max-width:900px){
+      .nav-wrap{
+        flex-direction:column;
+        min-height:auto;
+        padding:16px 0;
+        gap:12px;
+      }
+
+      .brand{
+        width:100%;
+        min-width:0;
+        justify-content:center;
+      }
+
+      .brand img{
+        width:260px;
+      }
+
+      .nav-menu{
+        width:100%;
+        overflow:auto;
+        gap:20px;
+        justify-content:flex-start;
+      }
+
+      .nav-menu a{
+        padding:10px 0;
+        font-size:13px;
+      }
+
+      .nav-actions{
+        justify-content:center;
+        flex-wrap:wrap;
+      }
+
+      .hero{
+        min-height:auto;
+        background-position:center right;
+        background-size:cover;
+      }
+
+      .hero h1{
+        font-size:36px;
+      }
+
+      .hero-copy{
+        font-size:16px;
+      }
+
+      .hero-search-panel{
+        max-width:100%;
+      }
+
+      .hero-benefits{
+        margin-top:0;
+      }
+
+      .hero-benefits-grid{
+        grid-template-columns:1fr 1fr;
+      }
+
+      .partner-box{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media(max-width:640px){
+      .container{
+        width:min(100% - 24px, 1480px);
+      }
+
+      .hero-grid{
+        padding:30px 0 60px;
+      }
+
+      .hero h1{
+        font-size:32px;
+        white-space:normal;
+      }
+
+      .vehicle-type-tabs,
+      .form-row,
+      .hero-benefits-grid,
+      .partners-row,
+      .benefit-grid,
+      .trust-grid{
+        grid-template-columns:1fr;
+      }
+
+      .plate-wrap{
+        grid-template-columns:1fr;
+      }
+
+      .plate-country{
+        height:42px;
+        flex-direction:row;
+        gap:8px;
+      }
+
+      .plate-search-btn{
+        width:100%;
+        min-width:0;
+        min-height:56px;
+      }
+
+      .benefit-item{
+        border-right:none;
+        border-bottom:1px solid var(--border);
+      }
+
+      .partner-content{
+        padding:30px;
+      }
+
+      .footer-simple .container{
+        flex-direction:column;
+        text-align:center;
+      }
+    }
+
+
+.footer{
+  background:#071d49;
+  color:#fff;
+  padding:16px 28px;
+  font-size:13px;
+}
+
+.footer-inner{
+  max-width:1480px;
+  margin:auto;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+  flex-wrap:wrap;
+}
+
+.footer-links{
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
+}
+
+
+/* Home premium v31 - Chi siamo e obiettivi */
+:root{--ef-blue:#071d49;--ef-blue2:#0b2d6c;--ef-green:#18b45a;--ef-text:#0f172a;--ef-muted:#64748b;--ef-border:#e2e8f0;--ef-soft:#f6f8fb;}
+body{font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ef-text);background:var(--ef-soft);}
+.main-header{background:rgba(255,255,255,.92);backdrop-filter:blur(16px);border-bottom:1px solid rgba(226,232,240,.9);box-shadow:0 10px 30px rgba(7,29,73,.04)}
+.nav-menu a{font-weight:850;color:#334155}.nav-menu a.active,.nav-menu a:hover{color:var(--ef-green)}
+.home-content-section{position:relative;padding:96px 0;background:radial-gradient(circle at 10% 0%,rgba(24,180,90,.10),transparent 30%),linear-gradient(180deg,#ffffff 0%,#f8fbff 100%);overflow:hidden}
+.home-content-section.alt{background:linear-gradient(180deg,#f6f8fb 0%,#ffffff 100%)}
+.home-content-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:30px;align-items:stretch}
+.premium-copy-card,.premium-info-card,.faq-card{position:relative;background:rgba(255,255,255,.96);border:1px solid rgba(210,224,241,.95);border-radius:32px;padding:34px;box-shadow:0 28px 70px rgba(7,29,73,.09);overflow:hidden}
+.premium-copy-card:before,.premium-info-card:before{content:"";position:absolute;inset:0 0 auto 0;height:5px;background:linear-gradient(90deg,var(--ef-green),#2563eb,#7c3aed,#f97316)}
+.premium-copy-card h2,.home-content-section h2{font-size:clamp(34px,3.5vw,58px);line-height:.98;letter-spacing:-1.8px;color:var(--ef-blue);margin:0 0 18px}.premium-copy-card p,.premium-info-card p,.faq-card p{color:var(--ef-muted);font-size:16.5px;line-height:1.8;margin:0}.premium-copy-card p strong,.premium-info-card p strong{color:var(--ef-blue)}
+.premium-kicker{display:inline-flex;align-items:center;gap:8px;border:1px solid #bdf0d2;background:#eafaf1;color:#117b3d;border-radius:999px;padding:9px 13px;font-weight:950;font-size:12px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px}
+.premium-lead{font-size:18px!important;color:#334155!important;font-weight:650}.premium-highlight{color:var(--ef-green);font-weight:950}.premium-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:26px}.premium-stat{border:1px solid #e7eef7;border-radius:20px;padding:18px;background:linear-gradient(180deg,#fff,#fbfdff)}.premium-stat strong{display:block;color:var(--ef-blue);font-size:26px}.premium-stat span{display:block;color:var(--ef-muted);font-size:12px;font-weight:850;margin-top:4px}.premium-objective-list{display:grid;gap:12px;margin-top:22px}.premium-objective-item{display:flex;gap:12px;align-items:flex-start;background:#f8fbff;border:1px solid #e6eef8;border-radius:18px;padding:16px}.premium-objective-item i{width:34px;height:34px;display:grid;place-items:center;border-radius:12px;background:#eafaf1;color:var(--ef-green);flex:0 0 auto}.premium-objective-item strong{display:block;color:var(--ef-blue);font-size:15px;margin-bottom:2px}.premium-objective-item span{display:block;color:var(--ef-muted);font-size:13.5px;line-height:1.55}.premium-visual-card{min-height:100%;background:linear-gradient(145deg,#071d49,#0b2d6c 62%,#18b45a);color:#fff;border-radius:32px;padding:32px;box-shadow:0 30px 80px rgba(7,29,73,.18);position:relative;overflow:hidden}.premium-visual-card:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(7,29,73,.94),rgba(7,29,73,.70)),url('/assets/hero-vehicles-premium-clean.png') center/cover no-repeat;opacity:.78}.premium-visual-card>*{position:relative;z-index:1}.premium-orbit{position:absolute;width:220px;height:220px;border:1px solid rgba(255,255,255,.22);border-radius:50%;right:-50px;top:-40px;animation:efFloat 8s ease-in-out infinite}.premium-orbit:after{content:"";position:absolute;width:18px;height:18px;background:#18b45a;border-radius:50%;right:35px;top:35px;box-shadow:0 0 0 10px rgba(24,180,90,.18)}.premium-visual-card h3{font-size:32px;line-height:1.08;margin:74px 0 14px;letter-spacing:-1px}.premium-visual-card p{color:rgba(255,255,255,.82);line-height:1.75;margin:0 0 22px}.premium-pill-row{display:flex;flex-wrap:wrap;gap:10px}.premium-pill-row span{border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.10);backdrop-filter:blur(8px);border-radius:999px;padding:10px 12px;font-size:12px;font-weight:900}.premium-motion-line{height:4px;width:88px;background:#18b45a;border-radius:999px;margin:18px 0 0;animation:efPulse 2.4s ease-in-out infinite}.section-head{text-align:center;max-width:860px;margin:0 auto}.section-kicker{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;background:#eafaf1;color:#117b3d;border:1px solid #bdf0d2;font-size:12px;font-weight:950;letter-spacing:.08em;text-transform:uppercase;padding:9px 13px;margin-bottom:14px}.section-head p{color:var(--ef-muted);font-size:17px;line-height:1.7}.audience-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:32px}.audience-card{background:#fff;border:1px solid var(--ef-border);border-radius:26px;padding:26px;box-shadow:0 20px 50px rgba(7,29,73,.06);transition:.25s ease}.audience-card:hover{transform:translateY(-4px);box-shadow:0 28px 70px rgba(7,29,73,.11)}.audience-card i{width:50px;height:50px;display:grid;place-items:center;border-radius:18px;background:#eafaf1;color:var(--ef-green);font-size:21px;margin-bottom:16px}.audience-card h3{margin:0 0 10px;color:var(--ef-blue);font-size:21px}.audience-card p{color:var(--ef-muted);line-height:1.72}.audience-card ul{margin:16px 0 0;padding-left:18px;color:var(--ef-muted);line-height:1.8;font-weight:750}.contact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:26px}.contact-card{background:#fff;border:1px solid var(--ef-border);border-radius:24px;padding:24px;box-shadow:0 18px 44px rgba(7,29,73,.05)}.contact-card small{display:block;color:var(--ef-muted);font-weight:950;text-transform:uppercase;font-size:11px;margin-bottom:8px}.contact-card strong{color:var(--ef-blue);font-size:17px}.faq-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:26px}.faq-card h3{margin:0 0 10px;color:var(--ef-blue);font-size:18px}.footer{background:linear-gradient(135deg,#071d49,#0b2d6c)!important;padding:26px 28px!important}
+@keyframes efFloat{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(16px) rotate(8deg)}}@keyframes efPulse{0%,100%{width:70px;opacity:.75}50%{width:130px;opacity:1}}
+@media(max-width:900px){.home-content-grid,.audience-grid,.contact-grid,.faq-grid{grid-template-columns:1fr}.premium-stats{grid-template-columns:1fr}.premium-visual-card h3{margin-top:50px}}
+
+  
+
+/* Step 1 - logo payoff premium */
+.main-header .brand{align-items:center!important;}
+.main-header .ef-logo-wordmark{align-items:center!important;gap:13px!important;}
+.main-header .ef-logo-stack{display:flex!important;flex-direction:column!important;align-items:flex-start!important;justify-content:center!important;line-height:1!important;}
+.main-header .ef-logo-payoff{display:block!important;margin-top:5px!important;font-size:10.5px!important;font-weight:700!important;letter-spacing:1.55px!important;text-transform:uppercase!important;color:#071d49!important;opacity:.82!important;white-space:nowrap!important;}
+@media(max-width:900px){.main-header .ef-logo-payoff{font-size:9.5px!important;letter-spacing:1.1px!important;text-align:left!important;}}
+</style>
+  <link rel="stylesheet" href="/urgent-fix.css" />
+  <link rel="stylesheet" href="/visual-final.css?v=20260519" />
+  <link rel="stylesheet" href="/approved-ui.css?v=20260519-final" />
+  <link rel="stylesheet" href="/home-100.css?v=20260519-home100" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  <link rel="stylesheet" href="/homepage-render.css?v=20260528"/>
+  <link rel="stylesheet" href="/homepage-enterprise-final.css?v=20260528-final"/>
+  <link rel="stylesheet" href="/homepage-wow-real.css?v=20260529"/>
+  <link rel="stylesheet" href="/homepage-v49-typography-premium.css?v=20260529"/>
+  <link rel="stylesheet" href="/homepage-v52-final-polish.css?v=20260529-final"/>
+
+  <style id="v61-home-header-top-fix">
+    /* V61 HOME HEADER TOP FIX */
+    html,body{margin:0!important;padding:0!important;padding-top:0!important;}
+    body::before,.top-strip,.header-top,.pre-header,.preheader,.upper-header{display:none!important;content:none!important;height:0!important;min-height:0!important;padding:0!important;margin:0!important;}
+    .main-header{position:sticky!important;top:0!important;left:0!important;width:100%!important;margin:0!important;transform:none!important;z-index:99999!important;background:rgba(255,255,255,.985)!important;}
+    .nav-wrap{min-height:86px!important;}
+    main{margin-top:0!important;padding-top:0!important;}
+    .ef-home-hero{margin-top:0!important;padding-top:48px!important;}
+  </style>
+  <link rel="stylesheet" href="/home-master-header-footer.css?v=63">
+  <link rel="stylesheet" href="/homepage-v65-index-fix.css?v=65">
+  <link rel="stylesheet" href="/homepage-v66-stable.css?v=66">
+</head>
+
+<body>
+
+  <header class="main-header">
+    <div class="container nav-wrap">
+      <a href="/index.html" class="brand">
+        <span class="ef-logo-wordmark" aria-label="EstendiFacile.it">
+          <span class="ef-logo-symbol">EF</span>
+          <span class="ef-logo-stack">
+            <span class="ef-logo-text">Estendi<span>Facile</span><small>.it</small></span>
+            <span class="ef-logo-payoff">ESTENDI LA TUA SICUREZZA</span>
+          </span>
+        </span>
+      </a>
+
+      <nav class="nav-menu ef-main-nav">
+        <a href="/partner.html"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v5M5 19v-4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v4"/><circle cx="12" cy="4" r="2"/><circle cx="5" cy="20" r="2"/><circle cx="19" cy="20" r="2"/></svg><span>Partner</span></a>
+        <a href="/chi-siamo.html"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v4"/><path d="M8 7h4M8 11h4M8 15h2"/><path d="M18 22s4-2 4-6v-3l-4-2-4 2v3c0 4 4 6 4 6Z"/><path d="m16.8 16 1 1 2.2-2.4"/></svg><span>Chi siamo</span></a>
+        <a href="/come-funziona.html"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="19" r="3"/><circle cx="18" cy="5" r="3"/><path d="M8.2 16.8 15.8 7.2"/></svg><span>Come funziona</span></a>
+        <a href="/faq.html"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.7 9a2.8 2.8 0 0 1 5.3 1.3c0 2.2-3 2.1-3 4"/><path d="M12 18h.01"/></svg><span>FAQ</span></a>
+        <a href="/contatti.html"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13a8 8 0 0 1 16 0"/><path d="M4 13v4a2 2 0 0 0 2 2h1v-7H6a2 2 0 0 0-2 2Z"/><path d="M20 13v4a2 2 0 0 1-2 2h-1v-7h1a2 2 0 0 1 2 2Z"/><path d="M16 19c0 1.1-1.8 2-4 2"/></svg><span>Contatti</span></a>
+      </nav>
+
+      <div class="nav-actions ef-nav-actions" id="navActions">
+        <a href="/normativa.html" class="nav-legal"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M5 6h14M7 6l-4 7h8L7 6ZM17 6l-4 7h8l-4-7Z"/><path d="M8 21h8"/></svg><span>Codice del consumo<br>Normativa vigente</span></a>
+        <a href="/login.html" class="nav-login"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="7" r="4"/><path d="M2.5 21a6.5 6.5 0 0 1 10.8-4.9"/><path d="M18 22s4-2 4-6v-3l-4-2-4 2v3c0 4 4 6 4 6Z"/></svg><span>Accedi</span></a>
+        <a href="/register.html" class="nav-register"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="7" r="4"/><path d="M2.5 21a6.5 6.5 0 0 1 11.7-3.9"/><path d="M19 8v6M16 11h6"/></svg><span>Crea account</span></a>
+      </div>
+
+     
+    </div>
+  </header>
+
+  <main>
+
+    <section class="hero ef-home-hero">
+      <div class="container ef-hero-grid">
+        <div class="ef-hero-copy">
+          <div class="hero-pill"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.8 1-6.1-4.4-4.3 6.1-.9L12 3Z"/></svg> La scelta intelligente per la tua mobilità</div>
+          <h1>
+            La prima piattaforma dedicata ai
+            <span class="green-line">servizi post vendita automotive.</span>
+          </h1>
+          <p class="hero-copy">
+            Confronta, scegli e gestisci in modo semplice, veloce e sicuro le migliori soluzioni di garanzia e servizi per il tuo veicolo.
+          </p>
+        </div>
+
+        <div class="ef-comparator-panel">
+          <h2><span>Comparatore</span> garanzie e servizi</h2>
+          <p class="ef-comparator-subtitle">Confronta le migliori garanzie e servizi per il tuo veicolo in pochi clic.</p>
+
+          <input type="hidden" id="tipoVeicoloInput" value="auto">
+
+          <div class="ef-step-label"><span>1</span> Seleziona il tipo di veicolo</div>
+          <div class="vehicle-type-tabs ef-vehicle-type-tabs">
+            <button class="vehicle-type-btn active" type="button" data-vehicle-type="auto"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 15h18l-2.2-5.2A3 3 0 0 0 16 8H8a3 3 0 0 0-2.8 1.8L3 15Z"/><path d="M5 15v3M19 15v3"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg><strong>Auto</strong></button>
+            <button class="vehicle-type-btn" type="button" data-vehicle-type="moto"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="17" r="3"/><circle cx="18" cy="17" r="3"/><path d="M8.5 17h4.3l2.2-6h-3l-2 4"/><path d="M15 11h3l2 3M11 8h3M5 14l3-4h3"/></svg><strong>Moto</strong></button>
+            <button class="vehicle-type-btn" type="button" data-vehicle-type="commerciale"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h11v10H3z"/><path d="M14 11h4l3 3v3h-7"/><circle cx="7" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg><strong>Veicoli<br>commerciali</strong></button>
+            <button class="vehicle-type-btn" type="button" data-vehicle-type="ricreazionale"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8h14a4 4 0 0 1 4 4v5H3V8Z"/><path d="M6 8v5M11 8v5M16 8v5"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg><strong>Ricreazionali</strong></button>
+          </div>
+
+          <div class="ef-step-label"><span>2</span> Inserisci la targa del veicolo</div>
+          <div class="plate-wrap ef-plate-wrap">
+            <div class="plate-country"><small>EU</small>IT</div>
+            <input id="targaInput" type="text" placeholder="AB123CD" maxlength="8">
+            <button class="ef-input-help" type="button" aria-label="Cerca targa"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4 4"/></svg></button>
+          </div>
+
+          <button class="btn btn-primary ef-main-compare" type="button" id="btnContinuaTarga">
+            Confronta garanzie e servizi <svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+          </button>
+
+          <div class="vehicle-extra" id="vehicleExtra">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="modelloInput">Modello veicolo</label>
+                <input id="modelloInput" type="text" placeholder="Es. Fiat Panda / Yamaha MT-07">
+              </div>
+
+              <div class="form-group">
+                <label for="annoInput">Anno immatricolazione</label>
+                <input id="annoInput" type="number" placeholder="Es. 2019">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="kmInput">Chilometraggio</label>
+                <input id="kmInput" type="number" placeholder="Es. 65000">
+              </div>
+
+              <div class="form-group">
+                <label>&nbsp;</label>
+                <button class="btn btn-primary" type="button" id="btnVaiRisultati" style="width:100%;">
+                  Visualizza soluzioni
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="ef-micro-benefits" aria-label="Vantaggi principali">
+            <span><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 10-14h-7l1-6Z"/></svg> Attivazione immediata</span>
+            <span><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5 14.1 5l3.2-.5.9 3.1 2.9 1.5-1.4 2.9 1.4 2.9-2.9 1.5-.9 3.1-3.2-.5-2.1 2.5L9.9 19l-3.2.5-.9-3.1-2.9-1.5 1.4-2.9-1.4-2.9 2.9-1.5.9-3.1 3.2.5L12 2.5Z"/><path d="m8.8 12 2.1 2.1 4.4-4.6"/></svg> Partner certificati</span>
+            <span><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13a8 8 0 0 1 16 0"/><path d="M4 13v4a2 2 0 0 0 2 2h1v-7H6a2 2 0 0 0-2 2Z"/><path d="M20 13v4a2 2 0 0 1-2 2h-1v-7h1a2 2 0 0 1 2 2Z"/><path d="M16 19c0 1.1-1.8 2-4 2"/></svg> Assistenza dedicata</span>
+          </div>
+          <div class="secure-note"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/><path d="M12 2v20"/></svg> 100% gratuito e senza impegno</div>
+          <div id="searchError" class="search-error"></div>
+        </div>
+
+        <div class="ef-vehicle-visual" aria-hidden="true"></div>
+      </div>
+
+      <div class="container ef-stats-row ef-stats-row-wow">
+        <div class="ef-stat-card">
+          <svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/><path d="M12 2v20"/></svg>
+          <div><span>Garanzie attivate</span><strong data-counter-target="12458">12.458</strong><small>+ 245 questa settimana ↗</small></div>
+          <svg viewBox="0 0 120 44" aria-hidden="true"><polyline points="2,38 18,30 34,34 52,20 68,25 84,14 102,18 118,4"/></svg>
+        </div>
+        <div class="ef-stat-card">
+          <svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="5"/><path d="M8.5 12.2 7 22l5-3 5 3-1.5-9.8"/></svg>
+          <div><span>Partner certificati</span><strong>128+</strong><small>In tutta Europa</small></div>
+          <div class="ef-eu-map">EU</div>
+        </div>
+        <div class="ef-stat-card">
+          <svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9Z"/><path d="M14 3v6h6"/><path d="M8 16c2-3 3 3 5 0 1-1 2-1 3 0"/></svg>
+          <div><span>Preventivi gestiti</span><strong data-counter-target="54800">54.800+</strong><small>+ 1.320 questa settimana ↗</small></div>
+          <svg viewBox="0 0 120 44" aria-hidden="true"><polyline points="2,35 20,32 38,23 54,26 72,16 88,12 104,8 118,3"/></svg>
+        </div>
+        <div class="ef-stat-card">
+          <svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5 14.1 5l3.2-.5.9 3.1 2.9 1.5-1.4 2.9 1.4 2.9-2.9 1.5-.9 3.1-3.2-.5-2.1 2.5L9.9 19l-3.2.5-.9-3.1-2.9-1.5 1.4-2.9-1.4-2.9 2.9-1.5.9-3.1 3.2.5L12 2.5Z"/><path d="m8.8 12 2.1 2.1 4.4-4.6"/></svg>
+          <div><span>Certificati emessi</span><strong data-counter-target="89000">89.000+</strong><small>+ 2.100 questa settimana ↗</small></div>
+          <div class="ef-eu-map">QR</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="home-results-section" id="homeResultsSection" aria-live="polite">
+      <div class="container">
+        <div class="home-results-shell">
+          <div class="home-results-head">
+            <div>
+              <div class="home-results-kicker"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/><path d="M12 2v20"/></svg> Soluzioni compatibili</div>
+              <h2>Garanzie disponibili per il tuo veicolo</h2>
+              <p id="homeResultsSubtitle">Abbiamo trovato almeno 3 soluzioni compatibili. Per privacy commerciale, dettagli e prezzo sono visibili solo dopo registrazione o accesso.</p>
+            </div>
+            <div class="home-results-vehicle">
+              <span>Veicolo cercato</span>
+              <strong id="homeResultsVehicle">—</strong>
+            </div>
+          </div>
+          <div id="homeResultsContainer" class="home-warranty-grid"></div>
+          <div class="home-auth-panel" id="homeAuthPanel">
+            <div>
+              <h3>Vuoi vedere dettagli e prezzo?</h3>
+              <p>Se non hai ancora un account, registrati per visualizzare coperture, condizioni e procedere all'acquisto. Se sei già registrato, accedi alla tua area riservata.</p>
+            </div>
+            <div class="home-auth-actions">
+              <a href="/register.html" class="btn btn-primary">Registrati gratis</a>
+              <a href="/login.html" class="btn btn-outline">Accedi</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="ef-trust-strip">
+      <div class="container ef-trust-row">
+        <div><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/><path d="M12 2v20"/></svg><strong>Trasparenza totale</strong></div>
+        <div><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5 14.1 5l3.2-.5.9 3.1 2.9 1.5-1.4 2.9 1.4 2.9-2.9 1.5-.9 3.1-3.2-.5-2.1 2.5L9.9 19l-3.2.5-.9-3.1-2.9-1.5 1.4-2.9-1.4-2.9 2.9-1.5.9-3.1 3.2.5L12 2.5Z"/><path d="m8.8 12 2.1 2.1 4.4-4.6"/></svg><strong>Partner certificati</strong></div>
+        <div><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13a8 8 0 0 1 16 0"/><path d="M4 13v4a2 2 0 0 0 2 2h1v-7H6a2 2 0 0 0-2 2Z"/><path d="M20 13v4a2 2 0 0 1-2 2h-1v-7h1a2 2 0 0 1 2 2Z"/><path d="M16 19c0 1.1-1.8 2-4 2"/></svg><strong>Assistenza dedicata</strong></div>
+        <div><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="12" r="3"/><path d="M9 2v3M9 19v3M2 12h3M13 12h3M4.2 7.2l2.1 2.1M11.7 14.7l2.1 2.1M13.8 7.2l-2.1 2.1M6.3 14.7l-2.1 2.1"/><circle cx="18" cy="17" r="2"/></svg><strong>Tecnologia avanzata</strong></div>
+        <div><strong>Oltre 120 partner<br>in tutta Europa</strong></div>
+        <div class="ef-logo-mini">Allianz</div>
+        <div class="ef-logo-mini">ARVAL</div>
+        <div class="ef-logo-mini">MAPFRE</div>
+        <div class="ef-logo-mini">REALE MUTUA</div>
+        <div class="ef-logo-mini">ZURICH</div>
+        <div class="ef-logo-mini">Conformgest</div>
+        <a class="ef-see-all" href="/partner.html">Vedi tutti <svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+      </div>
+    </section>
+
+    <section class="home-content-section" id="chi-siamo">
+      <div class="container home-content-grid">
+        <div class="premium-copy-card">
+          <div class="premium-kicker"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 10 9l-6 2 6 2 2 6 2-6 6-2-6-2-2-6Z"/><path d="M19 3v4M17 5h4M5 17v4M3 19h4"/></svg> Chi siamo e obiettivi</div>
+          <h2>La nuova era del post vendita automotive.</h2>
+          <p class="premium-lead"><strong>ESTENDIFACILE.IT</strong> è la prima piattaforma digitale in Italia e in Europa progettata per trasformare completamente il settore dei servizi post vendita automotive.</p>
+          <p>Nasciamo con una visione precisa: creare un ecosistema <strong>premium, trasparente e tecnologicamente evoluto</strong>, capace di mettere in connessione clienti privati, concessionari e partner professionali all’interno di un’unica piattaforma intelligente.</p>
+          <p>Auto, moto, truck e veicoli ricreazionali trovano finalmente uno spazio unico dove confrontare, acquistare e gestire servizi post vendita in modo semplice, veloce e sicuro.</p>
+          <div class="premium-stats">
+            <div class="premium-stat"><strong>1ª</strong><span>piattaforma europea</span></div>
+            <div class="premium-stat"><strong>360°</strong><span>servizi post vendita</span></div>
+            <div class="premium-stat"><strong>QR</strong><span>certificati verificabili</span></div>
+          </div>
+        </div>
+        <div class="premium-visual-card" aria-label="Visual EstendiFacile premium">
+          <div class="premium-orbit"></div>
+          <div class="premium-kicker"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/><path d="M12 2v20"/></svg> Ecosistema premium</div>
+          <h3>Una piattaforma. Un solo standard.</h3>
+          <p>EstendiFacile vuole diventare il punto di riferimento europeo per il post vendita automotive: più intelligente, più veloce e finalmente più semplice per tutti.</p>
+          <div class="premium-pill-row">
+            <span>Affidabilità</span>
+            <span>Innovazione</span>
+            <span>Automazione</span>
+            <span>Sicurezza</span>
+            <span>Trasparenza</span>
+          </div>
+          <div class="premium-motion-line"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="home-content-section alt" id="obiettivi">
+      <div class="container home-content-grid">
+        <div class="premium-info-card">
+          <div class="premium-kicker"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg> Il nostro obiettivo</div>
+          <h2>Ridefinire gli standard del settore.</h2>
+          <p>Per anni il mondo del post vendita è stato frammentato, poco trasparente e complesso da gestire. <strong>EstendiFacile nasce per cambiare tutto questo</strong>, offrendo strumenti digitali evoluti e una gestione completamente centralizzata di garanzie, ticket, preventivi e documentazione.</p>
+          <div class="premium-objective-list">
+            <div class="premium-objective-item"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M5 6h14M7 6l-4 7h8L7 6ZM17 6l-4 7h8l-4-7Z"/><path d="M8 21h8"/></svg><div><strong>Tutela del consumatore</strong><span>Processi più chiari, soluzioni verificabili e maggiore trasparenza per il cliente finale.</span></div></div>
+            <div class="premium-objective-item"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 14a8 8 0 0 1 16 0"/><path d="M12 14l5-5"/><path d="M7 20h10"/></svg><div><strong>Velocità per concessionari</strong><span>Comparazione, attivazione, checkout, pratiche e certificati gestiti da un’unica dashboard.</span></div></div>
+            <div class="premium-objective-item"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v5M5 19v-4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v4"/><circle cx="12" cy="4" r="2"/><circle cx="5" cy="20" r="2"/><circle cx="19" cy="20" r="2"/></svg><div><strong>Sviluppo per i partner</strong><span>Maggiore distribuzione territoriale, meno costi interni e gestione ordinata di prodotti, ticket e preventivi.</span></div></div>
+          </div>
+        </div>
+        <div class="premium-copy-card">
+          <div class="premium-kicker"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4c3 0 5-1 6-2-1 4-2 8-5 11l-5 5-4-4 5-5c1-1 2-3 3-5Z"/><path d="M8 16l-4 4"/><path d="M15 9h.01"/></svg> Un vantaggio per tutti</div>
+          <h2>Più scelta, più controllo, più fiducia.</h2>
+          <p><strong>Per il cliente privato</strong>: più trasparenza, più sicurezza e la possibilità di scegliere sempre la soluzione più adatta alle proprie esigenze.</p>
+          <p><strong>Per concessionari e rivenditori</strong>: una piattaforma professionale progettata per ottimizzare tempi, gestione operativa e qualità del servizio offerto al cliente finale.</p>
+          <p><strong>Per partner e società di servizi</strong>: uno strumento evoluto che consente di espandere il mercato, aumentare la distribuzione dei servizi e ridurre drasticamente costi operativi e tempi di gestione.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="home-content-section alt" id="come-funziona">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-kicker">Come funziona</div>
+          <h2>Un flusso unico per privati, concessionari e partner</h2>
+          <p>Ogni utente lavora nella propria area riservata, con funzioni pensate per il suo ruolo.</p>
+        </div>
+        <div class="audience-grid render-audience-grid">
+          <div class="audience-card"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><h3>Per il privato</h3><ol><li>Confronta le soluzioni</li><li>Scegli la garanzia più adatta</li><li>Acquista online in sicurezza</li><li>Gestisci tutto dalla tua area</li></ol><a href="/register.html">Scopri di più <svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a></div>
+          <div class="audience-card"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v16"/><path d="M8 7h1M12 7h1M8 11h1M12 11h1M8 15h1M12 15h1M3 21h18"/></svg><h3>Per il concessionario</h3><ol><li>Confronta le soluzioni</li><li>Apri ticket e richiedi preventivi</li><li>Gestisci le pratiche</li><li>Monitora tutto dalla dashboard</li></ol><a href="/register.html">Scopri di più <svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a></div>
+          <div class="audience-card"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="7" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 21a6 6 0 0 1 12 0"/><path d="M14 18a5 5 0 0 1 7 3"/></svg><h3>Per i partner</h3><ol><li>Carica i tuoi prodotti/servizi</li><li>Ricevi richieste di ticket</li><li>Gestisci e proponi soluzioni</li><li>Espandi il tuo business</li></ol><a href="/partner.html">Scopri di più <svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a></div>
+          <div class="audience-card security-card"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/><path d="M12 2v20"/></svg><h3>Sicurezza e affidabilità</h3><p>Tutti i processi sono certificati e conformi alle normative europee per offrirti la massima protezione.</p><a href="/normativa.html" class="security-link">Scopri di più <svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a></div>
+        </div>
+      </div>
+    </section>
+
+<section class="partner-section">
+      <div class="container">
+        <div class="partner-box">
+          <div class="partner-photo"></div>
+          <div class="partner-content">
+            <h2>Sei un concessionario o un partner?</h2>
+            <p>Accedi a strumenti dedicati, dashboard avanzate e gestione completa delle garanzie.</p>
+            <div class="partner-actions">
+              <a href="/partner-dashboard.html" class="btn btn-primary">Area Partner <svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></a>
+              <a href="/register.html" class="btn btn-outline">Scopri di più <svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    
+    <section class="home-content-section alt" id="contatti-info">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-kicker">Contatti</div>
+          <h2>Parla con EstendiFacile</h2>
+          <p>Questi dati sono provvisori e potranno essere aggiornati quando avremo i riferimenti definitivi.</p>
+        </div>
+        <div class="contact-grid">
+          <div class="contact-card"><small>Telefono</small><strong>+39 000 000 0000</strong></div>
+          <div class="contact-card"><small>Email</small><strong>info@estendifacile.it</strong></div>
+          <div class="contact-card"><small>Sede legale</small><strong>Da definire</strong></div>
+          <div class="contact-card"><small>Sede operativa</small><strong>Da definire</strong></div>
+          <div class="contact-card"><small>Assistenza</small><strong>support@estendifacile.it</strong></div>
+          <div class="contact-card"><small>Area partner</small><strong>partner@estendifacile.it</strong></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="home-content-section" id="faq">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-kicker">FAQ</div>
+          <h2>Domande frequenti</h2>
+          <p>Le risposte principali per usare EstendiFacile in modo rapido e sicuro.</p>
+        </div>
+        <div class="faq-grid">
+          <div class="faq-card"><h3>Posso acquistare una garanzia direttamente online?</h3><p>Sì. Dopo il confronto puoi selezionare una soluzione disponibile e completare il checkout dalla tua area riservata.</p></div>
+          <div class="faq-card"><h3>Cosa succede se il veicolo richiede preventivo?</h3><p>Il sistema permette di aprire un ticket. Il partner riceve la richiesta, inserisce prezzo e risposta, e tu puoi accettare o rifiutare.</p></div>
+          <div class="faq-card"><h3>Perché alcuni veicoli non sono attivabili?</h3><p>Ogni partner può indicare modelli esclusi o gestibili solo con valutazione. In quel caso il comparatore mostra il messaggio corretto.</p></div>
+          <div class="faq-card"><h3>Il certificato è verificabile?</h3><p>Sì. Il certificato premium include dati pratica, QR e codice verifica per controllare l’autenticità del documento.</p></div>
+        </div>
+      </div>
+    </section>
+
+
+
+  </main>
+
+  <footer id="contatti" class="footer">
+  <div class="footer-inner">
+    <div>© EstendiFacile.it</div>
+    <div><strong>Tel.</strong> +39 000 000 0000 · <strong>Email</strong> info@estendifacile.it</div><div><strong>Sede legale</strong> da definire · <strong>Sede operativa</strong> da definire</div>
+    <div class="footer-links">
+      <a href="/privacy.html">Privacy Policy</a>
+      <a href="/cookie.html">Cookie Policy</a>
+      <a href="/termini.html">Termini e Condizioni</a>
+      <a href="/normativa.html">Normativa vigente</a>
+    </div>
+  </div>
+</footer>
+
+  <script src="/js/index.js"></script>
+  <script src="/js/ai-assistant.js?v=20260519"></script>
+  <script src="/js/approved-ui.js?v=20260519-final"></script>
+
+  <script>
+  (function estendiCountUpFinal(){
+    const ease=t=>1-Math.pow(1-t,3);
+    const format=n=>Math.round(n).toLocaleString('it-IT');
+    const run=()=>document.querySelectorAll('[data-counter-target]').forEach(el=>{
+      const target=parseInt(el.getAttribute('data-counter-target'),10);
+      if(!target || el.dataset.done==='1') return;
+      el.dataset.done='1';
+      const plus=/\+$/.test(el.textContent.trim())?'+':'';
+      const start=performance.now();
+      const dur=1200;
+      function tick(now){
+        const p=Math.min(1,(now-start)/dur);
+        el.textContent=format(target*ease(p))+plus;
+        if(p<1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    });
+    if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',run); else run();
+  })();
+  </script>
+</body>
+</html>

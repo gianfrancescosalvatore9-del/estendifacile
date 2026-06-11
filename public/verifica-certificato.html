@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Verifica certificato | EstendiFacile.it</title>
+  <link rel="stylesheet" href="/style.css" />
+  <style>
+    body { min-height: 100vh; background: #f5f7fb; font-family: Arial, sans-serif; }
+    .verify-wrap { max-width: 860px; margin: 0 auto; padding: 48px 18px; }
+    .verify-card { background: #fff; border-radius: 20px; padding: 28px; box-shadow: 0 14px 40px rgba(15,23,42,.10); }
+    .verify-logo { max-width: 220px; display: block; margin-bottom: 24px; }
+    .verify-form { display: flex; gap: 12px; margin: 22px 0; flex-wrap: wrap; }
+    .verify-form input { flex: 1; min-width: 250px; padding: 14px 16px; border: 1px solid #d8dee9; border-radius: 12px; font-size: 16px; }
+    .verify-form button { border: 0; border-radius: 12px; padding: 14px 20px; font-weight: 700; cursor: pointer; }
+    .verify-ok { background: #eaf8ef; color: #166534; border: 1px solid #bbf7d0; padding: 18px; border-radius: 14px; margin-top: 18px; }
+    .verify-ko { background: #fff1f2; color: #9f1239; border: 1px solid #fecdd3; padding: 18px; border-radius: 14px; margin-top: 18px; }
+    .verify-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 14px; }
+    .verify-field { background: #f8fafc; border-radius: 12px; padding: 12px; }
+    .verify-field small { display: block; color: #64748b; margin-bottom: 4px; }
+    @media (max-width: 700px) { .verify-grid { grid-template-columns: 1fr; } }
+  </style>
+  <link rel="stylesheet" href="/urgent-fix.css" />
+  <link rel="stylesheet" href="/visual-final.css?v=20260519" />
+  <link rel="stylesheet" href="/premium-uniform.css?v=20260521" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/home-master-header-footer.css?v=63">
+</head>
+<body>
+<header class="main-header">
+    <div class="container nav-wrap">
+      <a href="/index.html" class="brand">
+        <span class="ef-logo-wordmark" aria-label="EstendiFacile.it">
+          <span class="ef-logo-symbol">EF</span>
+          <span class="ef-logo-stack">
+            <span class="ef-logo-text">Estendi<span>Facile</span><small>.it</small></span>
+            <span class="ef-logo-payoff">ESTENDI LA TUA SICUREZZA</span>
+          </span>
+        </span>
+      </a>
+
+      <nav class="nav-menu ef-main-nav">
+        <a href="/partner.html"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v5M5 19v-4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v4"/><circle cx="12" cy="4" r="2"/><circle cx="5" cy="20" r="2"/><circle cx="19" cy="20" r="2"/></svg><span>Partner</span></a>
+        <a href="/chi-siamo.html"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v4"/><path d="M8 7h4M8 11h4M8 15h2"/><path d="M18 22s4-2 4-6v-3l-4-2-4 2v3c0 4 4 6 4 6Z"/><path d="m16.8 16 1 1 2.2-2.4"/></svg><span>Chi siamo</span></a>
+        <a href="/come-funziona.html"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="19" r="3"/><circle cx="18" cy="5" r="3"/><path d="M8.2 16.8 15.8 7.2"/></svg><span>Come funziona</span></a>
+        <a href="/faq.html"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.7 9a2.8 2.8 0 0 1 5.3 1.3c0 2.2-3 2.1-3 4"/><path d="M12 18h.01"/></svg><span>FAQ</span></a>
+        <a href="/contatti.html"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13a8 8 0 0 1 16 0"/><path d="M4 13v4a2 2 0 0 0 2 2h1v-7H6a2 2 0 0 0-2 2Z"/><path d="M20 13v4a2 2 0 0 1-2 2h-1v-7h1a2 2 0 0 1 2 2Z"/><path d="M16 19c0 1.1-1.8 2-4 2"/></svg><span>Contatti</span></a>
+      </nav>
+
+      <div class="nav-actions ef-nav-actions" id="navActions">
+        <a href="/normativa.html" class="nav-legal"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M5 6h14M7 6l-4 7h8L7 6ZM17 6l-4 7h8l-4-7Z"/><path d="M8 21h8"/></svg><span>Codice del consumo<br>Normativa vigente</span></a>
+        <a href="/login.html" class="nav-login"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="7" r="4"/><path d="M2.5 21a6.5 6.5 0 0 1 10.8-4.9"/><path d="M18 22s4-2 4-6v-3l-4-2-4 2v3c0 4 4 6 4 6Z"/></svg><span>Accedi</span></a>
+        <a href="/register.html" class="nav-register"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="7" r="4"/><path d="M2.5 21a6.5 6.5 0 0 1 11.7-3.9"/><path d="M19 8v6M16 11h6"/></svg><span>Crea account</span></a>
+      </div>
+
+     
+    </div>
+  </header>
+  <main class="verify-wrap">
+    <section class="verify-card">
+      <span class="ef-logo-wordmark" aria-label="EstendiFacile.it">
+          <span class="ef-logo-symbol">EF</span>
+          <span class="ef-logo-text">Estendi<span>Facile</span><small>.it</small></span>
+        </span>
+      <h1>Verifica certificato</h1>
+      <p>Inserisci il numero certificato per controllare autenticità, stato e dati principali della garanzia.</p>
+
+      <form id="verifyForm" class="verify-form">
+        <input id="numeroCertificato" type="text" placeholder="EF-2026-000001" autocomplete="off" required />
+        <button type="submit">Verifica</button>
+      </form>
+
+      <div id="result"></div>
+    </section>
+  </main>
+
+  <script>
+    const form = document.getElementById('verifyForm');
+    const input = document.getElementById('numeroCertificato');
+    const result = document.getElementById('result');
+
+    const params = new URLSearchParams(window.location.search);
+    const certParam = params.get('certificato');
+    if (certParam) {
+      input.value = certParam;
+      verifica(certParam);
+    }
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      verifica(input.value);
+    });
+
+    function euroDate(value) {
+      if (!value) return '-';
+      const date = new Date(value);
+      if (Number.isNaN(date.getTime())) return value;
+      return date.toLocaleDateString('it-IT');
+    }
+
+    async function verifica(numero) {
+      const clean = String(numero || '').trim().toUpperCase();
+      result.innerHTML = '<p>Verifica in corso...</p>';
+
+      try {
+        const res = await fetch('/api/verifica-certificato/' + encodeURIComponent(clean));
+        const data = await res.json();
+
+        if (!res.ok || !data.valido) {
+          result.innerHTML = `<div class="verify-ko"><strong>Certificato non valido</strong><br>${data.error || (data.scaduto ? 'La garanzia risulta scaduta.' : 'Il certificato non risulta verificabile.')}</div>`;
+          return;
+        }
+
+        result.innerHTML = `
+          <div class="verify-ok">
+            <strong>Certificato valido</strong><br>
+            Numero: ${data.numero_certificato}
+          </div>
+          <div class="verify-grid">
+            <div class="verify-field"><small>Garanzia</small>${data.garanzia?.nome || '-'}</div>
+            <div class="verify-field"><small>Brand</small>${data.garanzia?.brand || '-'}</div>
+            <div class="verify-field"><small>Partner</small>${data.partner?.nome || '-'}</div>
+            <div class="verify-field"><small>Emissione</small>${euroDate(data.certificato_emesso_at)}</div>
+            <div class="verify-field"><small>Validità</small>${euroDate(data.garanzia?.inizio)} - ${euroDate(data.garanzia?.fine)}</div>
+            <div class="verify-field"><small>Veicolo</small>${data.veicolo?.modello || '-'} ${data.veicolo?.targa ? '(' + data.veicolo.targa + ')' : ''}</div>
+          </div>
+          ${data.certificato_pdf_url ? `<p style="margin-top:18px"><a href="${data.certificato_pdf_url}" target="_blank" rel="noopener">Scarica certificato PDF</a></p>` : ''}
+        `;
+      } catch (error) {
+        result.innerHTML = '<div class="verify-ko"><strong>Errore</strong><br>Impossibile completare la verifica in questo momento.</div>';
+      }
+    }
+  </script>
+  <script src="/js/ai-assistant.js?v=20260519"></script>
+<footer id="contatti" class="footer">
+  <div class="footer-inner">
+    <div>© EstendiFacile.it</div>
+    <div><strong>Tel.</strong> +39 000 000 0000 · <strong>Email</strong> info@estendifacile.it</div><div><strong>Sede legale</strong> da definire · <strong>Sede operativa</strong> da definire</div>
+    <div class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Termini e Condizioni</a>
+    </div>
+  </div>
+</footer>
+
+</html>

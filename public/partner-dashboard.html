@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard Partner - EstendiFacile.it</title>
+
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="/urgent-fix.css" />
+  <link rel="stylesheet" href="/visual-final.css?v=20260519" />
+  <link rel="stylesheet" href="/approved-ui.css?v=20260519-final" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+  <style>
+    :root {
+      --ef-blue:#071d49;
+      --ef-green:#18b45a;
+      --ef-green-dark:#0fa34f;
+      --ef-bg:#f6f9fd;
+      --ef-text:#071d49;
+      --ef-muted:#64748b;
+      --ef-border:#e4ebf5;
+      --ef-soft-green:#eafaf1;
+      --ef-shadow:0 18px 45px rgba(7,29,73,.08);
+      --ef-shadow-soft:0 10px 28px rgba(7,29,73,.06);
+      --ef-danger:#b91c1c;
+      --ef-orange:#f97316;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+      color:var(--ef-text);
+      background:radial-gradient(circle at top right,rgba(24,180,90,.06),transparent 32%),
+                 linear-gradient(180deg,#fff 0%,var(--ef-bg) 42%,#fff 100%);
+    }
+    button,input,textarea,select{font-family:inherit}
+
+    .partner-shell{min-height:100vh;display:grid;grid-template-columns:252px minmax(0,1fr)}
+    .partner-sidebar{
+      position:sticky;top:0;height:100vh;padding:26px 22px;background:rgba(255,255,255,.95);
+      border-right:1px solid var(--ef-border);box-shadow:14px 0 40px rgba(7,29,73,.035);
+      display:flex;flex-direction:column;gap:26px;z-index:5
+    }
+    .sidebar-logo-row{display:flex;align-items:center;min-height:68px}
+    .ef-mini-logo{
+      width:66px;height:66px;border-radius:18px;background:var(--ef-blue);color:#fff;
+      display:inline-flex;align-items:center;justify-content:center;font-weight:950;font-size:21px;
+      letter-spacing:-.6px;position:relative;box-shadow:0 14px 24px rgba(7,29,73,.18)
+    }
+    .ef-mini-logo:after{
+      content:"";position:absolute;right:-5px;bottom:-5px;width:21px;height:21px;border-radius:50%;
+      background:var(--ef-green);border:4px solid #fff
+    }
+
+    .partner-nav{display:grid;gap:9px}
+    .nav-item{
+      width:100%;border:0;background:transparent;color:var(--ef-text);display:flex;align-items:center;
+      gap:13px;padding:13px 14px;border-radius:14px;text-decoration:none;font-size:14px;font-weight:850;
+      cursor:pointer;text-align:left;transition:.16s ease
+    }
+    .nav-item:hover{background:#f2f7fd;transform:translateX(2px)}
+    .nav-item.active{background:linear-gradient(90deg,#e8f9ef,#f5fcf8);color:var(--ef-green-dark)}
+    .nav-icon{width:23px;display:inline-flex;align-items:center;justify-content:center;font-size:15px}
+    .nav-text{flex:1}
+    .sidebar-badge{
+      display:none;min-width:22px;height:22px;padding:0 7px;border-radius:999px;background:var(--ef-orange);
+      color:#fff;font-size:11px;font-weight:950;align-items:center;justify-content:center
+    }
+    .sidebar-badge.show{display:inline-flex!important}
+    .sidebar-actions{margin-top:auto;display:grid;gap:13px}
+    .sidebar-btn,.btn-action,.hero-btn{
+      min-height:48px;padding:0 22px;border-radius:13px;border:1px solid var(--ef-border);background:#fff;
+      color:var(--ef-text);font-weight:920;text-decoration:none;display:inline-flex;align-items:center;
+      justify-content:center;gap:10px;cursor:pointer;box-shadow:0 12px 24px rgba(7,29,73,.06);transition:.16s ease
+    }
+    .sidebar-btn{width:100%}
+    .sidebar-btn:hover,.btn-action:hover,.hero-btn:hover{transform:translateY(-1px);box-shadow:var(--ef-shadow-soft)}
+    .primary,.sidebar-btn.primary,.hero-btn.primary,.btn-action.primary{
+      background:linear-gradient(135deg,var(--ef-green),#11bf63);border-color:var(--ef-green);color:#fff;
+      box-shadow:0 18px 28px rgba(24,180,90,.2)
+    }
+
+    .partner-main{min-width:0;padding:32px 42px 42px}
+    .partner-topbar{min-height:60px;display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:26px}
+    .account-pill{
+      min-width:220px;border:1px solid var(--ef-border);background:rgba(255,255,255,.92);border-radius:16px;
+      padding:11px 16px;box-shadow:var(--ef-shadow-soft);display:inline-flex;align-items:center;justify-content:space-between;gap:14px
+    }
+    .account-pill small{display:block;color:var(--ef-muted);text-transform:uppercase;letter-spacing:.06em;font-size:11px;font-weight:900;margin-bottom:2px}
+    .account-pill strong{display:block;color:var(--ef-text);font-size:16px;font-weight:950;line-height:1.1;max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .topbar-actions{display:flex;align-items:center;gap:13px}
+    .top-icon{
+      width:42px;height:42px;border:1px solid var(--ef-border);background:#fff;border-radius:999px;display:inline-flex;
+      align-items:center;justify-content:center;color:var(--ef-text);position:relative;box-shadow:var(--ef-shadow-soft)
+    }
+    .top-icon .dot{
+      position:absolute;top:-4px;right:-2px;width:18px;height:18px;border-radius:50%;background:var(--ef-green);
+      color:#fff;font-size:10px;font-weight:900;display:inline-flex;align-items:center;justify-content:center;border:2px solid #fff
+    }
+
+    .hero-partner{
+      position:relative;min-height:280px;border-radius:26px;overflow:hidden;border:1px solid var(--ef-border);
+      background-image:linear-gradient(90deg,rgba(255,255,255,.98) 0%,rgba(255,255,255,.94) 39%,rgba(255,255,255,.62) 64%,rgba(255,255,255,.18) 100%),
+        url("https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=1800&auto=format&fit=crop");
+      background-size:cover;background-position:center right;box-shadow:var(--ef-shadow);margin-bottom:26px;padding:42px 44px;display:flex;align-items:center
+    }
+    .hero-partner:after{
+      content:"";position:absolute;inset:0;background:radial-gradient(circle at 74% 45%,rgba(255,255,255,.10),transparent 25%),
+      linear-gradient(180deg,transparent 0%,rgba(255,255,255,.16) 100%);pointer-events:none
+    }
+    .hero-content{position:relative;z-index:1;max-width:720px}
+    .badge{
+      display:inline-flex;border-radius:999px;background:var(--ef-soft-green);color:var(--ef-green-dark);
+      padding:8px 13px;font-size:12px;font-weight:950;text-transform:uppercase;letter-spacing:.02em;margin-bottom:15px
+    }
+    .hero-partner h1{margin:0 0 12px;font-size:42px;line-height:1.02;letter-spacing:-1.4px;font-weight:950}
+    .hero-partner p{margin:0;max-width:650px;color:#3f5575;font-size:16px;line-height:1.7;font-weight:650}
+    .hero-actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:26px}
+
+    .notification-box{
+      display:none;margin-bottom:26px;background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;border-radius:20px;
+      padding:18px 20px;font-weight:900;box-shadow:var(--ef-shadow-soft)
+    }
+    .notification-box.show{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+
+    .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:26px}
+    .kpi-card{
+      min-height:140px;background:#fff;border:1px solid var(--ef-border);border-radius:21px;box-shadow:var(--ef-shadow-soft);
+      padding:24px;display:grid;grid-template-columns:54px 1fr;column-gap:18px;align-items:start;transition:.16s ease
+    }
+    .kpi-card:hover{transform:translateY(-2px);box-shadow:var(--ef-shadow)}
+    .kpi-icon,.operation-icon{
+      border-radius:50%;background:var(--ef-soft-green);color:var(--ef-green-dark);display:inline-flex;align-items:center;justify-content:center
+    }
+    .kpi-icon{width:54px;height:54px;font-size:22px}
+    .kpi-label{color:#60708c;font-size:12px;font-weight:950;text-transform:uppercase;letter-spacing:.03em;margin-bottom:10px}
+    .kpi-value{font-size:34px;line-height:1;font-weight:950;margin-bottom:12px;letter-spacing:-.6px}
+    .kpi-note{color:var(--ef-green-dark);font-size:13px;font-weight:900}
+
+    .section{display:none}.section.active{display:block}
+    .panel-card{
+      background:rgba(255,255,255,.96);border:1px solid var(--ef-border);border-radius:24px;box-shadow:var(--ef-shadow-soft);
+      padding:28px;margin-bottom:26px
+    }
+    .panel-head{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:22px}
+    .panel-head h2{margin:0 0 8px;font-size:28px;line-height:1.12;letter-spacing:-.45px;font-weight:950}
+    .panel-head p{margin:0;color:var(--ef-muted);font-size:15px;line-height:1.7;max-width:780px}
+    .operation-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .operation-card{
+      border:1px solid var(--ef-border);background:#fbfdff;border-radius:19px;padding:20px 22px;min-height:104px;
+      display:grid;grid-template-columns:54px 1fr 24px;align-items:center;gap:17px;cursor:pointer;transition:.16s ease
+    }
+    .operation-card:hover{transform:translateY(-2px);box-shadow:var(--ef-shadow-soft);border-color:#d3e0ee}
+    .operation-icon{width:52px;height:52px;font-size:20px}
+    .operation-card h3{margin:0 0 6px;font-size:18px;font-weight:950}
+    .operation-card p{margin:0;color:var(--ef-muted);font-size:14px;line-height:1.55}
+    .operation-arrow{font-size:28px;opacity:.7}
+
+    .form-grid{display:grid;gap:16px}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .form-group{display:flex;flex-direction:column;gap:8px}
+    .form-group.full{grid-column:1/-1}
+    .form-group label{color:#334155;font-size:14px;font-weight:900}
+    .form-group input,.form-group textarea,.form-group select,.table-tools input,.table-tools select{
+      width:100%;padding:14px;border:1px solid #d6deea;border-radius:14px;background:#fff;font-size:15px;outline:none
+    }
+    textarea{min-height:110px;resize:vertical}
+    .limits-box{background:#f8fbff;border:1px solid #e5edf7;border-radius:18px;padding:18px;display:grid;gap:14px}
+    .toggle-row,.supplement-toggle{display:flex;align-items:flex-start;gap:10px;color:#334155;font-weight:800;line-height:1.5}
+    .table-tools{display:flex;gap:10px;flex-wrap:wrap}.table-tools input,.table-tools select{min-width:220px}
+    .table-wrap{overflow-x:auto;border:1px solid var(--ef-border);border-radius:18px;background:#fff}
+    table{width:100%;border-collapse:collapse;background:#fff}
+    th,td{padding:15px 16px;text-align:left;border-bottom:1px solid #edf2f7;vertical-align:top;font-size:14px}
+    th{background:#f8fbff;color:#334155;font-weight:900}
+    .product-title{font-size:17px;font-weight:900;margin-bottom:5px}.product-desc{color:var(--ef-muted);line-height:1.5}
+    .pill{display:inline-flex;align-items:center;justify-content:center;padding:7px 10px;border-radius:999px;font-size:12px;font-weight:900;text-transform:uppercase;background:#eef7f1;color:#15803d;white-space:nowrap}
+    .pill.warn{background:#fff7ed;color:#9a3412}.pill.off{background:#f1f5f9;color:#64748b}.pill.blue{background:#e0f2fe;color:#0369a1}
+    .table-actions{display:flex;gap:8px;flex-wrap:wrap}
+    .mini-btn{border:none;border-radius:10px;padding:8px 10px;font-size:13px;font-weight:900;cursor:pointer}
+    .mini-btn.edit{background:#e0f2fe;color:#0369a1}.mini-btn.delete{background:#fee2e2;color:var(--ef-danger)}
+    .mini-btn.success{background:#dcfce7;color:#15803d}.mini-btn.gray{background:#f1f5f9;color:#475569}
+    .empty-table{padding:24px;text-align:center;color:var(--ef-muted)}
+    .message{min-height:22px;font-size:14px;font-weight:900}.message.success{color:#15803d}.message.error{color:var(--ef-danger)}
+    .supplement-price-input{width:130px;padding:10px;border:1px solid #d6deea;border-radius:10px;font-size:14px}
+    .order-detail-box{background:#f8fbff;border:1px solid #e5edf7;border-radius:18px;padding:16px;margin-top:14px;display:none}
+    .order-detail-box.show{display:block}
+    .detail-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    .detail-item{background:#fff;border:1px solid #edf2f7;border-radius:14px;padding:12px}
+    .detail-label{font-size:11px;color:var(--ef-muted);font-weight:900;text-transform:uppercase;margin-bottom:5px}
+    .detail-value{font-weight:900;line-height:1.35}
+
+    @media(max-width:1180px){
+      .partner-shell{grid-template-columns:1fr}.partner-sidebar{position:static;height:auto;flex-direction:row;align-items:center;overflow-x:auto}
+      .partner-nav{grid-auto-flow:column;grid-auto-columns:max-content;overflow-x:auto}.sidebar-actions{margin-top:0;display:flex;min-width:max-content}
+      .kpi-grid,.detail-grid{grid-template-columns:1fr 1fr}
+    }
+    @media(max-width:760px){
+      .partner-main{padding:20px}.partner-topbar{align-items:flex-start;flex-direction:column}
+      .hero-partner{padding:28px 22px;min-height:auto;background-image:linear-gradient(90deg,rgba(255,255,255,.98),rgba(255,255,255,.88)),url("https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=1600&auto=format&fit=crop");background-size:cover;background-position:center}
+      .hero-partner h1{font-size:32px}.hero-actions,.topbar-actions{width:100%}.hero-btn,.top-icon{flex:1}
+      .kpi-grid,.operation-grid,.form-row,.detail-grid{grid-template-columns:1fr}.table-tools input,.table-tools select{min-width:100%}
+    }
+  
+    /* V6: identità visuale coerente con dashboard concessionario */
+    html body { margin-top:0!important; padding-top:0!important; }
+    body > .main-header, body > .premium-header, body > .topbar { display:none!important; height:0!important; min-height:0!important; }
+    .private-main, .partner-main { padding-top:28px!important; }
+    .private-sidebar, .partner-sidebar {
+      background: linear-gradient(180deg,#071d49 0%, #102d6b 45%, #163d86 100%) !important;
+      border-right: 1px solid rgba(255,255,255,.08) !important;
+      box-shadow: 14px 0 40px rgba(7,29,73,.12) !important;
+    }
+    .private-sidebar .nav-item, .partner-sidebar .nav-item { color:rgba(255,255,255,.88)!important; }
+    .private-sidebar .nav-item:hover, .partner-sidebar .nav-item:hover { background:rgba(255,255,255,.12)!important; color:#fff!important; transform:translateX(4px)!important; }
+    .private-sidebar .nav-item.active, .partner-sidebar .nav-item.active { background:linear-gradient(135deg,#6ea8ff,#7b61ff)!important; color:#fff!important; box-shadow:0 12px 28px rgba(123,97,255,.28)!important; }
+    .private-sidebar .ef-mini-logo, .partner-sidebar .ef-mini-logo { background:linear-gradient(135deg,#7b61ff,#4f8cff)!important; }
+    .private-sidebar .sidebar-user { background:rgba(255,255,255,.10)!important; border-color:rgba(255,255,255,.14)!important; box-shadow:none!important; }
+    .private-sidebar .sidebar-user strong, .private-sidebar .sidebar-user span { color:#fff!important; }
+    .section-title, .section-banner-v6 {
+      position:relative; overflow:hidden; border-radius:24px; padding:26px 28px; margin-bottom:18px; color:#fff;
+      background:radial-gradient(circle at 88% 20%,rgba(24,180,90,.36),transparent 30%),linear-gradient(135deg,#071d49 0%,#123477 56%,#255fba 100%);
+      box-shadow:0 22px 55px rgba(7,29,73,.16);
+    }
+    .section-title h2, .section-banner-v6 h2 { margin:0 0 8px!important; font-size:32px!important; line-height:1.05!important; font-weight:950!important; color:#fff!important; }
+    .section-title p, .section-banner-v6 p { margin:0!important; max-width:760px; color:rgba(255,255,255,.78)!important; font-weight:650; line-height:1.65; }
+    .panel-card, .table-card { border-radius:24px!important; border:1px solid #e2eaf5!important; box-shadow:0 14px 32px rgba(7,29,73,.07)!important; }
+    .kpi-grid { gap:12px!important; margin-bottom:18px!important; }
+    .kpi-card { min-height:82px!important; padding:13px 15px!important; border-radius:15px!important; }
+    .kpi-icon { width:36px!important; height:36px!important; font-size:14px!important; }
+    .kpi-label { font-size:10px!important; margin-bottom:5px!important; }
+    .kpi-value { font-size:22px!important; margin-bottom:3px!important; }
+    .kpi-note { font-size:10px!important; }
+    .comparatore-panel-v6 {
+      padding:34px; border:1px solid rgba(79,140,255,.34); border-radius:28px; color:#fff;
+      background:radial-gradient(circle at 84% 18%, rgba(24,180,90,.35), transparent 34%),linear-gradient(120deg,rgba(7,29,73,.96),rgba(12,44,103,.94) 45%,rgba(38,95,180,.88));
+      box-shadow:0 26px 70px rgba(7,29,73,.18); position:relative; overflow:hidden;
+    }
+    .comparatore-panel-v6::before { content:""; position:absolute; inset:0 auto 0 0; width:9px; background:linear-gradient(180deg,#18b45a,#4f8cff,#7b61ff); }
+    .comparatore-panel-v6 h2 { margin:0 0 8px; color:#fff; font-size:32px; font-weight:950; }
+    .comparatore-panel-v6 p { margin:0 0 20px; color:rgba(255,255,255,.78); line-height:1.6; }
+    .badge-v6 { display:inline-flex; border-radius:999px; padding:8px 13px; margin-bottom:14px; font-size:12px; font-weight:950; text-transform:uppercase; background:rgba(255,255,255,.12); color:#fff; border:1px solid rgba(255,255,255,.18); }
+    .plate-wrap-v6 { display:grid; grid-template-columns:58px 1fr; max-width:460px; overflow:hidden; border-radius:18px; border:1px solid rgba(255,255,255,.22); box-shadow:0 18px 35px rgba(0,0,0,.16); margin-bottom:14px; }
+    .plate-country-v6 { display:flex; align-items:center; justify-content:center; background:#2456a6; color:#fff; font-weight:950; }
+    .plate-wrap-v6 input, .form-row-v6 input { width:100%; border:0; padding:16px; font-weight:900; font-size:16px; outline:none; }
+    .search-fields-v6 { display:none; margin-top:18px; }
+    .search-fields-v6.open { display:block; }
+    .form-row-v6 { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px; }
+    .form-group-v6 { display:grid; gap:8px; }
+    .form-group-v6 label { color:#fff; font-weight:900; font-size:13px; }
+    .form-group-v6 input { border-radius:16px; border:1px solid rgba(255,255,255,.22); box-shadow:0 18px 35px rgba(0,0,0,.16); }
+    .search-error-v6 { color:#fecaca; font-weight:900; margin-top:12px; }
+    .inline-results { display:none; margin-top:18px; } .inline-results.open { display:block; }
+    .inline-results-head { display:flex; justify-content:space-between; gap:18px; flex-wrap:wrap; padding:24px 26px; margin-bottom:14px; border-radius:24px; color:#fff; background:radial-gradient(circle at 92% 18%, rgba(24,180,90,.30), transparent 32%), linear-gradient(135deg,#071d49 0%,#123477 55%,#255fba 100%); box-shadow:0 22px 55px rgba(7,29,73,.16); }
+    .inline-results-head h2 { margin:0 0 6px; color:#fff; font-size:28px; font-weight:950; } .inline-results-head p { margin:0; color:rgba(255,255,255,.78); font-weight:750; }
+    .inline-results-grid { display:grid; gap:14px; }
+    .inline-warranty-card { display:grid; grid-template-columns:minmax(0,1fr) 220px; gap:18px; background:linear-gradient(135deg,#fff,#f8fbff); border:1px solid #e2eaf5; border-radius:24px; padding:20px; box-shadow:0 14px 32px rgba(7,29,73,.07); position:relative; overflow:hidden; }
+    .inline-warranty-card::before { content:""; position:absolute; inset:0 auto 0 0; width:5px; background:linear-gradient(180deg,#18b45a,#4f8cff,#7b61ff); }
+    .warranty-topline { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:10px; }
+    .compatibility,.brand-pill { display:inline-flex; border-radius:999px; padding:7px 10px; font-size:12px; font-weight:950; } .compatibility{background:#eafaf1;color:#0fa34f}.brand-pill{background:#eef6ff;color:#2563eb}
+
+    .partner-main.partner-section-focused .hero-partner,
+    .partner-main.partner-section-focused .notification-box,
+    .partner-main.partner-section-focused .kpi-grid { display:none!important; }
+    .partner-main.partner-section-focused .partner-topbar { margin-bottom:18px!important; }
+
+    .inline-warranty-card h3{margin:0 0 8px;color:#071d49;font-size:22px;font-weight:950}.inline-warranty-card p{margin:0 0 14px;color:#64748b;line-height:1.55}
+    .warranty-mini-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.warranty-mini-grid span{background:#fff;border:1px solid #edf2f7;border-radius:15px;padding:11px}.warranty-mini-grid small{display:block;color:#64748b;font-size:10px;font-weight:950;text-transform:uppercase;margin-bottom:5px}.warranty-mini-grid strong{color:#071d49;font-weight:950}
+    .warranty-price-box{display:flex;flex-direction:column;justify-content:space-between;gap:12px;padding:16px;border-radius:20px;background:#071d49;color:#fff}.warranty-price-box small{color:#cfe0ff;font-weight:900;text-transform:uppercase}.warranty-price-box strong{font-size:28px;font-weight:950}
+
+    .supplement-editor{margin:18px 0 22px;padding:22px;border:1px solid rgba(24,180,90,.22);border-radius:24px;background:linear-gradient(135deg,#f8fffb 0%,#ffffff 58%,#f4f8ff 100%);box-shadow:0 20px 50px rgba(7,29,73,.08)}
+    .editor-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:16px}.editor-head h3{margin:4px 0 0;color:#071d49;font-size:22px;font-weight:950}.eyebrow{display:inline-flex;align-items:center;gap:8px;color:#0fa34f;text-transform:uppercase;font-size:12px;font-weight:950;letter-spacing:.08em}.form-actions-inline{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}.supplement-name-input{min-width:210px;width:100%;padding:10px;border:1px solid #d6deea;border-radius:10px;font-size:14px;font-weight:800}.supplement-code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:#475569;font-size:12px;font-weight:900;background:#f1f5f9;border-radius:999px;padding:6px 10px;display:inline-flex}.table-actions .mini-btn{white-space:nowrap}
+
+    @media(max-width:800px){.form-row-v6,.inline-warranty-card,.warranty-mini-grid{grid-template-columns:1fr}.warranty-price-box{background:#f8fbff;color:#071d49;border:1px solid #e2eaf5}}
+
+  </style>
+  <link rel="stylesheet" href="/premium-uniform.css?v=29" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/home-master-header-footer.css?v=63">
+</head>
+
+<body>
+  <div class="partner-shell">
+    <aside class="partner-sidebar">
+      <div class="sidebar-logo-row">
+        <span class="ef-mini-logo" aria-label="EstendiFacile">EF</span>
+      </div>
+
+      <nav class="partner-nav">
+        <button class="nav-item active partner-section-btn" type="button" data-section="overview">
+          <span class="nav-icon"><i class="fa-solid fa-house"></i></span><span class="nav-text">Dashboard</span>
+        </button>
+        <button class="nav-item partner-section-btn" type="button" data-section="orders">
+          <span class="nav-icon"><i class="fa-solid fa-inbox"></i></span><span class="nav-text">Ordini ricevuti</span>
+          <span class="sidebar-badge" id="sidebarOrdiniBadge">0</span>
+        </button>
+        <button class="nav-item partner-section-btn" type="button" data-section="catalog">
+          <span class="nav-icon"><i class="fa-solid fa-shield-halved"></i></span><span class="nav-text">Catalogo garanzie</span>
+        </button>
+        <button class="nav-item partner-section-btn" type="button" data-section="supplements">
+          <span class="nav-icon"><i class="fa-solid fa-sliders"></i></span><span class="nav-text">Supplementi</span>
+        </button>
+        <button class="nav-item partner-section-btn" type="button" data-section="blockedVehicles">
+          <span class="nav-icon"><i class="fa-solid fa-ban"></i></span><span class="nav-text">Veicoli non attivabili</span>
+        </button>
+        <button class="nav-item partner-section-btn" type="button" data-section="quoteVehicles">
+          <span class="nav-icon"><i class="fa-solid fa-file-invoice-dollar"></i></span><span class="nav-text">Veicoli con preventivo</span>
+        </button>
+        <button class="nav-item partner-section-btn" type="button" data-section="tickets">
+          <span class="nav-icon"><i class="fa-solid fa-ticket"></i></span><span class="nav-text">Ticket preventivi</span>
+          <span class="sidebar-badge" id="sidebarTicketsBadge">0</span>
+        </button>
+        <button class="nav-item partner-section-btn" type="button" data-section="form">
+          <span class="nav-icon"><i class="fa-solid fa-plus"></i></span><span class="nav-text">Nuova garanzia</span>
+        </button>
+        <button class="nav-item partner-section-btn" type="button" data-section="profile">
+          <span class="nav-icon"><i class="fa-solid fa-building"></i></span><span class="nav-text">Dati aziendali</span>
+        </button>
+        <button class="nav-item partner-section-btn" type="button" data-section="catalog">
+          <span class="nav-icon"><i class="fa-solid fa-store"></i></span><span class="nav-text">Offerte pubbliche</span>
+        </button>
+        <button class="nav-item partner-section-btn" type="button" data-section="orders">
+          <span class="nav-icon"><i class="fa-solid fa-file-signature"></i></span><span class="nav-text">Certificati</span>
+        </button>
+        <button class="nav-item partner-section-btn" type="button" data-section="profile">
+          <span class="nav-icon"><i class="fa-solid fa-user-gear"></i></span><span class="nav-text">Profilo utente</span>
+        </button>
+        <button class="nav-item" type="button" id="btnPartnerAssistenzaFaq" data-open-assistant="1">
+          <span class="nav-icon"><i class="fa-solid fa-circle-question"></i></span><span class="nav-text">Assistenza e FAQ</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-actions">
+        <a href="/index.html" class="sidebar-btn">Torna al sito <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+        <button class="sidebar-btn primary" type="button" id="btnLogoutPartner">Esci <i class="fa-solid fa-arrow-right-from-bracket"></i></button>
+      </div>
+    </aside>
+
+    <main class="partner-main">
+      <header class="main-header">
+    <div class="container nav-wrap">
+      <a href="/index.html" class="brand">
+        <span class="ef-logo-wordmark" aria-label="EstendiFacile.it">
+          <span class="ef-logo-symbol">EF</span>
+          <span class="ef-logo-stack">
+            <span class="ef-logo-text">Estendi<span>Facile</span><small>.it</small></span>
+            <span class="ef-logo-payoff">ESTENDI LA TUA SICUREZZA</span>
+          </span>
+        </span>
+      </a>
+
+      <nav class="nav-menu ef-main-nav">
+        <a href="/partner.html"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v5M5 19v-4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v4"/><circle cx="12" cy="4" r="2"/><circle cx="5" cy="20" r="2"/><circle cx="19" cy="20" r="2"/></svg><span>Partner</span></a>
+        <a href="/chi-siamo.html"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v4"/><path d="M8 7h4M8 11h4M8 15h2"/><path d="M18 22s4-2 4-6v-3l-4-2-4 2v3c0 4 4 6 4 6Z"/><path d="m16.8 16 1 1 2.2-2.4"/></svg><span>Chi siamo</span></a>
+        <a href="/come-funziona.html"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="19" r="3"/><circle cx="18" cy="5" r="3"/><path d="M8.2 16.8 15.8 7.2"/></svg><span>Come funziona</span></a>
+        <a href="/faq.html"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.7 9a2.8 2.8 0 0 1 5.3 1.3c0 2.2-3 2.1-3 4"/><path d="M12 18h.01"/></svg><span>FAQ</span></a>
+        <a href="/contatti.html"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13a8 8 0 0 1 16 0"/><path d="M4 13v4a2 2 0 0 0 2 2h1v-7H6a2 2 0 0 0-2 2Z"/><path d="M20 13v4a2 2 0 0 1-2 2h-1v-7h1a2 2 0 0 1 2 2Z"/><path d="M16 19c0 1.1-1.8 2-4 2"/></svg><span>Contatti</span></a>
+      </nav>
+
+      <div class="nav-actions ef-nav-actions" id="navActions">
+        <a href="/normativa.html" class="nav-legal"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M5 6h14M7 6l-4 7h8L7 6ZM17 6l-4 7h8l-4-7Z"/><path d="M8 21h8"/></svg><span>Codice del consumo<br>Normativa vigente</span></a>
+        <a href="/login.html" class="nav-login"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="7" r="4"/><path d="M2.5 21a6.5 6.5 0 0 1 10.8-4.9"/><path d="M18 22s4-2 4-6v-3l-4-2-4 2v3c0 4 4 6 4 6Z"/></svg><span>Accedi</span></a>
+        <a href="/register.html" class="nav-register"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="7" r="4"/><path d="M2.5 21a6.5 6.5 0 0 1 11.7-3.9"/><path d="M19 8v6M16 11h6"/></svg><span>Crea account</span></a>
+      </div>
+
+     
+    </div>
+  </header>
+
+      <section class="hero-partner">
+        <div class="hero-content">
+          <div class="badge">Gestionale partner</div>
+          <h1>Ciao <span id="heroPartnerName">Partner</span></h1>
+          <p id="partnerInfo">Gestisci catalogo, supplementi, certificati e ordini concessionari da un’unica piattaforma professionale.</p>
+          <div class="hero-actions">
+            <button class="hero-btn primary partner-section-btn" type="button" data-section="orders"><i class="fa-solid fa-inbox"></i> Ordini ricevuti</button>
+            <button class="hero-btn partner-section-btn" type="button" data-section="catalog"><i class="fa-solid fa-shield-halved"></i> Catalogo garanzie</button>
+            <button class="hero-btn partner-section-btn" type="button" data-section="supplements"><i class="fa-solid fa-sliders"></i> Supplementi</button>
+          </div>
+        </div>
+      </section>
+
+      <div class="notification-box" id="ordiniNotification">
+        <span id="ordiniNotificationText">Hai nuovi ordini ricevuti.</span>
+        <button class="mini-btn success partner-section-btn" type="button" id="btnApriOrdiniRicevuti" data-section="orders">Visualizza ordini</button>
+      </div>
+
+      <section class="kpi-grid">
+        <div class="kpi-card"><div class="kpi-icon"><i class="fa-solid fa-inbox"></i></div><div><div class="kpi-label">Ordini ricevuti</div><div class="kpi-value" id="kpiOrdini">0</div><div class="kpi-note">Acquisti concessionari →</div></div></div>
+        <div class="kpi-card"><div class="kpi-icon"><i class="fa-solid fa-chart-line"></i></div><div><div class="kpi-label">Venduto totale</div><div class="kpi-value" id="kpiVenduto">0€</div><div class="kpi-note">Valore pratiche →</div></div></div>
+        <div class="kpi-card"><div class="kpi-icon"><i class="fa-solid fa-shield-halved"></i></div><div><div class="kpi-label">Garanzie totali</div><div class="kpi-value" id="kpiGaranzie">0</div><div class="kpi-note">Catalogo partner →</div></div></div>
+        <div class="kpi-card"><div class="kpi-icon"><i class="fa-solid fa-sliders"></i></div><div><div class="kpi-label">Supplementi attivi</div><div class="kpi-value" id="kpiSupplementi">0</div><div class="kpi-note">Extra configurabili →</div></div></div>
+      </section>
+
+      <section id="section-overview" class="section active">
+        <div class="panel-card">
+          <div class="panel-head"><div><h2>Panoramica operativa</h2><p>Da qui puoi gestire catalogo, supplementi, dati aziendali e ordini acquistati dai concessionari.</p></div></div>
+          <div class="operation-grid">
+            <article class="operation-card partner-section-btn" data-section="orders"><div class="operation-icon"><i class="fa-solid fa-inbox"></i></div><div><h3>Ordini ricevuti</h3><p id="overviewOrdiniText">Caricamento ordini ricevuti...</p></div><div class="operation-arrow">›</div></article>
+            <article class="operation-card partner-section-btn" data-section="orders"><div class="operation-icon"><i class="fa-solid fa-file-signature"></i></div><div><h3>Certificati</h3><p>Quando ricevi un ordine pagato, puoi aprirlo ed emettere il certificato di garanzia.</p></div><div class="operation-arrow">›</div></article>
+            <article class="operation-card partner-section-btn" data-section="catalog"><div class="operation-icon"><i class="fa-solid fa-shield-halved"></i></div><div><h3>Catalogo garanzie</h3><p>Crea e aggiorna prodotti, prezzi, durata, coperture, documenti PDF e limiti di attivabilità.</p></div><div class="operation-arrow">›</div></article>
+            <article class="operation-card partner-section-btn" data-section="supplements"><div class="operation-icon"><i class="fa-solid fa-sliders"></i></div><div><h3>Supplementi</h3><p>Imposta i prezzi dei supplementi. Ogni partner ha il pieno controllo dei propri importi.</p></div><div class="operation-arrow">›</div></article>
+          </div>
+        </div>
+      </section>
+
+      <section id="section-orders" class="section">
+        <div class="panel-card">
+          <div class="panel-head">
+            <div><h2>Ordini ricevuti</h2><p>Qui vedi le garanzie acquistate dai concessionari sui tuoi prodotti.</p></div>
+            <div class="table-tools">
+              <input id="searchOrdiniInput" type="text" placeholder="Cerca cliente, targa, garanzia..." />
+              <select id="filtroStatoOrdini"><option value="">Tutti gli stati</option><option value="pagato">Pagati</option><option value="in_attesa">In attesa</option><option value="attivo">Attivi</option></select>
+              <button class="btn-action" type="button" id="btnAggiornaOrdini"><i class="fa-solid fa-rotate"></i> Aggiorna</button>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table><thead><tr><th>Ordine</th><th>Garanzia</th><th>Cliente</th><th>Veicolo</th><th>Pagamento</th><th>Totale</th><th>Azioni</th></tr></thead>
+            <tbody id="ordiniTable"><tr><td colspan="7" class="empty-table">Caricamento ordini...</td></tr></tbody></table>
+          </div>
+          <div id="ordiniMsg" class="message" style="margin-top:14px;"></div>
+          <div id="ordineDettaglioBox" class="order-detail-box"></div>
+        </div>
+      </section>
+
+      <section id="section-profile" class="section">
+        <div class="panel-card">
+          <div class="panel-head"><div><h2>Profilo utente</h2><p>Aggiorna dati aziendali, preferenze e informazioni associate al tuo account partner.</p></div></div>
+          <div class="form-grid">
+            <div class="form-row"><div class="form-group"><label for="azienda_nome">Ragione sociale</label><input id="azienda_nome" type="text" /></div><div class="form-group"><label for="azienda_referente">Referente</label><input id="azienda_referente" type="text" /></div></div>
+            <div class="form-row"><div class="form-group"><label for="azienda_email">Email</label><input id="azienda_email" type="email" disabled /></div><div class="form-group"><label for="azienda_telefono">Telefono</label><input id="azienda_telefono" type="text" /></div></div>
+            <div class="form-row"><div class="form-group"><label for="azienda_piva">Partita IVA</label><input id="azienda_piva" type="text" /></div><div class="form-group"><label for="azienda_indirizzo">Indirizzo</label><input id="azienda_indirizzo" type="text" /></div></div>
+            <div class="form-row"><div class="form-group"><label for="azienda_citta">Città</label><input id="azienda_citta" type="text" /></div><div class="form-group"><label for="azienda_cap">CAP</label><input id="azienda_cap" type="text" /></div></div>
+            <div class="form-row"><div class="form-group"><label for="azienda_provincia">Provincia</label><input id="azienda_provincia" type="text" /></div></div>
+            <button class="btn-action primary" type="button" id="btnSalvaProfiloPartner"><i class="fa-solid fa-floppy-disk"></i> Salva dati aziendali</button>
+            <div id="partnerProfileMsg" class="message"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="section-supplements" class="section">
+        <div class="panel-card">
+          <div class="panel-head">
+            <div>
+              <h2>Supplementi partner</h2>
+              <p>Aggiungi, modifica o rimuovi supplementi specifici del tuo catalogo. Ogni voce sarà disponibile nel checkout e nel comparatore.</p>
+            </div>
+            <div class="table-tools">
+              <button class="btn-action primary" type="button" id="btnNuovoSupplemento"><i class="fa-solid fa-plus"></i> Nuovo supplemento</button>
+              <button class="btn-action" type="button" id="btnAggiornaSupplementi"><i class="fa-solid fa-rotate"></i> Aggiorna</button>
+            </div>
+          </div>
+
+          <div class="supplement-editor" id="supplementEditor" style="display:none;">
+            <div class="editor-head">
+              <div>
+                <span class="eyebrow"><i class="fa-solid fa-sliders"></i> gestione supplemento</span>
+                <h3 id="supplementFormTitle">Nuovo supplemento</h3>
+              </div>
+              <button class="mini-btn gray" type="button" id="btnChiudiSupplemento">Chiudi</button>
+            </div>
+            <div class="form-row">
+              <div class="form-group"><label for="suppNome">Nome supplemento</label><input id="suppNome" type="text" placeholder="es. Cambio automatico" /></div>
+              <div class="form-group"><label for="suppCodice">Codice interno</label><input id="suppCodice" type="text" placeholder="es. cambio_automatico" /></div>
+            </div>
+            <div class="form-row">
+              <div class="form-group"><label for="suppPrezzoForm">Prezzo €</label><input id="suppPrezzoForm" type="number" min="0" step="0.01" placeholder="0.00" /></div>
+              <div class="form-group"><label>Stato</label><label class="toggle-row"><input id="suppAttivoForm" type="checkbox" checked /><span>Supplemento attivo e selezionabile</span></label></div>
+            </div>
+            <div class="form-actions-inline">
+              <button class="btn-action primary" type="button" id="btnSalvaSupplementoForm"><i class="fa-solid fa-floppy-disk"></i> Salva supplemento</button>
+              <button class="btn-action" type="button" id="btnResetSupplementoForm"><i class="fa-solid fa-rotate-left"></i> Annulla</button>
+            </div>
+          </div>
+
+          <div class="table-wrap"><table><thead><tr><th>Supplemento</th><th>Codice</th><th>Prezzo</th><th>Stato</th><th>Azioni</th></tr></thead><tbody id="supplementiTable"><tr><td colspan="5" class="empty-table">Caricamento supplementi...</td></tr></tbody></table></div>
+          <div id="supplementiMsg" class="message" style="margin-top:14px;"></div>
+        </div>
+      </section>
+
+      <section id="section-blockedVehicles" class="section">
+        <div class="panel-card">
+          <div class="panel-head"><div><h2>Veicoli non attivabili</h2><p>Marca e modello dei veicoli che non possono essere attivati con le tue soluzioni.</p></div></div>
+          <div class="form-row"><div class="form-group"><label for="blockedMarca">Marca</label><input id="blockedMarca" type="text" placeholder="es. Fiat" /></div><div class="form-group"><label for="blockedModello">Modello</label><input id="blockedModello" type="text" placeholder="es. Panda" /></div></div>
+          <div class="form-actions-inline"><button class="btn-action primary" type="button" id="btnAddBlockedVehicle"><i class="fa-solid fa-plus"></i> Aggiungi / aggiorna</button></div>
+          <div class="table-wrap"><table><thead><tr><th>Marca</th><th>Modello</th><th>Azioni</th></tr></thead><tbody id="blockedVehiclesTable"><tr><td colspan="3" class="empty-table">Caricamento...</td></tr></tbody></table></div>
+          <div id="blockedVehiclesMsg" class="message" style="margin-top:14px;"></div>
+        </div>
+      </section>
+
+      <section id="section-quoteVehicles" class="section">
+        <div class="panel-card">
+          <div class="panel-head"><div><h2>Veicoli attivabili con preventivazione</h2><p>Marca e modello dei veicoli per cui vuoi ricevere un ticket prima dell'attivazione.</p></div></div>
+          <div class="form-row"><div class="form-group"><label for="quoteMarca">Marca</label><input id="quoteMarca" type="text" placeholder="es. Yamaha" /></div><div class="form-group"><label for="quoteModello">Modello</label><input id="quoteModello" type="text" placeholder="es. MT-07" /></div></div>
+          <div class="form-actions-inline"><button class="btn-action primary" type="button" id="btnAddQuoteVehicle"><i class="fa-solid fa-plus"></i> Aggiungi / aggiorna</button></div>
+          <div class="table-wrap"><table><thead><tr><th>Marca</th><th>Modello</th><th>Azioni</th></tr></thead><tbody id="quoteVehiclesTable"><tr><td colspan="3" class="empty-table">Caricamento...</td></tr></tbody></table></div>
+          <div id="quoteVehiclesMsg" class="message" style="margin-top:14px;"></div>
+        </div>
+      </section>
+
+      <section id="section-tickets" class="section">
+        <div class="panel-card">
+          <div class="panel-head"><div><h2>Ticket preventivi</h2><p>Richieste generate dal comparatore per veicoli che richiedono preventivazione.</p></div><button class="btn-action" type="button" id="btnAggiornaTickets"><i class="fa-solid fa-rotate"></i> Aggiorna</button></div>
+          <div class="table-wrap"><table><thead><tr><th>Richiesta</th><th>Veicolo</th><th>Garanzia</th><th>Stato</th><th>Risposta</th><th>Azioni</th></tr></thead><tbody id="quoteTicketsTable"><tr><td colspan="6" class="empty-table">Caricamento ticket...</td></tr></tbody></table></div>
+          <div id="quoteTicketsMsg" class="message" style="margin-top:14px;"></div>
+        </div>
+      </section>
+
+      <section id="section-catalog" class="section">
+        <div class="panel-card">
+          <div class="panel-head"><div><h2>Catalogo garanzie</h2><p>Elenco completo dei prodotti creati dal tuo account partner.</p></div><div class="table-tools"><input id="searchInput" type="text" placeholder="Cerca prodotto..." /></div></div>
+          <div class="table-wrap"><table><thead><tr><th>Prodotto</th><th>Brand</th><th>Prezzo</th><th>Durata</th><th>Limiti</th><th>Stato</th><th>Canale</th><th>Veicolo</th><th>Servizio</th><th>Azioni</th></tr></thead><tbody id="garanzieTable"><tr><td colspan="10" class="empty-table">Caricamento garanzie...</td></tr></tbody></table></div>
+        </div>
+      </section>
+
+      <section id="section-form" class="section">
+        <div class="panel-card" id="formSection">
+          <div class="panel-head"><div><h2 id="formTitle">Nuova garanzia</h2><p>Crea o modifica una garanzia, definendo prezzo, copertura, PDF e limiti.</p></div></div>
+          <div class="form-grid">
+            <div class="form-row"><div class="form-group"><label for="nome">Nome prodotto</label><input id="nome" type="text" placeholder="Garanzia Premium Plus" /></div><div class="form-group"><label for="brand">Brand / Compagnia</label><input id="brand" type="text" placeholder="AutoProtect" /></div></div>
+            <div class="form-row"><div class="form-group"><label for="durata">Durata mesi</label><input id="durata" type="number" placeholder="24" /></div><div class="form-group"><label for="prezzo">Prezzo €</label><input id="prezzo" type="number" step="0.01" placeholder="549" /></div></div>
+            <div class="form-row"><div class="form-group"><label for="copertura">Copertura</label><input id="copertura" type="text" placeholder="Motore, cambio, elettronica" /></div><div class="form-group"><label for="stato">Stato prodotto</label><select id="stato"><option value="attiva">Attiva</option><option value="bozza">Bozza</option><option value="sospesa">Sospesa</option></select></div></div>
+            <div class="form-row"><div class="form-group"><label for="canaleAttivazione">Attivabile da</label><select id="canaleAttivazione"><option value="entrambi">Privato e concessionario</option><option value="privato">Solo privato</option><option value="concessionario">Solo concessionario</option></select></div><div class="form-group"><label for="tipoVeicoloAttivabile">Tipologia veicolo</label><select id="tipoVeicoloAttivabile"><option value="AUTOVEICOLO">AUTOVEICOLO</option><option value="MOTOVEICOLO">MOTOVEICOLO</option><option value="VEICOLO RICREAZIONALE">VEICOLO RICREAZIONALE</option><option value="VEICOLO COMMERCIALE">VEICOLO COMMERCIALE / TRUCK</option><option value="TRUCK">TRUCK (compatibilita vecchie garanzie)</option></select></div></div>
+            <div class="form-row"><div class="form-group"><label for="servizioTipo">Tipologia soluzione</label><select id="servizioTipo"><option value="GARANZIA">Garanzia guasti</option><option value="GARANZIA_CONFORMITA">Garanzia di conformità</option></select></div></div>
+            <div class="form-group full"><label for="descrizione">Descrizione</label><textarea id="descrizione" placeholder="Descrivi la garanzia"></textarea></div>
+            <div class="form-group full"><label for="pdfFile">PDF condizioni di garanzia</label><input id="pdfFile" type="file" accept="application/pdf" /></div>
+            <div class="limits-box">
+              <label class="toggle-row"><input id="limitiAttivi" type="checkbox" /><span>Abilita limiti di attivabilità per questo prodotto</span></label>
+              <div class="form-row" id="limitiFields" style="display:none;"><div class="form-group"><label for="limiteKm">Limite chilometrico massimo</label><input id="limiteKm" type="number" placeholder="es. 150000" /></div><div class="form-group"><label for="limiteImmatricolazione">Anno immatricolazione minimo</label><input id="limiteImmatricolazione" type="number" placeholder="es. 2016" /></div></div>
+            </div>
+            <div style="display:flex;gap:12px;flex-wrap:wrap;"><button class="btn-action primary" type="button" id="saveBtn"><i class="fa-solid fa-floppy-disk"></i> Salva garanzia</button><button class="btn-action" type="button" id="btnResetForm"><i class="fa-solid fa-xmark"></i> Annulla</button></div>
+            <div id="partnerMsg" class="message"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/js/auth-guard.js"></script>
+  <script src="/js/partner-dashboard.js"></script>
+  <script src="/js/ai-assistant.js?v=20260519"></script>
+  <script src="/js/approved-ui.js?v=20260519-final"></script>
+
+  <script>
+    (function syncPartnerHeroName() {
+      const sidebarName = document.getElementById("sidebarPartnerName");
+      const heroName = document.getElementById("heroPartnerName");
+      const topDot = document.getElementById("topOrdiniDot");
+      const sideBadge = document.getElementById("sidebarOrdiniBadge");
+
+      if (topDot && sideBadge) {
+        const updateDot = () => {
+          const value = (sideBadge.textContent || "0").trim();
+          topDot.textContent = value || "0";
+        };
+        updateDot();
+        new MutationObserver(updateDot).observe(sideBadge, { childList: true, subtree: true, characterData: true });
+      }
+
+      if (!sidebarName || !heroName) return;
+
+      const update = () => {
+        const value = (sidebarName.textContent || "").trim();
+        if (value && value !== "Caricamento...") {
+          heroName.textContent = value.replace(/^Ciao\\s+/i, "");
+        }
+      };
+
+      update();
+      new MutationObserver(update).observe(sidebarName, { childList: true, subtree: true, characterData: true });
+    })();
+
+
+
+    (function openPartnerAssistantFromSidebar() {
+      const btn = document.getElementById("btnPartnerAssistenzaFaq");
+      if (!btn) return;
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".nav-item").forEach((item) => item.classList.remove("active"));
+        btn.classList.add("active");
+        const panel = document.querySelector(".ef-assistant-panel");
+        const assistantButton = document.querySelector(".ef-assistant-button");
+        if (panel) {
+          panel.classList.add("open");
+          const input = panel.querySelector(".ef-assistant-input");
+          if (input) setTimeout(() => input.focus(), 80);
+        } else if (assistantButton) {
+          assistantButton.click();
+        }
+      });
+    })();
+
+    (function ensurePartnerNavState() {
+      const buttons = document.querySelectorAll(".partner-section-btn");
+
+      buttons.forEach((button) => {
+        button.addEventListener("click", () => {
+          document.querySelectorAll(".nav-item").forEach((item) => item.classList.remove("active"));
+
+          if (button.classList.contains("nav-item")) {
+            button.classList.add("active");
+          }
+
+          const section = button.getAttribute("data-section");
+          if (!section) return;
+
+          document.querySelectorAll(".section").forEach((el) => el.classList.remove("active"));
+
+          const target = document.getElementById("section-" + section);
+          if (target) target.classList.add("active");
+          const main = document.querySelector(".partner-main");
+          if (main) main.classList.toggle("partner-section-focused", section !== "overview");
+        });
+      });
+    })();
+  </script>
+<footer id="contatti" class="footer">
+  <div class="footer-inner">
+    <div>© EstendiFacile.it</div>
+    <div><strong>Tel.</strong> +39 000 000 0000 · <strong>Email</strong> info@estendifacile.it</div><div><strong>Sede legale</strong> da definire · <strong>Sede operativa</strong> da definire</div>
+    <div class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Termini e Condizioni</a>
+    </div>
+  </div>
+</footer>
+
+</html>

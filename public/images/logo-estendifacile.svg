@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="86" viewBox="0 0 420 86" fill="none">
+  <rect x="4" y="10" width="66" height="66" rx="20" fill="#071D49"/>
+  <path d="M37 23L52 29V41C52 52 45 61 37 65C29 61 22 52 22 41V29L37 23Z" fill="#18B45A"/>
+  <rect x="27" y="40" width="20" height="8" rx="3" fill="white"/>
+  <circle cx="31" cy="53" r="3" fill="white"/>
+  <circle cx="43" cy="53" r="3" fill="white"/>
+  <text x="86" y="55" font-family="Arial, Helvetica, sans-serif" font-size="42" font-weight="900" letter-spacing="-2.4" fill="#071D49">Estendi</text>
+  <text x="229" y="55" font-family="Arial, Helvetica, sans-serif" font-size="42" font-weight="900" letter-spacing="-2.4" fill="#18B45A">Facile</text>
+  <text x="355" y="55" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="900" letter-spacing="-1.6" fill="#071D49">.it</text>
+</svg>

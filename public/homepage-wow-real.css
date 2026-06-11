@@ -1,0 +1,501 @@
+
+/* ==========================================================
+   ESTENDIFACILE V46 - HERO REBUILD FROM ZERO
+   Obiettivo: replica del render premium, senza effetto immagine incollata.
+   ========================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800;900&display=swap');
+
+:root{
+  --ef-navy:#071d49;
+  --ef-green:#18b45a;
+  --ef-muted:#64748b;
+  --ef-border:#dfe8f4;
+  --ef-shadow:0 28px 80px rgba(7,29,73,.10);
+}
+
+html,body{
+  margin:0!important;
+  padding-top:0!important;
+  background:#fff!important;
+  font-family:'Inter',Arial,Helvetica,sans-serif!important;
+}
+
+body::before{display:none!important;content:none!important;}
+
+.main-header{
+  position:sticky!important;
+  top:0!important;
+  z-index:9999!important;
+  background:rgba(255,255,255,.96)!important;
+  border-bottom:1px solid #e8eef7!important;
+  box-shadow:0 14px 45px rgba(7,29,73,.045)!important;
+  backdrop-filter:blur(18px)!important;
+}
+
+.nav-wrap{
+  min-height:96px!important;
+  padding:0!important;
+  display:grid!important;
+  grid-template-columns:minmax(300px,420px) 1fr auto!important;
+  align-items:center!important;
+  gap:28px!important;
+}
+
+.ef-logo-wordmark{transform:scale(1.04)!important;transform-origin:left center!important;}
+.ef-logo-wordmark::after,
+.brand::after{
+  content:none!important;
+  display:block!important;
+  margin-left:78px!important;
+  margin-top:-9px!important;
+  color:#071d49!important;
+  font-size:11px!important;
+  line-height:1!important;
+  letter-spacing:.18em!important;
+  font-weight:900!important;
+  white-space:nowrap!important;
+}
+
+.ef-main-nav{
+  gap:30px!important;
+  justify-content:center!important;
+}
+
+.ef-main-nav a{
+  position:relative!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  gap:6px!important;
+  padding:0!important;
+  border:0!important;
+  color:#071d49!important;
+  font-size:12px!important;
+  font-weight:900!important;
+  letter-spacing:-.01em!important;
+  text-transform:uppercase!important;
+  transition:transform .22s ease,color .22s ease!important;
+}
+
+.ef-main-nav a i{display:none!important;}
+.ef-main-nav a::before{
+  content:''!important;
+  width:28px!important;
+  height:28px!important;
+  border-radius:11px!important;
+  display:block!important;
+  background:#f7fbff!important;
+  border:1px solid #dfe8f4!important;
+  box-shadow:0 8px 18px rgba(7,29,73,.05)!important;
+}
+.ef-main-nav a:nth-child(1)::before{background:linear-gradient(#fff,#f7fbff), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23071d49' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 20v-6M6 20V10M18 20V4'/%3E%3C/svg%3E") center/17px no-repeat!important;}
+.ef-main-nav a:nth-child(2)::before{background:linear-gradient(#fff,#f7fbff), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23071d49' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='8' r='4'/%3E%3Cpath d='M4 20c2-4 14-4 16 0'/%3E%3C/svg%3E") center/17px no-repeat!important;}
+.ef-main-nav a:nth-child(3)::before{background:linear-gradient(#fff,#f7fbff), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23071d49' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 12h16M12 4v16'/%3E%3Ccircle cx='12' cy='12' r='8'/%3E%3C/svg%3E") center/17px no-repeat!important;}
+.ef-main-nav a:nth-child(4)::before{background:linear-gradient(#fff,#f7fbff), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23071d49' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M9.5 9a3 3 0 1 1 4.5 2.6c-.9.5-1.5 1.2-1.5 2.4'/%3E%3Cpath d='M12 17h.01'/%3E%3C/svg%3E") center/17px no-repeat!important;}
+.ef-main-nav a:nth-child(5)::before{background:linear-gradient(#fff,#f7fbff), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23071d49' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='5' width='18' height='14' rx='2'/%3E%3Cpath d='m3 7 9 6 9-6'/%3E%3C/svg%3E") center/17px no-repeat!important;}
+.ef-main-nav a:hover{color:#18b45a!important;transform:translateY(-2px)!important;}
+.ef-main-nav a:hover::before{border-color:#bdf0d2!important;box-shadow:0 12px 26px rgba(24,180,90,.12)!important;}
+
+.ef-nav-actions{gap:14px!important;}
+.nav-legal,.nav-login,.nav-register{
+  height:54px!important;
+  border-radius:14px!important;
+  font-weight:900!important;
+  transition:transform .22s ease, box-shadow .22s ease!important;
+}
+.nav-legal:hover,.nav-login:hover,.nav-register:hover{transform:translateY(-2px)!important;}
+
+.hero.ef-home-hero,
+.ef-home-hero{
+  position:relative!important;
+  min-height:770px!important;
+  padding:56px 0 46px!important;
+  overflow:hidden!important;
+  background:
+    radial-gradient(circle at 77% 26%, rgba(37,99,235,.105), transparent 34%),
+    radial-gradient(circle at 63% 52%, rgba(24,180,90,.075), transparent 32%),
+    linear-gradient(180deg,#ffffff 0%,#f8fbff 58%,#ffffff 100%)!important;
+}
+
+.hero.ef-home-hero::before,
+.ef-home-hero::before{
+  content:''!important;
+  position:absolute!important;
+  right:-6%!important;
+  top:88px!important;
+  width:66%!important;
+  height:560px!important;
+  background:linear-gradient(130deg,rgba(255,255,255,0) 0%,rgba(236,245,255,.62) 42%,rgba(255,255,255,0) 78%)!important;
+  clip-path:polygon(18% 0,100% 0,100% 100%,0 80%)!important;
+  opacity:1!important;
+  pointer-events:none!important;
+  transform:none!important;
+}
+
+.hero.ef-home-hero::after,
+.ef-home-hero::after{
+  content:''!important;
+  position:absolute!important;
+  right:-2%!important;
+  top:132px!important;
+  width:60%!important;
+  height:520px!important;
+  background:linear-gradient(90deg,rgba(255,255,255,0) 0%,rgba(255,255,255,.18) 38%,rgba(255,255,255,.72) 100%)!important;
+  pointer-events:none!important;
+  opacity:.75!important;
+  transform:none!important;
+}
+
+.ef-hero-grid{
+  position:relative!important;
+  z-index:2!important;
+  display:grid!important;
+  grid-template-columns:minmax(270px,360px) minmax(480px,560px) minmax(560px,1fr)!important;
+  gap:34px!important;
+  align-items:center!important;
+  min-height:560px!important;
+  padding:0!important;
+}
+
+.ef-hero-copy{max-width:360px!important;align-self:center!important;}
+.hero-pill{
+  margin-bottom:22px!important;
+  border-radius:999px!important;
+  padding:9px 14px!important;
+  background:#fff!important;
+  border:1px solid #cdefdb!important;
+  box-shadow:0 12px 28px rgba(24,180,90,.08)!important;
+}
+.ef-hero-copy h1{
+  font-size:clamp(42px,3.1vw,58px)!important;
+  line-height:1.035!important;
+  letter-spacing:-.055em!important;
+  margin:0 0 24px!important;
+  color:#071d49!important;
+  font-weight:900!important;
+}
+.ef-hero-copy h1 .green-line{color:#18b45a!important;}
+.ef-hero-copy .hero-copy{
+  max-width:350px!important;
+  font-size:17px!important;
+  line-height:1.62!important;
+  color:#152a4d!important;
+  font-weight:750!important;
+}
+
+.ef-comparator-panel{
+  width:100%!important;
+  max-width:560px!important;
+  justify-self:center!important;
+  padding:32px!important;
+  border-radius:28px!important;
+  border:1px solid #dbe7f5!important;
+  background:rgba(255,255,255,.955)!important;
+  box-shadow:0 28px 84px rgba(7,29,73,.12)!important;
+  backdrop-filter:blur(18px)!important;
+  transform:translateY(-6px)!important;
+  animation:efCardEnter .8s ease both, efPanelFloat 7s ease-in-out infinite!important;
+}
+.ef-comparator-panel h2{font-size:28px!important;line-height:1.05!important;letter-spacing:-.04em!important;margin-bottom:10px!important;}
+.ef-comparator-subtitle{font-size:14px!important;color:#193259!important;font-weight:750!important;margin-bottom:22px!important;}
+.ef-step-label{margin-top:14px!important;margin-bottom:10px!important;font-size:12px!important;letter-spacing:.01em!important;color:#071d49!important;}
+.ef-step-label span{width:24px!important;height:24px!important;box-shadow:0 8px 18px rgba(24,180,90,.16)!important;}
+.ef-vehicle-type-tabs{grid-template-columns:repeat(4,1fr)!important;gap:12px!important;}
+.ef-vehicle-type-tabs .vehicle-type-btn{
+  height:76px!important;
+  border-radius:16px!important;
+  background:#fff!important;
+  border:1px solid #dbe7f5!important;
+  box-shadow:0 10px 24px rgba(7,29,73,.04)!important;
+  transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease!important;
+}
+.ef-vehicle-type-tabs .vehicle-type-btn:hover{transform:translateY(-3px)!important;box-shadow:0 16px 32px rgba(7,29,73,.08)!important;}
+.ef-vehicle-type-tabs .vehicle-type-btn.active{background:#eefbf3!important;border-color:#18b45a!important;box-shadow:0 16px 34px rgba(24,180,90,.12)!important;}
+
+.ef-plate-wrap{
+  display:grid!important;
+  grid-template-columns:72px 1fr 58px!important;
+  min-height:72px!important;
+  border-radius:18px!important;
+  overflow:hidden!important;
+  border:1px solid #d1deed!important;
+  background:#fff!important;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.85), 0 16px 34px rgba(7,29,73,.07)!important;
+}
+.plate-country{background:linear-gradient(180deg,#1764d8,#0f49ae)!important;color:#fff!important;font-size:15px!important;}
+.ef-plate-wrap input{
+  padding:0 24px!important;
+  font-size:25px!important;
+  font-weight:900!important;
+  letter-spacing:.02em!important;
+  color:#6b7280!important;
+  background:#fff!important;
+}
+.ef-input-help{background:#fff!important;border:0!important;color:#071d49!important;font-size:19px!important;}
+.ef-main-compare{
+  height:62px!important;
+  width:88%!important;
+  margin:24px auto 0!important;
+  display:flex!important;
+  border-radius:13px!important;
+  background:linear-gradient(135deg,#18b45a,#0aa34f)!important;
+  box-shadow:0 20px 44px rgba(24,180,90,.25)!important;
+  transition:transform .22s ease, box-shadow .22s ease!important;
+}
+.ef-main-compare:hover{transform:translateY(-3px)!important;box-shadow:0 26px 58px rgba(24,180,90,.33)!important;}
+.secure-note{font-size:13px!important;margin-top:15px!important;color:#071d49!important;}
+
+.ef-vehicle-visual{
+  position:relative!important;
+  z-index:1!important;
+  min-height:560px!important;
+  width:100%!important;
+  align-self:center!important;
+  background:url('/assets/hero-vehicles-premium-clean.png') center center/115% auto no-repeat!important;
+  background-color:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  filter:drop-shadow(0 34px 44px rgba(7,29,73,.105))!important;
+  transform:translateX(-36px) translateY(8px) scale(1.08)!important;
+  animation:efVehicleEnter .9s ease both, efVehicleFloat 7.5s ease-in-out infinite!important;
+}
+.ef-vehicle-visual::before{
+  content:''!important;
+  position:absolute!important;
+  inset:-24px!important;
+  display:block!important;
+  background:radial-gradient(ellipse at 50% 52%, rgba(255,255,255,0) 42%, rgba(255,255,255,.86) 72%, #fff 96%)!important;
+  pointer-events:none!important;
+  z-index:2!important;
+}
+.ef-vehicle-visual::after{
+  content:''!important;
+  position:absolute!important;
+  left:14%!important;
+  right:5%!important;
+  bottom:40px!important;
+  height:36px!important;
+  display:block!important;
+  background:radial-gradient(ellipse at center, rgba(7,29,73,.13), transparent 68%)!important;
+  filter:blur(14px)!important;
+  pointer-events:none!important;
+  z-index:-1!important;
+}
+
+.ef-stats-row{
+  position:relative!important;
+  z-index:3!important;
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:18px!important;
+  margin-top:-8px!important;
+}
+.ef-stat-card{
+  min-height:126px!important;
+  border-radius:24px!important;
+  background:rgba(255,255,255,.94)!important;
+  border:1px solid #e1eaf5!important;
+  box-shadow:0 18px 50px rgba(7,29,73,.07)!important;
+  backdrop-filter:blur(12px)!important;
+  transition:transform .24s ease, box-shadow .24s ease!important;
+}
+.ef-stat-card:hover{transform:translateY(-5px)!important;box-shadow:0 28px 74px rgba(7,29,73,.12)!important;}
+.ef-stat-card strong{font-size:34px!important;letter-spacing:-.04em!important;}
+.ef-stat-card i{width:58px!important;height:58px!important;border-radius:50%!important;}
+
+.ef-trust-strip{margin-top:0!important;border-top:1px solid #e7edf5!important;background:#fff!important;}
+.ef-trust-row{border-radius:20px!important;background:#fff!important;}
+
+@keyframes efCardEnter{from{opacity:0;transform:translateY(20px) scale(.985)}to{opacity:1;transform:translateY(-6px) scale(1)}}
+@keyframes efPanelFloat{0%,100%{transform:translateY(-6px)}50%{transform:translateY(-14px)}}
+@keyframes efVehicleEnter{from{opacity:0;transform:translateX(-12px) translateY(22px) scale(1.02)}to{opacity:1;transform:translateX(-36px) translateY(8px) scale(1.08)}}
+@keyframes efVehicleFloat{0%,100%{transform:translateX(-36px) translateY(8px) scale(1.08)}50%{transform:translateX(-36px) translateY(-2px) scale(1.095)}}
+
+@media(max-width:1320px){
+  .ef-hero-grid{grid-template-columns:330px minmax(460px,540px) minmax(450px,1fr)!important;gap:26px!important;}
+  .ef-vehicle-visual{transform:translateX(-22px) translateY(8px) scale(1.04)!important;background-size:118% auto!important;}
+  @keyframes efVehicleFloat{0%,100%{transform:translateX(-22px) translateY(8px) scale(1.04)}50%{transform:translateX(-22px) translateY(0) scale(1.055)}}
+}
+@media(max-width:1100px){
+  .nav-wrap{grid-template-columns:1fr!important;gap:14px!important;min-height:auto!important;padding:16px 0!important;}
+  .brand{justify-content:center!important;}
+  .ef-main-nav,.ef-nav-actions{justify-content:center!important;flex-wrap:wrap!important;}
+  .hero.ef-home-hero,.ef-home-hero{min-height:auto!important;padding:42px 0!important;}
+  .ef-hero-grid{grid-template-columns:1fr!important;min-height:auto!important;}
+  .ef-hero-copy{text-align:center!important;margin:auto!important;max-width:720px!important;}
+  .ef-hero-copy .hero-copy{margin-left:auto!important;margin-right:auto!important;max-width:560px!important;}
+  .ef-comparator-panel{max-width:680px!important;margin:auto!important;}
+  .ef-vehicle-visual{min-height:430px!important;transform:none!important;background-size:contain!important;}
+  .ef-stats-row{grid-template-columns:1fr 1fr!important;margin-top:18px!important;}
+}
+@media(max-width:720px){
+  .ef-hero-copy h1{font-size:34px!important;}
+  .ef-comparator-panel{padding:22px!important;}
+  .ef-vehicle-type-tabs{grid-template-columns:1fr 1fr!important;}
+  .ef-plate-wrap{grid-template-columns:64px 1fr 46px!important;}
+  .ef-vehicle-visual{min-height:300px!important;}
+  .ef-stats-row{grid-template-columns:1fr!important;}
+}
+
+/* ==========================================================
+   V47 FINAL FIX - header clean + hero visual integrated
+   ========================================================== */
+html, body{
+  margin:0!important;
+  padding:0!important;
+  padding-top:0!important;
+  scroll-padding-top:0!important;
+}
+body::before,
+body::after{
+  display:none!important;
+  content:none!important;
+}
+.main-header{
+  margin:0!important;
+  top:0!important;
+  position:sticky!important;
+  transform:none!important;
+}
+.main-header::before,
+.main-header::after{
+  display:none!important;
+  content:none!important;
+}
+.main-header + main,
+main{
+  margin-top:0!important;
+  padding-top:0!important;
+}
+
+/* Logo payoff: una sola dicitura, sotto al wordmark */
+.brand::after{
+  display:none!important;
+  content:none!important;
+}
+.ef-logo-wordmark::after{
+  content:none!important;
+  display:block!important;
+  margin-left:78px!important;
+  margin-top:-6px!important;
+  color:#071d49!important;
+  font-size:11px!important;
+  line-height:1!important;
+  letter-spacing:.18em!important;
+  font-weight:900!important;
+  white-space:nowrap!important;
+}
+
+/* Header più ordinato: niente duplicazioni e icone leggibili */
+.ef-main-nav{
+  gap:28px!important;
+  align-items:center!important;
+}
+.ef-main-nav a{
+  min-width:66px!important;
+}
+.ef-main-nav a span{
+  white-space:nowrap!important;
+}
+
+/* Hero senza spazio alto e con sfondo premium pulito */
+.hero.ef-home-hero,
+.ef-home-hero{
+  margin-top:0!important;
+  padding-top:48px!important;
+  background:
+    radial-gradient(circle at 78% 38%, rgba(226,239,255,.72) 0%, rgba(255,255,255,0) 42%),
+    linear-gradient(180deg,#ffffff 0%,#f9fbff 58%,#ffffff 100%)!important;
+}
+.hero.ef-home-hero::before,
+.ef-home-hero::before{
+  opacity:.82!important;
+  background:linear-gradient(130deg,rgba(255,255,255,0) 0%,rgba(235,244,255,.50) 42%,rgba(255,255,255,0) 78%)!important;
+}
+.hero.ef-home-hero::after,
+.ef-home-hero::after{
+  display:none!important;
+  content:none!important;
+}
+
+/* Visual veicoli integrato: nessun riquadro, bordi sfumati, più contrasto */
+.ef-vehicle-visual{
+  min-height:590px!important;
+  background:url('/assets/hero-vehicles-premium-clean.png') center center/118% auto no-repeat!important;
+  background-color:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  filter:drop-shadow(0 32px 46px rgba(7,29,73,.14)) saturate(1.08) contrast(1.04)!important;
+  transform:translateX(-34px) translateY(4px) scale(1.12)!important;
+  -webkit-mask-image:radial-gradient(ellipse at 50% 52%, #000 0%, #000 66%, rgba(0,0,0,.82) 78%, transparent 97%)!important;
+  mask-image:radial-gradient(ellipse at 50% 52%, #000 0%, #000 66%, rgba(0,0,0,.82) 78%, transparent 97%)!important;
+  animation:efVehicleEnterV47 .85s ease both, efVehicleFloatV47 7s ease-in-out infinite!important;
+}
+.ef-vehicle-visual::before{
+  display:none!important;
+  content:none!important;
+  background:none!important;
+}
+.ef-vehicle-visual::after{
+  content:''!important;
+  position:absolute!important;
+  left:8%!important;
+  right:6%!important;
+  bottom:42px!important;
+  height:44px!important;
+  display:block!important;
+  background:radial-gradient(ellipse at center, rgba(7,29,73,.16), transparent 70%)!important;
+  filter:blur(18px)!important;
+  pointer-events:none!important;
+  z-index:-1!important;
+}
+@keyframes efVehicleEnterV47{
+  from{opacity:0;transform:translateX(-8px) translateY(18px) scale(1.04)}
+  to{opacity:1;transform:translateX(-34px) translateY(4px) scale(1.12)}
+}
+@keyframes efVehicleFloatV47{
+  0%,100%{transform:translateX(-34px) translateY(4px) scale(1.12)}
+  50%{transform:translateX(-34px) translateY(-6px) scale(1.135)}
+}
+
+/* Barra targa più premium e pulita */
+.ef-plate-wrap{
+  border-radius:20px!important;
+  border:1px solid #d8e3f1!important;
+  background:linear-gradient(180deg,#ffffff,#fbfdff)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.9), 0 16px 36px rgba(7,29,73,.065)!important;
+}
+.plate-country{
+  background:linear-gradient(180deg,#1f66dc,#0f4eb8)!important;
+  box-shadow:inset -1px 0 0 rgba(255,255,255,.28)!important;
+}
+.ef-plate-wrap input{
+  color:#7b8495!important;
+  letter-spacing:.015em!important;
+}
+.ef-input-help{
+  color:#071d49!important;
+  background:transparent!important;
+}
+
+@media(max-width:1320px){
+  .ef-vehicle-visual{
+    min-height:540px!important;
+    background-size:122% auto!important;
+    transform:translateX(-22px) translateY(4px) scale(1.07)!important;
+  }
+  @keyframes efVehicleFloatV47{
+    0%,100%{transform:translateX(-22px) translateY(4px) scale(1.07)}
+    50%{transform:translateX(-22px) translateY(-4px) scale(1.085)}
+  }
+}
+@media(max-width:1100px){
+  .ef-vehicle-visual{
+    min-height:430px!important;
+    transform:none!important;
+    background-size:contain!important;
+    -webkit-mask-image:radial-gradient(ellipse at center,#000 0 78%,transparent 100%)!important;
+    mask-image:radial-gradient(ellipse at center,#000 0 78%,transparent 100%)!important;
+  }
+}

@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Risultati garanzie - EstendiFacile.it</title>
+
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="/urgent-fix.css" />
+  <link rel="stylesheet" href="/visual-final.css?v=20260519" />
+  <link rel="stylesheet" href="/approved-ui.css?v=20260519-final" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+  <style>
+    :root {
+      --ef-blue: #071d49;
+      --ef-blue-2: #0b2b66;
+      --ef-green: #18b45a;
+      --ef-green-dark: #0fa34f;
+      --ef-bg: #f6f9fd;
+      --ef-text: #071d49;
+      --ef-muted: #64748b;
+      --ef-border: #e4ebf5;
+      --ef-card: #ffffff;
+      --ef-soft-green: #eafaf1;
+      --ef-danger: #b91c1c;
+      --ef-shadow: 0 18px 45px rgba(7, 29, 73, 0.08);
+      --ef-shadow-soft: 0 10px 28px rgba(7, 29, 73, 0.06);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at top right, rgba(24, 180, 90, 0.06), transparent 32%),
+        linear-gradient(180deg, #ffffff 0%, var(--ef-bg) 42%, #ffffff 100%);
+      color: var(--ef-text);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .results-page {
+      min-height: 100vh;
+      background: transparent;
+    }
+
+    .premium-header {
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--ef-border);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      box-shadow: 0 8px 24px rgba(11,28,57,.04);
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(90deg, rgba(7,29,73,0.98) 0%, rgba(7,29,73,0.92) 48%, rgba(7,29,73,0.42) 74%, rgba(7,29,73,0.20) 100%),
+        url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1800&auto=format&fit=crop");
+      background-size: cover;
+      background-position: center right;
+      color: white;
+      padding: 42px 0 46px;
+      border-bottom: 1px solid rgba(255,255,255,0.10);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 86% 24%, rgba(24,180,90,0.18), transparent 28%),
+        linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.06) 100%);
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      background: rgba(234, 250, 241, 0.14);
+      color: #d7ffe7;
+      border: 1px solid rgba(234, 250, 241, 0.25);
+      padding: 8px 13px;
+      font-size: 12px;
+      font-weight: 950;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      margin-bottom: 15px;
+    }
+
+    .hero h1 {
+      margin: 0 0 12px;
+      font-size: 44px;
+      line-height: 1.04;
+      letter-spacing: -1.2px;
+      font-weight: 950;
+    }
+
+    .hero p {
+      margin: 0;
+      color: #dbe7f9;
+      line-height: 1.7;
+      max-width: 820px;
+      font-size: 16px;
+      font-weight: 650;
+    }
+
+    .vehicle-card {
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.22);
+      border-radius: 24px;
+      padding: 20px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 16px 34px rgba(7, 29, 73, 0.14);
+    }
+
+    .vehicle-card h3 {
+      margin: 0 0 14px;
+      font-size: 22px;
+      color: white;
+      font-weight: 950;
+    }
+
+    .vehicle-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      border-bottom: 1px solid rgba(255,255,255,.14);
+      padding: 9px 0;
+      font-size: 14px;
+    }
+
+    .vehicle-row:last-child { border-bottom: none; }
+
+    .vehicle-row strong { color: #dbe7f9; }
+
+    .vehicle-row span {
+      color: white;
+      font-weight: 900;
+      text-align: right;
+    }
+
+    .main { padding: 28px 0 50px; }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 22px;
+      align-items: start;
+    }
+
+    .filters {
+      position: sticky;
+      top: 96px;
+      background: white;
+      border: 1px solid var(--ef-border);
+      border-radius: 28px;
+      padding: 24px;
+      box-shadow: 0 12px 34px rgba(15,23,42,.05);
+    }
+
+    .filters h2 {
+      margin: 0 0 8px;
+      font-size: 24px;
+      color: var(--ef-text);
+      font-weight: 950;
+    }
+
+    .filters p {
+      margin: 0 0 18px;
+      color: var(--ef-muted);
+      line-height: 1.55;
+      font-size: 14px;
+    }
+
+    .filter-group {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .filter-group label {
+      font-size: 13px;
+      font-weight: 900;
+      color: #334155;
+    }
+
+    .filter-group input,
+    .filter-group select {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #d6deea;
+      border-radius: 14px;
+      background: white;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .filter-group input:focus,
+    .filter-group select:focus {
+      border-color: var(--ef-green);
+      box-shadow: 0 0 0 4px rgba(24,180,90,.08);
+    }
+
+    .ai-recommendation-box {
+      background:
+        radial-gradient(circle at top right, rgba(34,197,94,.18), transparent 38%),
+        linear-gradient(135deg,#071d49 0%,#0b2d6c 100%);
+      border-radius: 28px;
+      padding: 28px;
+      color: white;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      box-shadow: 0 18px 44px rgba(11,28,57,.14);
+      border: 1px solid rgba(255,255,255,.12);
+    }
+
+    .ai-recommendation-box h2 {
+      margin: 0 0 8px;
+      font-size: 30px;
+      color: white;
+      font-weight: 950;
+    }
+
+    .ai-recommendation-box p {
+      margin: 0;
+      color: #dbe7f9;
+      line-height: 1.6;
+      max-width: 700px;
+    }
+
+    .ai-recommendation-box .badge {
+      margin-bottom: 12px;
+    }
+
+    .results-head {
+      background: white;
+      border: 1px solid var(--ef-border);
+      border-radius: 24px;
+      padding: 22px;
+      box-shadow: var(--ef-shadow-soft);
+      margin-bottom: 18px;
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: flex-end;
+      flex-wrap: wrap;
+    }
+
+    .results-head h2 {
+      margin: 0 0 6px;
+      font-size: 30px;
+      color: var(--ef-text);
+      font-weight: 950;
+    }
+
+    .results-head p {
+      margin: 0;
+      color: var(--ef-muted);
+      line-height: 1.5;
+      font-size: 15px;
+    }
+
+    .count-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 15px;
+      border-radius: 999px;
+      background: #f3fbf6;
+      color: #16a34a;
+      font-weight: 900;
+      font-size: 13px;
+      border: 1px solid #bce8cc;
+      white-space: nowrap;
+    }
+
+    .cards { display: grid; gap: 18px; }
+
+    .warranty-card {
+      background: white;
+      border: 1px solid var(--ef-border);
+      border-radius: 26px;
+      padding: 22px;
+      box-shadow: var(--ef-shadow-soft);
+      display: grid;
+      grid-template-columns: 1fr 240px;
+      gap: 22px;
+      align-items: start;
+      transition: .18s ease;
+    }
+
+    .warranty-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(15,23,42,.12);
+      border-color: #d8e6f5;
+    }
+
+    .warranty-top {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .warranty-title {
+      margin: 0 0 6px;
+      font-size: 26px;
+      line-height: 1.1;
+      color: var(--ef-text);
+      font-weight: 950;
+    }
+
+    .brand-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: #f1f5f9;
+      color: #334155;
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .warranty-desc {
+      color: var(--ef-muted);
+      line-height: 1.6;
+      margin: 0 0 16px;
+      font-size: 15px;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .feature-box {
+      background: #f8fbff;
+      border: 1px solid #e5edf7;
+      border-radius: 16px;
+      padding: 13px;
+      transition: .18s ease;
+    }
+
+    .feature-box:hover {
+      transform: translateY(-2px);
+      border-color: #bce8cc;
+      background: #f3fbf6;
+    }
+
+    .feature-label {
+      color: var(--ef-muted);
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+
+    .feature-value {
+      color: var(--ef-text);
+      font-weight: 900;
+      font-size: 15px;
+      line-height: 1.3;
+    }
+
+    .coverage-box {
+      background: #f8fbff;
+      border: 1px solid #e5edf7;
+      border-radius: 16px;
+      padding: 14px;
+      color: #334155;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .coverage-box strong {
+      display: block;
+      color: var(--ef-text);
+      margin-bottom: 5px;
+    }
+
+    .price-panel {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg,#071d49 0%,#0b2d6c 100%);
+      color: white;
+      border-radius: 22px;
+      padding: 20px;
+      display: grid;
+      gap: 14px;
+      box-shadow: 0 14px 34px rgba(7,29,73,.12);
+    }
+
+    .price-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top right, rgba(34,197,94,.18), transparent 40%);
+      pointer-events: none;
+    }
+
+    .price-panel > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .price-label {
+      color: #dbe7f9;
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .price {
+      font-size: 34px;
+      font-weight: 900;
+      color: #22c55e;
+      line-height: 1;
+    }
+
+    .price-note {
+      color: #dbe7f9;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .limit-note {
+      background: rgba(255,255,255,.10);
+      border: 1px solid rgba(255,255,255,.14);
+      color: #e2e8f0;
+      padding: 10px;
+      border-radius: 14px;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .card-actions { display: grid; gap: 10px; }
+
+    .empty-state {
+      background: white;
+      border: 1px dashed #cbd5e1;
+      border-radius: 24px;
+      padding: 34px;
+      text-align: center;
+      color: var(--ef-muted);
+      line-height: 1.7;
+      box-shadow: var(--ef-shadow-soft);
+    }
+
+    .empty-state h2 {
+      color: var(--ef-text);
+      margin: 0 0 8px;
+    }
+
+    .compatibility {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      color: #15803d;
+      background: #eef7f1;
+      border-radius: 999px;
+      padding: 7px 10px;
+      font-size: 12px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    @media(max-width:1100px) {
+      .hero-grid,
+      .layout,
+      .warranty-card {
+        grid-template-columns: 1fr;
+      }
+
+      .filters { position: static; }
+      .features { grid-template-columns: 1fr 1fr; }
+      .ai-recommendation-box { flex-direction: column; align-items: flex-start; }
+    }
+
+    @media(max-width:700px) {
+      .hero h1 { font-size: 34px; }
+      .features { grid-template-columns: 1fr; }
+      .price { font-size: 30px; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/home-master-header-footer.css?v=63">
+</head>
+
+<body>
+  <div class="results-page">
+    <header class="main-header">
+    <div class="container nav-wrap">
+      <a href="/index.html" class="brand">
+        <span class="ef-logo-wordmark" aria-label="EstendiFacile.it">
+          <span class="ef-logo-symbol">EF</span>
+          <span class="ef-logo-stack">
+            <span class="ef-logo-text">Estendi<span>Facile</span><small>.it</small></span>
+            <span class="ef-logo-payoff">ESTENDI LA TUA SICUREZZA</span>
+          </span>
+        </span>
+      </a>
+
+      <nav class="nav-menu ef-main-nav">
+        <a href="/partner.html"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v5M5 19v-4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v4"/><circle cx="12" cy="4" r="2"/><circle cx="5" cy="20" r="2"/><circle cx="19" cy="20" r="2"/></svg><span>Partner</span></a>
+        <a href="/chi-siamo.html"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v4"/><path d="M8 7h4M8 11h4M8 15h2"/><path d="M18 22s4-2 4-6v-3l-4-2-4 2v3c0 4 4 6 4 6Z"/><path d="m16.8 16 1 1 2.2-2.4"/></svg><span>Chi siamo</span></a>
+        <a href="/come-funziona.html"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="19" r="3"/><circle cx="18" cy="5" r="3"/><path d="M8.2 16.8 15.8 7.2"/></svg><span>Come funziona</span></a>
+        <a href="/faq.html"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.7 9a2.8 2.8 0 0 1 5.3 1.3c0 2.2-3 2.1-3 4"/><path d="M12 18h.01"/></svg><span>FAQ</span></a>
+        <a href="/contatti.html"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13a8 8 0 0 1 16 0"/><path d="M4 13v4a2 2 0 0 0 2 2h1v-7H6a2 2 0 0 0-2 2Z"/><path d="M20 13v4a2 2 0 0 1-2 2h-1v-7h1a2 2 0 0 1 2 2Z"/><path d="M16 19c0 1.1-1.8 2-4 2"/></svg><span>Contatti</span></a>
+      </nav>
+
+      <div class="nav-actions ef-nav-actions" id="navActions">
+        <a href="/normativa.html" class="nav-legal"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M5 6h14M7 6l-4 7h8L7 6ZM17 6l-4 7h8l-4-7Z"/><path d="M8 21h8"/></svg><span>Codice del consumo<br>Normativa vigente</span></a>
+        <a href="/login.html" class="nav-login"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="7" r="4"/><path d="M2.5 21a6.5 6.5 0 0 1 10.8-4.9"/><path d="M18 22s4-2 4-6v-3l-4-2-4 2v3c0 4 4 6 4 6Z"/></svg><span>Accedi</span></a>
+        <a href="/register.html" class="nav-register"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="7" r="4"/><path d="M2.5 21a6.5 6.5 0 0 1 11.7-3.9"/><path d="M19 8v6M16 11h6"/></svg><span>Crea account</span></a>
+      </div>
+
+     
+    </div>
+  </header>
+
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="badge">Comparatore garanzie</div>
+          <h1>Soluzioni disponibili per il veicolo</h1>
+          <p>
+            Confronta le garanzie compatibili, verifica durata, coperture e prezzo.
+            Dopo la scelta potrai aggiungere eventuali supplementi nel checkout.
+          </p>
+        </div>
+
+        <div class="vehicle-card">
+          <h3>Dati veicolo</h3>
+
+          <div class="vehicle-row">
+            <strong>Targa</strong>
+            <span id="vehicleTarga">—</span>
+          </div>
+
+          <div class="vehicle-row">
+            <strong>Modello</strong>
+            <span id="vehicleModello">—</span>
+          </div>
+
+          <div class="vehicle-row">
+            <strong>Anno</strong>
+            <span id="vehicleAnno">—</span>
+          </div>
+
+          <div class="vehicle-row">
+            <strong>Km</strong>
+            <span id="vehicleKm">—</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main class="main">
+      <div class="container layout">
+        <aside class="filters">
+          <h2>Filtri</h2>
+          <p>Affina i risultati in base a prezzo, durata e ricerca testuale.</p>
+
+          <div class="filter-group">
+            <label for="searchInput">Cerca prodotto o brand</label>
+            <input id="searchInput" type="text" placeholder="Es. Premium, AutoProtect" />
+          </div>
+
+          <div class="filter-group">
+            <label for="sortSelect">Ordina per</label>
+            <select id="sortSelect">
+              <option value="prezzo_asc">Prezzo crescente</option>
+              <option value="prezzo_desc">Prezzo decrescente</option>
+              <option value="durata_desc">Durata maggiore</option>
+              <option value="durata_asc">Durata minore</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="durataSelect">Durata minima</label>
+            <select id="durataSelect">
+              <option value="">Qualsiasi durata</option>
+              <option value="12">Almeno 12 mesi</option>
+              <option value="24">Almeno 24 mesi</option>
+              <option value="36">Almeno 36 mesi</option>
+            </select>
+          </div>
+
+          <button class="btn btn-outline" type="button" id="btnResetFiltri" style="width:100%;">
+            Reset filtri
+          </button>
+        </aside>
+
+        <section>
+          <div class="ai-recommendation-box" id="aiRecommendationBox">
+            <div>
+              <span class="badge">Consiglio IA</span>
+              <h2>Vuoi un suggerimento automatico?</h2>
+              <p>
+                L'assistente analizza anno, chilometraggio, durata, coperture e limiti della garanzia
+                per evidenziare le opzioni più adatte.
+              </p>
+            </div>
+            <button class="btn btn-primary" type="button" id="btnAiRecommend">Consigliami la garanzia migliore</button>
+          </div>
+
+          <div class="results-head">
+            <div>
+              <h2>Garanzie compatibili</h2>
+              <p id="resultsSubtitle">Caricamento soluzioni disponibili...</p>
+            </div>
+
+            <div class="top-actions">
+              <span class="count-pill" id="resultsCount">0 risultati</span>
+              <a href="/index.html" class="btn btn-outline">Modifica veicolo</a>
+            </div>
+          </div>
+
+          <div class="cards" id="resultsContainer">
+            <div class="empty-state">Caricamento garanzie...</div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/risultati.js"></script>
+  <script src="/js/ai-assistant.js?v=20260519"></script>
+<footer id="contatti" class="footer">
+  <div class="footer-inner">
+    <div>© EstendiFacile.it</div>
+    <div><strong>Tel.</strong> +39 000 000 0000 · <strong>Email</strong> info@estendifacile.it</div><div><strong>Sede legale</strong> da definire · <strong>Sede operativa</strong> da definire</div>
+    <div class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Termini e Condizioni</a>
+    </div>
+  </div>
+</footer>
+
+</html>

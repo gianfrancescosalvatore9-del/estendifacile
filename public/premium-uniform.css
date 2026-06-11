@@ -1,0 +1,156 @@
+:root {
+  --ef-premium-blue: #071d49;
+  --ef-premium-green: #18b45a;
+  --ef-premium-ink: #102542;
+  --ef-premium-muted: #64748b;
+  --ef-premium-border: #dfe7f2;
+  --ef-premium-bg: #f6f9fd;
+  --ef-premium-shadow: 0 14px 34px rgba(7, 29, 73, 0.08);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  color: var(--ef-premium-ink);
+  text-rendering: optimizeLegibility;
+}
+
+.main-header,
+.partner-sidebar,
+.dealer-sidebar,
+.admin-sidebar {
+  border-color: var(--ef-premium-border) !important;
+  box-shadow: 0 10px 30px rgba(7, 29, 73, 0.05) !important;
+}
+
+.nav-menu a,
+.nav-item,
+.partner-nav .nav-item,
+.private-nav button,
+.admin-nav button {
+  letter-spacing: 0 !important;
+}
+
+.btn,
+.btn-login,
+.btn-google,
+.btn-primary,
+.btn-outline,
+.btn-action,
+.hero-btn,
+.sidebar-btn,
+.side-btn,
+.nav-item,
+.profile-card,
+.hero-search-panel,
+.kpi-card,
+.card,
+.panel-card,
+.operation-card,
+.notification-box,
+.table-wrap,
+.checkout-card,
+.summary-card,
+.payment-option,
+.admin-badge {
+  border-radius: 8px !important;
+}
+
+.btn-primary,
+.btn-login,
+.btn-action.primary,
+.hero-btn.primary,
+.sidebar-btn.primary,
+.side-btn.primary {
+  background: linear-gradient(135deg, var(--ef-premium-green), #0fa34f) !important;
+  border-color: var(--ef-premium-green) !important;
+  box-shadow: 0 14px 26px rgba(24, 180, 90, 0.18) !important;
+}
+
+.btn-outline,
+.btn-google,
+.sidebar-btn,
+.side-btn,
+.btn-action {
+  border-color: var(--ef-premium-border) !important;
+  box-shadow: 0 10px 24px rgba(7, 29, 73, 0.05) !important;
+}
+
+.btn-google,
+.divider,
+.forgot-link {
+  display: none !important;
+}
+
+input,
+select,
+textarea,
+.input-wrap input,
+.form-group input,
+.form-group textarea,
+.form-group select,
+.date-input {
+  border-radius: 8px !important;
+}
+
+.hero-search-panel,
+.kpi-card,
+.card,
+.panel-card,
+.checkout-card,
+.summary-card,
+.operation-card,
+.profile-card,
+.payment-option,
+.table-wrap {
+  box-shadow: var(--ef-premium-shadow) !important;
+}
+
+.floating-proof {
+  border-radius: 8px !important;
+  border: 1px solid var(--ef-premium-border);
+}
+
+.hero h1,
+.hero-partner h1,
+.hero-panel h1,
+.login-title,
+.register-title {
+  letter-spacing: 0 !important;
+}
+
+.message {
+  line-height: 1.45;
+}
+
+table th {
+  letter-spacing: 0.02em !important;
+}
+
+@media (max-width: 760px) {
+  .container {
+    width: min(100% - 32px, 1480px) !important;
+  }
+}
+
+
+/* v29 dashboard visual unification */
+body, button, input, select, textarea { font-family: Inter, "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif !important; }
+.dealer-main, .private-main, .partner-main { background: #f6f9fd !important; color: #102542 !important; }
+.dealer-main h1, .dealer-main h2, .dealer-main h3,
+.private-main h1, .private-main h2, .private-main h3,
+.partner-main h1, .partner-main h2, .partner-main h3 { color: #071d49 !important; font-weight: 850 !important; letter-spacing: -0.03em !important; }
+.dealer-main p, .private-main p, .partner-main p,
+.card-subtitle, .panel-head p, .section-title p, .section-banner p { color: #64748b !important; font-weight: 500 !important; line-height: 1.55 !important; }
+.dealer-sidebar, .private-sidebar, .partner-sidebar { background: linear-gradient(180deg, #06183d 0%, #0b2a63 52%, #071d49 100%) !important; border-right: 1px solid rgba(255,255,255,.10) !important; box-shadow: 20px 0 55px rgba(7,29,73,.16) !important; }
+.dealer-sidebar .nav-item, .private-sidebar .nav-item, .partner-sidebar .nav-item, .partner-nav .nav-item { color: rgba(255,255,255,.78) !important; font-weight: 750 !important; border-radius: 14px !important; }
+.dealer-sidebar .nav-item.active, .private-sidebar .nav-item.active, .partner-sidebar .nav-item.active, .partner-nav .nav-item.active { background: rgba(255,255,255,.14) !important; color: #fff !important; box-shadow: inset 3px 0 0 #18b45a, 0 12px 26px rgba(0,0,0,.16) !important; }
+.panel-card, .card, .table-card, .kpi-card, .data-row-card, .inline-warranty-card { border: 1px solid #dfe7f2 !important; border-radius: 22px !important; background: rgba(255,255,255,.94) !important; box-shadow: 0 18px 45px rgba(7,29,73,.08) !important; }
+.hero-btn.primary, .btn-primary, .mini-btn.edit { background: linear-gradient(135deg, #18b45a, #0ea550) !important; color: #fff !important; border: 0 !important; box-shadow: 0 14px 30px rgba(24,180,90,.22) !important; }
+.hero-btn.secondary, .btn-secondary-premium { background: #fff !important; color: #071d49 !important; border: 1px solid #dfe7f2 !important; }
+.sidebar-badge { margin-left: auto; min-width: 22px; height: 22px; padding: 0 7px; border-radius: 999px; background: #18b45a; color: #fff; display: none; align-items: center; justify-content: center; font-size: 12px; font-weight: 900; box-shadow: 0 8px 16px rgba(24,180,90,.28); }
+.sidebar-badge.show { display: inline-flex !important; }
+.ticket-card-risposto { border-color: rgba(24,180,90,.45) !important; box-shadow: 0 18px 45px rgba(24,180,90,.12) !important; }
+.ticket-card-aperto { border-color: rgba(245,158,11,.38) !important; }

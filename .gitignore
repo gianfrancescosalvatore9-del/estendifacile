@@ -1,0 +1,11 @@
+node_modules/
+qa_runtime/
+qa_screenshots/
+.env
+database.db
+*.log
+npm-debug.log*
+public/uploads/*
+!public/uploads/.gitkeep
+public/certificati/*
+!public/certificati/.gitkeep

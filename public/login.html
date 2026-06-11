@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Accedi - EstendiFacile.it</title>
+  <style>
+    :root{
+      --navy:#071d49;
+      --navy-2:#0b2d6c;
+      --green:#18b45a;
+      --green-dark:#079447;
+      --text:#0b1c39;
+      --muted:#64748b;
+      --border:#dfe8f4;
+      --soft:#f7faff;
+      --danger:#b91c1c;
+      --shadow:0 26px 70px rgba(7,29,73,.10);
+      --shadow-soft:0 16px 42px rgba(7,29,73,.075);
+      --radius:28px;
+    }
+
+    *{box-sizing:border-box;}
+    html,body{margin:0;padding:0;width:100%;min-height:100%;overflow-x:hidden;}
+    body{
+      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 82% 20%,rgba(24,180,90,.08),transparent 30%),
+        radial-gradient(circle at 8% 36%,rgba(37,99,235,.07),transparent 32%),
+        linear-gradient(180deg,#ffffff 0%,#f7faff 100%);
+      min-height:100vh;
+    }
+    a{text-decoration:none;color:inherit;}
+    svg{display:block;}
+
+    .container{width:min(1560px,calc(100% - 72px));margin:0 auto;}
+
+    .main-header{
+      position:sticky;
+      top:0;
+      z-index:1000;
+      background:rgba(255,255,255,.94);
+      backdrop-filter:blur(18px);
+      border-bottom:1px solid rgba(223,232,244,.95);
+      box-shadow:0 10px 30px rgba(7,29,73,.045);
+    }
+    .nav-wrap{
+      min-height:82px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:28px;
+    }
+    .brand{display:flex;align-items:center;min-width:360px;}
+    .ef-logo-wordmark{display:flex;align-items:center;gap:12px;}
+    .ef-logo-symbol{
+      width:48px;height:48px;border:3px solid var(--green);border-radius:14px;
+      display:grid;place-items:center;color:var(--navy);font-weight:950;font-size:19px;position:relative;background:#fff;
+      box-shadow:0 12px 28px rgba(7,29,73,.10);
+    }
+    .ef-logo-symbol::after{
+      content:"";position:absolute;right:-8px;bottom:-7px;width:18px;height:18px;border-radius:50%;background:var(--green);border:4px solid #fff;
+    }
+    .ef-logo-stack{display:flex;flex-direction:column;gap:2px;}
+    .ef-logo-text{font-weight:950;font-size:29px;letter-spacing:-1.4px;line-height:.95;color:var(--navy);}
+    .ef-logo-text span{color:var(--green);}
+    .ef-logo-text small{font-size:17px;color:var(--navy);letter-spacing:-.5px;}
+    .ef-logo-payoff{font-size:10.5px;font-weight:900;letter-spacing:1.35px;text-transform:uppercase;color:#21395f;}
+
+    .nav-menu{display:flex;align-items:center;gap:31px;margin-left:auto;white-space:nowrap;}
+    .nav-menu a{display:flex;flex-direction:column;align-items:center;gap:5px;color:var(--navy);font-size:12px;font-weight:900;text-transform:uppercase;transition:.22s ease;}
+    .nav-menu a .ef-icon-shell{width:32px;height:32px;border-radius:12px;border:1px solid #dbe7f5;background:#fff;display:grid;place-items:center;box-shadow:0 8px 18px rgba(7,29,73,.06);}
+    .nav-menu a svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.3;stroke-linecap:round;stroke-linejoin:round;}
+    .nav-menu a:hover{color:var(--green);transform:translateY(-2px);}
+
+    .nav-actions{display:flex;align-items:center;gap:13px;}
+    .nav-actions a{min-height:47px;border-radius:14px;padding:0 18px;display:inline-flex;align-items:center;justify-content:center;gap:9px;font-weight:900;text-transform:uppercase;font-size:12px;transition:.22s ease;white-space:nowrap;}
+    .nav-actions svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2.25;stroke-linecap:round;stroke-linejoin:round;}
+    .nav-legal{border:1.5px solid var(--green);color:var(--navy);background:#fff;line-height:1.05;}
+    .nav-login{border:1px solid #cfdceb;color:var(--navy);background:#fff;}
+    .nav-register{background:var(--green);color:#fff;box-shadow:0 18px 36px rgba(24,180,90,.24);}
+    .nav-actions a:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(7,29,73,.10);}
+
+    .page-shell{padding:54px 0 70px;position:relative;overflow:hidden;}
+    .page-shell::before{
+      content:"";position:absolute;right:-16%;top:80px;width:66%;height:520px;
+      background:url('/assets/hero-vehicles-premium-clean.png') center center/contain no-repeat;
+      opacity:.19;filter:blur(.1px);pointer-events:none;
+    }
+    .auth-grid{position:relative;z-index:1;display:grid;grid-template-columns:1.02fr .98fr;gap:34px;align-items:stretch;}
+
+    .auth-copy{padding:24px 0 24px;display:flex;flex-direction:column;justify-content:center;}
+    .hero-pill{display:inline-flex;align-items:center;gap:9px;width:max-content;padding:9px 14px;border:1px solid #bbf7d0;border-radius:999px;background:#fff;color:#07813e;font-size:12px;font-weight:950;text-transform:uppercase;letter-spacing:.25px;box-shadow:0 14px 35px rgba(24,180,90,.10);}
+    .hero-pill svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.3;}
+    .auth-copy h1{margin:22px 0 18px;font-size:clamp(44px,4.6vw,74px);line-height:.98;letter-spacing:-2.5px;color:var(--navy);font-weight:950;max-width:690px;}
+    .auth-copy h1 span{display:block;color:var(--green);}
+    .auth-copy p{margin:0;max-width:570px;color:#243b63;font-size:19px;line-height:1.62;font-weight:650;}
+    .trust-mini{display:flex;gap:16px;flex-wrap:wrap;margin-top:28px;}
+    .trust-mini div{display:flex;align-items:center;gap:9px;padding:11px 14px;border:1px solid #e5edf7;background:#fff;border-radius:999px;color:var(--navy);font-size:12px;font-weight:900;box-shadow:0 12px 26px rgba(7,29,73,.05);}
+    .trust-mini svg{width:18px;height:18px;stroke:var(--green);fill:none;stroke-width:2.4;}
+
+    .login-card{
+      background:rgba(255,255,255,.96);
+      border:1px solid #dfe8f4;
+      border-radius:32px;
+      box-shadow:var(--shadow);
+      padding:34px;
+      position:relative;
+      overflow:hidden;
+      min-height:620px;
+    }
+    .login-card::before{content:"";position:absolute;inset:0 0 auto 0;height:5px;background:linear-gradient(90deg,var(--green),#2563eb);}
+    .badge{display:inline-flex;align-items:center;gap:8px;margin-bottom:16px;padding:9px 13px;border-radius:999px;background:#ecfdf3;color:#07813e;border:1px solid #bbf7d0;font-size:12px;font-weight:950;text-transform:uppercase;letter-spacing:.35px;}
+    .badge svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.3;}
+    .login-title{margin:0 0 7px;color:var(--navy);font-size:36px;line-height:1.04;font-weight:950;letter-spacing:-1.1px;}
+    .login-subtitle{margin:0 0 22px;color:#475569;font-size:15.5px;line-height:1.65;font-weight:650;}
+    .section-label{display:flex;align-items:center;gap:8px;margin:0 0 12px;color:var(--navy);font-size:12px;font-weight:950;text-transform:uppercase;letter-spacing:.3px;}
+    .section-label::before{content:"1";width:22px;height:22px;border-radius:50%;background:var(--green);color:#fff;display:grid;place-items:center;font-size:12px;}
+
+    .profile-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:22px;}
+    .profile-card{position:relative;border:1.5px solid #dfe8f4;border-radius:18px;background:#fff;padding:16px 12px;cursor:pointer;text-align:center;transition:.22s ease;box-shadow:0 10px 24px rgba(7,29,73,.04);}
+    .profile-card:hover{transform:translateY(-3px);border-color:#b7c8de;box-shadow:0 18px 34px rgba(7,29,73,.08);}
+    .profile-card.active{background:#effcf5;border-color:var(--green);box-shadow:0 20px 38px rgba(24,180,90,.13);}
+    .profile-card.active::after{content:"";position:absolute;right:12px;top:12px;width:13px;height:13px;border-radius:50%;background:var(--green);box-shadow:0 0 0 5px rgba(24,180,90,.12);}
+    .profile-icon{width:42px;height:42px;border-radius:15px;background:#f7faff;border:1px solid #e5edf7;display:grid;place-items:center;margin:0 auto 10px;color:var(--navy);}
+    .profile-card.active .profile-icon{color:var(--green);background:#fff;}
+    .profile-icon svg{width:23px;height:23px;stroke:currentColor;fill:none;stroke-width:2.3;stroke-linecap:round;stroke-linejoin:round;}
+    .profile-card h3{margin:0 0 5px;color:var(--navy);font-size:13px;font-weight:950;text-transform:uppercase;}
+    .profile-card p{margin:0;color:#64748b;font-size:11.5px;line-height:1.35;font-weight:700;}
+
+    .form-group{margin-bottom:15px;}
+    .form-group label{display:block;margin-bottom:8px;color:var(--navy);font-size:13px;font-weight:950;}
+    .input-wrap{height:58px;display:grid;grid-template-columns:52px 1fr 48px;align-items:center;border:1.5px solid #d8e3f0;border-radius:17px;background:#fff;overflow:hidden;transition:.22s ease;box-shadow:0 10px 25px rgba(7,29,73,.035);}
+    .input-wrap:focus-within{border-color:var(--green);box-shadow:0 0 0 5px rgba(24,180,90,.10),0 18px 34px rgba(7,29,73,.07);}
+    .input-icon{height:100%;display:grid;place-items:center;background:#f8fbff;color:var(--navy);border-right:1px solid #e5edf7;}
+    .input-icon svg,.password-toggle svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2.25;stroke-linecap:round;stroke-linejoin:round;}
+    .input-wrap input{border:none;outline:none;background:transparent;width:100%;height:100%;padding:0 14px;color:var(--navy);font-size:16px;font-weight:750;}
+    .input-wrap input::placeholder{color:#94a3b8;font-weight:650;}
+    .password-toggle{cursor:pointer;height:100%;display:grid;place-items:center;color:#64748b;transition:.2s ease;}
+    .password-toggle:hover{color:var(--green);}
+
+    .form-options{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:10px 0 18px;color:#475569;font-size:13px;font-weight:750;}
+    .remember{display:flex;align-items:center;gap:8px;}
+    .remember input{accent-color:var(--green);}
+    .forgot-link{color:var(--green-dark);font-weight:900;}
+    .btn-login,.btn-google{width:100%;height:58px;border:none;border-radius:17px;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;font-weight:950;text-transform:uppercase;letter-spacing:.2px;transition:.22s ease;}
+    .btn-login{background:linear-gradient(135deg,#18b45a,#0b9f4c);color:#fff;box-shadow:0 20px 40px rgba(24,180,90,.25);}
+    .btn-login:hover,.btn-google:hover{transform:translateY(-2px);}
+    .btn-login svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:2.4;}
+    .divider{display:flex;align-items:center;gap:14px;margin:18px 0;color:#94a3b8;font-size:12px;font-weight:850;text-transform:uppercase;}
+    .divider::before,.divider::after{content:"";height:1px;background:#e5edf7;flex:1;}
+    .btn-google{background:#fff;color:var(--navy);border:1px solid #dfe8f4;box-shadow:0 12px 28px rgba(7,29,73,.045);}
+    .google-icon{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:#f8fbff;border:1px solid #e5edf7;font-weight:950;color:#2563eb;}
+    .message{min-height:22px;margin-top:12px;color:var(--danger);font-size:13px;font-weight:900;text-align:center;}
+    .register-box{margin-top:14px;text-align:center;color:#475569;font-size:14px;line-height:1.7;font-weight:700;}
+    .register-box a{color:var(--green-dark);font-weight:950;}
+
+    .footer{background:#071d49;color:#cbd5e1;padding:22px 0;font-size:13px;}
+    .footer-inner{width:min(1560px,calc(100% - 72px));margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+    .footer-links{display:flex;gap:16px;flex-wrap:wrap;}
+
+    @media(max-width:1180px){
+      .container{width:min(100% - 36px,1560px);} .brand{min-width:280px}.nav-menu{gap:18px}.auth-grid{grid-template-columns:1fr}.page-shell::before{opacity:.08;right:-25%;width:90%;}.auth-copy h1{font-size:48px}.login-card{min-height:auto}.nav-wrap{flex-wrap:wrap;padding:13px 0}.nav-actions{margin-left:auto;}
+    }
+    @media(max-width:760px){
+      .container,.footer-inner{width:min(100% - 24px,1560px);} .nav-wrap{justify-content:center}.brand{min-width:0;width:100%;justify-content:center}.ef-logo-text{font-size:24px}.nav-menu{order:3;width:100%;justify-content:flex-start;overflow:auto;padding-bottom:6px}.nav-actions{width:100%;justify-content:center;flex-wrap:wrap;margin-left:0}.page-shell{padding:30px 0 44px}.auth-copy h1{font-size:39px}.auth-copy p{font-size:16px}.profile-grid{grid-template-columns:1fr}.login-card{padding:24px}.input-wrap{grid-template-columns:48px 1fr 44px}.footer-inner{flex-direction:column;text-align:center;}
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/home-master-header-footer.css?v=63">
+</head>
+<body>
+  <header class="main-header">
+    <div class="container nav-wrap">
+      <a href="/index.html" class="brand">
+        <span class="ef-logo-wordmark" aria-label="EstendiFacile.it">
+          <span class="ef-logo-symbol">EF</span>
+          <span class="ef-logo-stack">
+            <span class="ef-logo-text">Estendi<span>Facile</span><small>.it</small></span>
+            <span class="ef-logo-payoff">ESTENDI LA TUA SICUREZZA</span>
+          </span>
+        </span>
+      </a>
+
+      <nav class="nav-menu ef-main-nav">
+        <a href="/partner.html"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v5M5 19v-4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v4"/><circle cx="12" cy="4" r="2"/><circle cx="5" cy="20" r="2"/><circle cx="19" cy="20" r="2"/></svg><span>Partner</span></a>
+        <a href="/chi-siamo.html"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v4"/><path d="M8 7h4M8 11h4M8 15h2"/><path d="M18 22s4-2 4-6v-3l-4-2-4 2v3c0 4 4 6 4 6Z"/><path d="m16.8 16 1 1 2.2-2.4"/></svg><span>Chi siamo</span></a>
+        <a href="/come-funziona.html"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="19" r="3"/><circle cx="18" cy="5" r="3"/><path d="M8.2 16.8 15.8 7.2"/></svg><span>Come funziona</span></a>
+        <a href="/faq.html"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.7 9a2.8 2.8 0 0 1 5.3 1.3c0 2.2-3 2.1-3 4"/><path d="M12 18h.01"/></svg><span>FAQ</span></a>
+        <a href="/contatti.html"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13a8 8 0 0 1 16 0"/><path d="M4 13v4a2 2 0 0 0 2 2h1v-7H6a2 2 0 0 0-2 2Z"/><path d="M20 13v4a2 2 0 0 1-2 2h-1v-7h1a2 2 0 0 1 2 2Z"/><path d="M16 19c0 1.1-1.8 2-4 2"/></svg><span>Contatti</span></a>
+      </nav>
+
+      <div class="nav-actions ef-nav-actions" id="navActions">
+        <a href="/normativa.html" class="nav-legal"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M5 6h14M7 6l-4 7h8L7 6ZM17 6l-4 7h8l-4-7Z"/><path d="M8 21h8"/></svg><span>Codice del consumo<br>Normativa vigente</span></a>
+        <a href="/login.html" class="nav-login"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="7" r="4"/><path d="M2.5 21a6.5 6.5 0 0 1 10.8-4.9"/><path d="M18 22s4-2 4-6v-3l-4-2-4 2v3c0 4 4 6 4 6Z"/></svg><span>Accedi</span></a>
+        <a href="/register.html" class="nav-register"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="7" r="4"/><path d="M2.5 21a6.5 6.5 0 0 1 11.7-3.9"/><path d="M19 8v6M16 11h6"/></svg><span>Crea account</span></a>
+      </div>
+
+     
+    </div>
+  </header>
+
+  <main class="page-shell">
+    <div class="container auth-grid">
+      <section class="auth-copy">
+        <div class="hero-pill"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.8 1-6.1-4.4-4.3 6.1-.9L12 3Z"/></svg> Accesso sicuro alla piattaforma</div>
+        <h1>Gestisci garanzie, pratiche e servizi <span>in un’unica area.</span></h1>
+        <p>Accedi alla tua area riservata EstendiFacile per confrontare soluzioni, monitorare ordini, documenti, certificati e richieste di preventivo.</p>
+        <div class="trust-mini">
+          <div><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg>Accesso protetto</div>
+          <div><svg viewBox="0 0 24 24"><path d="M4 12h16"/><path d="M12 4v16"/></svg>Dashboard dedicate</div>
+          <div><svg viewBox="0 0 24 24"><path d="M4 13a8 8 0 0 1 16 0"/><path d="M4 13v4a2 2 0 0 0 2 2h1v-7H6a2 2 0 0 0-2 2Z"/><path d="M20 13v4a2 2 0 0 1-2 2h-1v-7h1a2 2 0 0 1 2 2Z"/></svg>Assistenza dedicata</div>
+        </div>
+      </section>
+
+      <section class="login-card">
+        <div class="badge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg> Accesso piattaforma</div>
+        <h1 class="login-title">Accedi al tuo account</h1>
+        <p class="login-subtitle">Scegli la tua area e accedi con le credenziali associate al tuo profilo.</p>
+
+        <div class="section-label">Seleziona la tua area</div>
+        <div class="profile-grid">
+          <div class="profile-card active" data-role="privato">
+            <div class="profile-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></div>
+            <h3>Privato</h3><p>Garanzie e documenti.</p>
+          </div>
+          <div class="profile-card" data-role="concessionario">
+            <div class="profile-icon"><svg viewBox="0 0 24 24"><path d="M4 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"/><path d="M8 7h2M13 7h2M8 11h2M13 11h2M8 15h2M13 15h2"/><path d="M2 21h20"/></svg></div>
+            <h3>Concessionario</h3><p>Ordini e pratiche.</p>
+          </div>
+          <div class="profile-card" data-role="partner">
+            <div class="profile-icon"><svg viewBox="0 0 24 24"><path d="M12 5v5M5 19v-4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v4"/><circle cx="12" cy="4" r="2"/><circle cx="5" cy="20" r="2"/><circle cx="19" cy="20" r="2"/></svg></div>
+            <h3>Partner</h3><p>Prodotti e ticket.</p>
+          </div>
+        </div>
+
+        <form id="loginForm">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <div class="input-wrap">
+              <span class="input-icon"><svg viewBox="0 0 24 24"><path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/></svg></span>
+              <input type="email" id="email" placeholder="Inserisci la tua email" autocomplete="username" required />
+              <span></span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <div class="input-wrap">
+              <span class="input-icon"><svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></span>
+              <input type="password" id="password" placeholder="Inserisci la tua password" autocomplete="current-password" required />
+              <span class="password-toggle" id="togglePassword" aria-label="Mostra password"><svg id="eyeIcon" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></span>
+            </div>
+          </div>
+          <div class="form-options">
+            <label class="remember"><input type="checkbox" /> Ricordami</label>
+            <a href="#" class="forgot-link">Password dimenticata?</a>
+          </div>
+          <button type="submit" class="btn-login">Accedi <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></button>
+          <div class="divider">oppure</div>
+          <button type="button" class="btn-google"><div class="google-icon">G</div> Accedi con Google</button>
+          <div class="message" id="errorMsg"></div>
+        </form>
+        <div class="register-box">
+          Non hai ancora un account? <a href="/register.html">Registrati</a><br />
+          <a href="/admin.html">Accesso amministratore</a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer id="contatti" class="footer">
+  <div class="footer-inner">
+    <div>© EstendiFacile.it</div>
+    <div><strong>Tel.</strong> +39 000 000 0000 · <strong>Email</strong> info@estendifacile.it</div><div><strong>Sede legale</strong> da definire · <strong>Sede operativa</strong> da definire</div>
+    <div class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Termini e Condizioni</a>
+    </div>
+  </div>
+</footer>
+
+  <script>
+    let selectedRole = "privato";
+    const cards = document.querySelectorAll(".profile-card");
+    cards.forEach(card => {
+      card.addEventListener("click", () => {
+        cards.forEach(c => c.classList.remove("active"));
+        card.classList.add("active");
+        selectedRole = card.dataset.role;
+        const errorMsg = document.getElementById("errorMsg");
+        if(errorMsg) errorMsg.textContent = "";
+      });
+    });
+
+    const togglePassword = document.getElementById("togglePassword");
+    const passwordInput = document.getElementById("password");
+    const eyeIcon = document.getElementById("eyeIcon");
+    if(togglePassword && passwordInput){
+      togglePassword.addEventListener("click", () => {
+        const show = passwordInput.type === "password";
+        passwordInput.type = show ? "text" : "password";
+        eyeIcon.innerHTML = show
+          ? '<path d="M3 3l18 18"/><path d="M10.6 10.6a3 3 0 0 0 4.1 4.1"/><path d="M9.9 4.2A10.5 10.5 0 0 1 12 4c6.5 0 10 8 10 8a18.5 18.5 0 0 1-3.2 4.5"/><path d="M6.6 6.6C3.6 8.6 2 12 2 12s3.5 8 10 8a10.8 10.8 0 0 0 4.8-1.1"/>'
+          : '<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>';
+      });
+    }
+
+    document.getElementById("loginForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const errorMsg = document.getElementById("errorMsg");
+      errorMsg.textContent = "";
+      let endpoint = "/api/login";
+      if(selectedRole === "privato") endpoint = "/api/privati/login";
+      if(selectedRole === "partner") endpoint = "/api/partner/login";
+      try{
+        const response = await fetch(endpoint, {
+          method:"POST",
+          headers:{"Content-Type":"application/json"},
+          body:JSON.stringify({email,password})
+        });
+        const data = await response.json();
+        if(!response.ok){
+          errorMsg.textContent = data.message || data.error || "Credenziali non valide";
+          return;
+        }
+        localStorage.clear();
+        if(selectedRole === "partner"){
+          localStorage.setItem("partnerToken", data.token || "");
+          localStorage.setItem("partnerUser", JSON.stringify(data.partner || {}));
+          localStorage.setItem("tipoUtente", "partner");
+          window.location.href = "/partner-dashboard.html";
+          return;
+        }
+        if(selectedRole === "concessionario"){
+          localStorage.setItem("token", data.token || "");
+          localStorage.setItem("user", JSON.stringify(data.user || {}));
+          localStorage.setItem("tipoUtente", "concessionario");
+          window.location.href = "/dashboard-concessionario.html";
+          return;
+        }
+        localStorage.setItem("privatoToken", data.token || "");
+        localStorage.setItem("privatoUser", JSON.stringify(data.user || {}));
+        localStorage.setItem("tipoUtente", "privato");
+        window.location.href = "/profilo.html";
+      }catch(err){
+        console.error(err);
+        errorMsg.textContent = "Errore di connessione al server.";
+      }
+    });
+  </script>
+</body>
+</html>

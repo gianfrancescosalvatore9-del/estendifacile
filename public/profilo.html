@@ -1,0 +1,1858 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>Dashboard Privato - EstendiFacile</title>
+
+  <link rel="stylesheet" href="/urgent-fix.css" />
+  <link rel="stylesheet" href="/visual-final.css?v=20260519" />
+  <link rel="stylesheet" href="/approved-ui.css?v=20260519-final" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+  <style>
+    :root {
+      --ef-blue: #071d49;
+      --ef-blue-2: #0b2b66;
+      --ef-green: #18b45a;
+      --ef-green-dark: #0fa34f;
+      --ef-bg: #f6f9fd;
+      --ef-text: #071d49;
+      --ef-muted: #64748b;
+      --ef-border: #e4ebf5;
+      --ef-card: #ffffff;
+      --ef-soft-green: #eafaf1;
+      --ef-shadow: 0 18px 45px rgba(7, 29, 73, 0.08);
+      --ef-shadow-soft: 0 10px 28px rgba(7, 29, 73, 0.06);
+      --ef-danger: #ef4444;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at top right, rgba(24, 180, 90, 0.06), transparent 32%),
+        linear-gradient(180deg, #ffffff 0%, var(--ef-bg) 42%, #ffffff 100%);
+      color: var(--ef-text);
+      font-family: Arial, Helvetica, sans-serif;
+      overflow-x: hidden;
+    }
+
+    a { text-decoration: none; color: inherit; }
+    button, input { font-family: inherit; }
+
+    .private-shell {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 252px minmax(0, 1fr);
+      background: transparent;
+    }
+
+    .private-sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding: 26px 22px;
+      background: rgba(255, 255, 255, 0.95);
+      border-right: 1px solid var(--ef-border);
+      box-shadow: 14px 0 40px rgba(7, 29, 73, 0.035);
+      display: flex;
+      flex-direction: column;
+      gap: 26px;
+      z-index: 5;
+    }
+
+    .sidebar-logo-row {
+      min-height: 68px;
+      display: flex;
+      align-items: center;
+    }
+
+    .ef-mini-logo {
+      width: 66px;
+      height: 66px;
+      border-radius: 18px;
+      background: var(--ef-blue);
+      color: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 950;
+      font-size: 21px;
+      letter-spacing: -0.6px;
+      position: relative;
+      box-shadow: 0 14px 24px rgba(7, 29, 73, 0.18);
+      flex: 0 0 auto;
+    }
+
+    .ef-mini-logo::after {
+      content: "";
+      position: absolute;
+      right: -5px;
+      bottom: -5px;
+      width: 21px;
+      height: 21px;
+      border-radius: 50%;
+      background: var(--ef-green);
+      border: 4px solid #ffffff;
+    }
+
+    .sidebar-user {
+      border: 1px solid var(--ef-border);
+      border-radius: 18px;
+      padding: 16px;
+      background: #fbfdff;
+      box-shadow: var(--ef-shadow-soft);
+    }
+
+    .sidebar-user strong {
+      display: block;
+      color: var(--ef-text);
+      font-size: 17px;
+      font-weight: 950;
+      line-height: 1.15;
+      margin-bottom: 6px;
+      word-break: break-word;
+    }
+
+    .sidebar-user span {
+      color: var(--ef-muted);
+      font-size: 13px;
+      line-height: 1.4;
+      word-break: break-word;
+    }
+
+    .private-nav {
+      display: grid;
+      gap: 9px;
+    }
+
+    .nav-item {
+      width: 100%;
+      border: 0;
+      background: transparent;
+      color: var(--ef-text);
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      padding: 13px 14px;
+      border-radius: 14px;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 850;
+      cursor: pointer;
+      transition: background 0.16s ease, color 0.16s ease, transform 0.16s ease;
+      text-align: left;
+    }
+
+    .nav-item:hover {
+      background: #f2f7fd;
+      transform: translateX(2px);
+    }
+
+    .nav-item.active {
+      background: linear-gradient(90deg, #e8f9ef, #f5fcf8);
+      color: var(--ef-green-dark);
+    }
+
+    .nav-icon {
+      width: 23px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: inherit;
+      font-size: 15px;
+    }
+
+    .sidebar-actions {
+      margin-top: auto;
+      display: grid;
+      gap: 13px;
+    }
+
+    .sidebar-btn {
+      width: 100%;
+      min-height: 48px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border-radius: 13px;
+      font-size: 14px;
+      font-weight: 900;
+      text-decoration: none;
+      cursor: pointer;
+      border: 1px solid var(--ef-border);
+      background: #ffffff;
+      color: var(--ef-text);
+      transition: transform 0.16s ease, box-shadow 0.16s ease;
+    }
+
+    .sidebar-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--ef-shadow-soft);
+    }
+
+    .sidebar-btn.primary {
+      background: linear-gradient(135deg, var(--ef-green), #11bf63);
+      border-color: var(--ef-green);
+      color: #ffffff;
+      box-shadow: 0 14px 26px rgba(24, 180, 90, 0.20);
+    }
+
+    .private-main {
+      min-width: 0;
+      padding: 32px 42px 42px;
+    }
+
+    .private-topbar {
+      min-height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 26px;
+    }
+
+    .page-title {
+      margin: 0;
+      color: var(--ef-text);
+      font-size: 26px;
+      font-weight: 950;
+      letter-spacing: -0.5px;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+    }
+
+    .top-icon {
+      width: 42px;
+      height: 42px;
+      border: 1px solid var(--ef-border);
+      background: #ffffff;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--ef-text);
+      position: relative;
+      box-shadow: var(--ef-shadow-soft);
+      font-size: 15px;
+    }
+
+    .top-icon .dot {
+      position: absolute;
+      top: -4px;
+      right: -2px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--ef-green);
+      color: white;
+      font-size: 10px;
+      font-weight: 900;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid white;
+    }
+
+    .hero-private {
+      position: relative;
+      min-height: 280px;
+      border-radius: 26px;
+      overflow: hidden;
+      border: 1px solid var(--ef-border);
+      background-image:
+        linear-gradient(
+          90deg,
+          rgba(255,255,255,0.98) 0%,
+          rgba(255,255,255,0.94) 40%,
+          rgba(255,255,255,0.62) 65%,
+          rgba(255,255,255,0.18) 100%
+        ),
+        url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1800&auto=format&fit=crop");
+      background-size: cover;
+      background-position: center right;
+      box-shadow: var(--ef-shadow);
+      margin-bottom: 26px;
+      padding: 42px 44px;
+      display: flex;
+      align-items: center;
+    }
+
+    .hero-private::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 75% 48%, rgba(255,255,255,0.10), transparent 25%),
+        linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.16) 100%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 690px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      background: var(--ef-soft-green);
+      color: var(--ef-green-dark);
+      padding: 8px 13px;
+      font-size: 12px;
+      font-weight: 950;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      margin-bottom: 15px;
+    }
+
+    .hero-private h1 {
+      margin: 0 0 12px;
+      font-size: 42px;
+      line-height: 1.02;
+      color: var(--ef-text);
+      letter-spacing: -1.4px;
+      font-weight: 950;
+    }
+
+    .hero-private p {
+      margin: 0;
+      max-width: 620px;
+      color: #3f5575;
+      font-size: 16px;
+      line-height: 1.7;
+      font-weight: 650;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 26px;
+    }
+
+    .hero-btn,
+    .btn-action {
+      min-height: 48px;
+      padding: 0 22px;
+      border-radius: 13px;
+      border: 1px solid var(--ef-border);
+      background: #ffffff;
+      color: var(--ef-text);
+      font-weight: 920;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      cursor: pointer;
+      box-shadow: 0 12px 24px rgba(7, 29, 73, 0.06);
+      transition: 0.16s ease;
+    }
+
+    .hero-btn:hover,
+    .btn-action:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--ef-shadow-soft);
+    }
+
+    .hero-btn.primary,
+    .btn-action.primary {
+      background: linear-gradient(135deg, var(--ef-green), #11bf63);
+      color: #ffffff;
+      border-color: var(--ef-green);
+      box-shadow: 0 18px 28px rgba(24, 180, 90, 0.20);
+    }
+
+    .section { display: none; }
+    .section.active { display: block; }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-bottom: 26px;
+    }
+
+    .kpi-card {
+      min-height: 140px;
+      background: var(--ef-card);
+      border: 1px solid var(--ef-border);
+      border-radius: 21px;
+      box-shadow: var(--ef-shadow-soft);
+      padding: 24px;
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      column-gap: 18px;
+      align-items: start;
+      transition: transform 0.16s ease, box-shadow 0.16s ease;
+    }
+
+    .kpi-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--ef-shadow);
+    }
+
+    .kpi-icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: var(--ef-soft-green);
+      color: var(--ef-green-dark);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+    }
+
+    .kpi-label {
+      color: #60708c;
+      font-size: 12px;
+      font-weight: 950;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      margin-bottom: 10px;
+    }
+
+    .kpi-value {
+      color: var(--ef-text);
+      font-size: 34px;
+      line-height: 1;
+      font-weight: 950;
+      margin-bottom: 12px;
+      letter-spacing: -0.6px;
+    }
+
+    .kpi-note {
+      color: var(--ef-green-dark);
+      font-size: 13px;
+      font-weight: 900;
+      line-height: 1.4;
+    }
+
+    .panel-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 22px;
+    }
+
+    .panel-card {
+      background: rgba(255,255,255,0.96);
+      border: 1px solid var(--ef-border);
+      border-radius: 24px;
+      box-shadow: var(--ef-shadow-soft);
+      padding: 28px;
+      margin-bottom: 26px;
+    }
+
+    .panel-head {
+      margin-bottom: 22px;
+    }
+
+    .panel-head h2,
+    .section-title h2 {
+      margin: 0 0 8px;
+      color: var(--ef-text);
+      font-size: 28px;
+      line-height: 1.12;
+      letter-spacing: -0.45px;
+      font-weight: 950;
+    }
+
+    .panel-head p,
+    .section-title p {
+      margin: 0;
+      color: var(--ef-muted);
+      font-size: 15px;
+      line-height: 1.7;
+      max-width: 780px;
+    }
+
+    .empty {
+      padding: 34px;
+      border: 1px dashed #cbd5e1;
+      border-radius: 22px;
+      text-align: center;
+      color: var(--ef-muted);
+      background: #fbfdff;
+      margin-top: 16px;
+      line-height: 1.6;
+    }
+
+    .info-list {
+      display: grid;
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 14px 16px;
+      border: 1px solid var(--ef-border);
+      border-radius: 16px;
+      background: #fbfdff;
+    }
+
+    .info-row span {
+      color: var(--ef-muted);
+      font-weight: 800;
+    }
+
+    .info-row strong {
+      color: var(--ef-text);
+      text-align: right;
+      word-break: break-word;
+      font-weight: 950;
+    }
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 16px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .table-card {
+      background: white;
+      border: 1px solid var(--ef-border);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: var(--ef-shadow-soft);
+      overflow: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 720px;
+    }
+
+    th, td {
+      padding: 14px;
+      text-align: left;
+      border-bottom: 1px solid #edf2f7;
+      font-size: 14px;
+    }
+
+    th {
+      color: #334155;
+      font-weight: 900;
+      background: #f8fafc;
+    }
+
+    td { color: #475569; }
+
+    .profile-form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .form-group {
+      display: grid;
+      gap: 8px;
+    }
+
+    .form-group.full { grid-column: 1 / -1; }
+
+    .form-group label {
+      font-weight: 900;
+      color: #334155;
+      font-size: 14px;
+    }
+
+    .form-group input {
+      width: 100%;
+      border: 1px solid #dbe4ef;
+      border-radius: 14px;
+      padding: 14px;
+      font-size: 15px;
+      outline: none;
+      background: #fbfdff;
+    }
+
+    .form-group input:focus {
+      border-color: var(--ef-green);
+      box-shadow: 0 0 0 4px rgba(24,180,90,.08);
+      background: #fff;
+    }
+
+    .notice {
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+      color: #9a3412;
+      border-radius: 18px;
+      padding: 16px;
+      line-height: 1.5;
+      margin-top: 18px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .timeline-item {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 16px;
+      border-radius: 18px;
+      background: #fbfdff;
+      border: 1px solid var(--ef-border);
+    }
+
+    .timeline-dot {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--ef-soft-green);
+      color: var(--ef-green-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-weight: 900;
+    }
+
+    .timeline-item strong {
+      display: block;
+      color: var(--ef-text);
+      margin-bottom: 4px;
+    }
+
+    .timeline-item span {
+      color: var(--ef-muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 1180px) {
+      .private-shell { grid-template-columns: 1fr; }
+
+      .private-sidebar {
+        position: static;
+        height: auto;
+        flex-direction: row;
+        align-items: center;
+        overflow-x: auto;
+      }
+
+      .private-nav {
+        display: flex;
+        min-width: max-content;
+      }
+
+      .sidebar-actions {
+        margin-top: 0;
+        display: flex;
+        min-width: max-content;
+      }
+
+      .kpi-grid,
+      .panel-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .private-main { padding: 20px; }
+
+      .private-topbar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .hero-private {
+        padding: 28px 22px;
+        min-height: auto;
+        background-image:
+          linear-gradient(90deg, rgba(255,255,255,0.98), rgba(255,255,255,0.88)),
+          url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1600&auto=format&fit=crop");
+        background-size: cover;
+        background-position: center;
+      }
+
+      .hero-private h1 { font-size: 32px; }
+
+      .hero-actions,
+      .topbar-actions {
+        width: 100%;
+      }
+
+      .hero-btn,
+      .top-icon {
+        flex: 1;
+      }
+
+      .kpi-grid,
+      .panel-grid,
+      .profile-form {
+        grid-template-columns: 1fr;
+      }
+
+      .info-row {
+        flex-direction: column;
+      }
+
+      .info-row strong {
+        text-align: left;
+      }
+    }
+  
+    /* V6: identità visuale coerente con dashboard concessionario */
+    html body { margin-top:0!important; padding-top:0!important; }
+    body > .main-header, body > .premium-header, body > .topbar { display:none!important; height:0!important; min-height:0!important; }
+    .private-main, .partner-main { padding-top:28px!important; }
+    .private-sidebar, .partner-sidebar {
+      background: linear-gradient(180deg,#071d49 0%, #102d6b 45%, #163d86 100%) !important;
+      border-right: 1px solid rgba(255,255,255,.08) !important;
+      box-shadow: 14px 0 40px rgba(7,29,73,.12) !important;
+    }
+    .private-sidebar .nav-item, .partner-sidebar .nav-item { color:rgba(255,255,255,.88)!important; }
+    .private-sidebar .nav-item:hover, .partner-sidebar .nav-item:hover { background:rgba(255,255,255,.12)!important; color:#fff!important; transform:translateX(4px)!important; }
+    .private-sidebar .nav-item.active, .partner-sidebar .nav-item.active { background:linear-gradient(135deg,#6ea8ff,#7b61ff)!important; color:#fff!important; box-shadow:0 12px 28px rgba(123,97,255,.28)!important; }
+    .private-sidebar .ef-mini-logo, .partner-sidebar .ef-mini-logo { background:linear-gradient(135deg,#7b61ff,#4f8cff)!important; }
+    .private-sidebar .sidebar-user { background:rgba(255,255,255,.10)!important; border-color:rgba(255,255,255,.14)!important; box-shadow:none!important; }
+    .private-sidebar .sidebar-user strong, .private-sidebar .sidebar-user span { color:#fff!important; }
+    .section-title, .section-banner-v6 {
+      position:relative; overflow:hidden; border-radius:24px; padding:26px 28px; margin-bottom:18px; color:#fff;
+      background:radial-gradient(circle at 88% 20%,rgba(24,180,90,.36),transparent 30%),linear-gradient(135deg,#071d49 0%,#123477 56%,#255fba 100%);
+      box-shadow:0 22px 55px rgba(7,29,73,.16);
+    }
+    .section-title h2, .section-banner-v6 h2 { margin:0 0 8px!important; font-size:32px!important; line-height:1.05!important; font-weight:950!important; color:#fff!important; }
+    .section-title p, .section-banner-v6 p { margin:0!important; max-width:760px; color:rgba(255,255,255,.78)!important; font-weight:650; line-height:1.65; }
+    .panel-card, .table-card { border-radius:24px!important; border:1px solid #e2eaf5!important; box-shadow:0 14px 32px rgba(7,29,73,.07)!important; }
+    .kpi-grid { gap:12px!important; margin-bottom:18px!important; }
+    .kpi-card { min-height:82px!important; padding:13px 15px!important; border-radius:15px!important; }
+    .kpi-icon { width:36px!important; height:36px!important; font-size:14px!important; }
+    .kpi-label { font-size:10px!important; margin-bottom:5px!important; }
+    .kpi-value { font-size:22px!important; margin-bottom:3px!important; }
+    .kpi-note { font-size:10px!important; }
+    .comparatore-panel-v6 {
+      padding:34px; border:1px solid rgba(79,140,255,.34); border-radius:28px; color:#fff;
+      background:radial-gradient(circle at 84% 18%, rgba(24,180,90,.35), transparent 34%),linear-gradient(120deg,rgba(7,29,73,.96),rgba(12,44,103,.94) 45%,rgba(38,95,180,.88));
+      box-shadow:0 26px 70px rgba(7,29,73,.18); position:relative; overflow:hidden;
+    }
+    .comparatore-panel-v6::before { content:""; position:absolute; inset:0 auto 0 0; width:9px; background:linear-gradient(180deg,#18b45a,#4f8cff,#7b61ff); }
+    .comparatore-panel-v6 h2 { margin:0 0 8px; color:#fff; font-size:32px; font-weight:950; }
+    .comparatore-panel-v6 p { margin:0 0 20px; color:rgba(255,255,255,.78); line-height:1.6; }
+    .badge-v6 { display:inline-flex; border-radius:999px; padding:8px 13px; margin-bottom:14px; font-size:12px; font-weight:950; text-transform:uppercase; background:rgba(255,255,255,.12); color:#fff; border:1px solid rgba(255,255,255,.18); }
+    .plate-wrap-v6 { display:grid; grid-template-columns:58px 1fr; max-width:460px; overflow:hidden; border-radius:18px; border:1px solid rgba(255,255,255,.22); box-shadow:0 18px 35px rgba(0,0,0,.16); margin-bottom:14px; }
+    .plate-country-v6 { display:flex; align-items:center; justify-content:center; background:#2456a6; color:#fff; font-weight:950; }
+    .plate-wrap-v6 input, .form-row-v6 input { width:100%; border:0; padding:16px; font-weight:900; font-size:16px; outline:none; }
+    .search-fields-v6 { display:none; margin-top:18px; }
+    .search-fields-v6.open { display:block; }
+    .form-row-v6 { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px; }
+    .form-group-v6 { display:grid; gap:8px; }
+    .form-group-v6 label { color:#fff; font-weight:900; font-size:13px; }
+    .form-group-v6 input { border-radius:16px; border:1px solid rgba(255,255,255,.22); box-shadow:0 18px 35px rgba(0,0,0,.16); }
+    .search-error-v6 { color:#fecaca; font-weight:900; margin-top:12px; }
+    .inline-results { display:none; margin-top:18px; } .inline-results.open { display:block; }
+    .inline-results-head { display:flex; justify-content:space-between; gap:18px; flex-wrap:wrap; padding:24px 26px; margin-bottom:14px; border-radius:24px; color:#fff; background:radial-gradient(circle at 92% 18%, rgba(24,180,90,.30), transparent 32%), linear-gradient(135deg,#071d49 0%,#123477 55%,#255fba 100%); box-shadow:0 22px 55px rgba(7,29,73,.16); }
+    .inline-results-head h2 { margin:0 0 6px; color:#fff; font-size:28px; font-weight:950; } .inline-results-head p { margin:0; color:rgba(255,255,255,.78); font-weight:750; }
+    .inline-results-grid { display:grid; gap:14px; }
+    .inline-warranty-card { display:grid; grid-template-columns:minmax(0,1fr) 220px; gap:18px; background:linear-gradient(135deg,#fff,#f8fbff); border:1px solid #e2eaf5; border-radius:24px; padding:20px; box-shadow:0 14px 32px rgba(7,29,73,.07); position:relative; overflow:hidden; }
+    .inline-warranty-card::before { content:""; position:absolute; inset:0 auto 0 0; width:5px; background:linear-gradient(180deg,#18b45a,#4f8cff,#7b61ff); }
+    .warranty-topline { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:10px; }
+    .compatibility,.brand-pill { display:inline-flex; border-radius:999px; padding:7px 10px; font-size:12px; font-weight:950; } .compatibility{background:#eafaf1;color:#0fa34f}.brand-pill{background:#eef6ff;color:#2563eb}
+    .inline-warranty-card h3{margin:0 0 8px;color:#071d49;font-size:22px;font-weight:950}.inline-warranty-card p{margin:0 0 14px;color:#64748b;line-height:1.55}
+    .warranty-mini-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.warranty-mini-grid span{background:#fff;border:1px solid #edf2f7;border-radius:15px;padding:11px}.warranty-mini-grid small{display:block;color:#64748b;font-size:10px;font-weight:950;text-transform:uppercase;margin-bottom:5px}.warranty-mini-grid strong{color:#071d49;font-weight:950}
+    .warranty-price-box{display:flex;flex-direction:column;justify-content:space-between;gap:12px;padding:16px;border-radius:20px;background:#071d49;color:#fff}.warranty-price-box small{color:#cfe0ff;font-weight:900;text-transform:uppercase}.warranty-price-box strong{font-size:28px;font-weight:950}
+    @media(max-width:800px){.form-row-v6,.inline-warranty-card,.warranty-mini-grid{grid-template-columns:1fr}.warranty-price-box{background:#f8fbff;color:#071d49;border:1px solid #e2eaf5}}
+
+    .value-recommended-badge {
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      background:linear-gradient(135deg,#fff7ed,#ffedd5);
+      color:#ea580c;
+      border:1px solid #fed7aa;
+      box-shadow:0 10px 24px rgba(234,88,12,.14);
+      font-size:12px;
+      font-weight:950;
+      text-transform:uppercase;
+      letter-spacing:.02em;
+    }
+    .inline-warranty-card.recommended {
+      border-color:#fdba74;
+      box-shadow:0 20px 44px rgba(234,88,12,.16), 0 14px 32px rgba(7,29,73,.07);
+    }
+    .inline-warranty-card.recommended::after {
+      content:"";
+      position:absolute;
+      inset:0 0 auto 0;
+      height:5px;
+      background:linear-gradient(90deg,#f97316,#18b45a,#4f8cff);
+    }
+
+
+
+    /* Selettore AUTO / MOTO comparatore */
+    .vehicle-type-selector,
+    .vehicle-type-selector-v6 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin: 22px 0 18px;
+      max-width: 560px;
+    }
+    .vehicle-type-option,
+    .vehicle-type-option-v6 {
+      position: relative;
+      cursor: pointer;
+    }
+    .vehicle-type-option input,
+    .vehicle-type-option-v6 input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .vehicle-type-card,
+    .vehicle-type-card-v6 {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 18px;
+      border: 1px solid rgba(15, 43, 90, .12);
+      border-radius: 18px;
+      background: rgba(255,255,255,.82);
+      box-shadow: 0 14px 36px rgba(11,31,68,.08);
+      color: #071f4f;
+      font-weight: 900;
+      transition: .22s ease;
+    }
+    .vehicle-type-card i,
+    .vehicle-type-card-v6 i {
+      width: 38px;
+      height: 38px;
+      border-radius: 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #eafff2;
+      color: #13b760;
+    }
+    .vehicle-type-option input:checked + .vehicle-type-card,
+    .vehicle-type-option-v6 input:checked + .vehicle-type-card-v6 {
+      border-color: rgba(18,183,96,.55);
+      background: linear-gradient(135deg, #f2fff7, #ffffff);
+      box-shadow: 0 18px 45px rgba(18,183,96,.16);
+      transform: translateY(-1px);
+    }
+    .vehicle-type-option input:checked + .vehicle-type-card::after,
+    .vehicle-type-option-v6 input:checked + .vehicle-type-card-v6::after {
+      content: "✓";
+      margin-left: auto;
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #13b760;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+
+    .data-row-card{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;padding:16px;border:1px solid #e1eaf5;border-radius:18px;background:#fff;box-shadow:0 10px 30px rgba(7,29,73,.06);margin-bottom:12px;}
+    .data-row-icon{width:44px;height:44px;border-radius:14px;background:#eafff2;color:#13b760;display:flex;align-items:center;justify-content:center;}
+    .status-pill{display:inline-flex;align-items:center;justify-content:center;padding:7px 12px;border-radius:999px;background:#eafff2;color:#0fa34f;font-weight:900;font-size:12px;text-transform:capitalize;}
+    .status-pill.pending{background:#fff7e6;color:#d97706;}
+    .mini-label{font-size:12px;color:#64748b;font-weight:800;}
+
+  
+
+/* ===== Comparatore dashboard premium allineato alla homepage - v55 ===== */
+.dashboard-home-comparator,
+.comparatore-panel-v6,
+.comparatore-panel{
+  position:relative !important;
+  background:rgba(255,255,255,.96) !important;
+  border:1px solid rgba(205,219,238,.95) !important;
+  border-radius:28px !important;
+  padding:30px !important;
+  box-shadow:0 30px 90px rgba(7,29,73,.12) !important;
+  overflow:hidden !important;
+  max-width:760px !important;
+}
+.dashboard-home-comparator::before,
+.comparatore-panel-v6::before,
+.comparatore-panel::before{
+  content:"" !important;
+  position:absolute !important;
+  inset:0 0 auto 0 !important;
+  height:5px !important;
+  background:linear-gradient(90deg,#18b45a,#2563eb) !important;
+}
+.dashboard-home-comparator .badge-v6,
+.dashboard-home-comparator .badge,
+.comparatore-panel-v6 .badge-v6,
+.comparatore-panel .badge{
+  display:inline-flex !important;
+  align-items:center !important;
+  gap:8px !important;
+  padding:8px 13px !important;
+  border-radius:999px !important;
+  border:1px solid #bbf7d0 !important;
+  background:#ecfdf3 !important;
+  color:#07813e !important;
+  font-size:12px !important;
+  font-weight:900 !important;
+  text-transform:uppercase !important;
+  letter-spacing:.04em !important;
+  margin-bottom:14px !important;
+}
+.dashboard-home-comparator h2,
+.comparatore-panel-v6 h2,
+.comparatore-panel h2{
+  margin:0 0 8px !important;
+  color:#071d49 !important;
+  font-size:30px !important;
+  line-height:1.05 !important;
+  letter-spacing:-.8px !important;
+  font-weight:900 !important;
+  text-transform:uppercase !important;
+}
+.dashboard-home-comparator h2 span,
+.comparatore-panel-v6 h2 span,
+.comparatore-panel h2 span{color:#18b45a !important;}
+.dashboard-home-comparator p,
+.comparatore-panel-v6 p,
+.comparatore-panel p{
+  margin:0 0 20px !important;
+  color:#334155 !important;
+  font-weight:650 !important;
+  line-height:1.55 !important;
+}
+.ef-step-label-dash{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  margin:16px 0 10px;
+  color:#071d49;
+  font-size:12px;
+  font-weight:900;
+  text-transform:uppercase;
+}
+.ef-step-label-dash span{
+  width:24px;height:24px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;
+  color:#fff;background:#18b45a;box-shadow:0 8px 18px rgba(24,180,90,.22);
+}
+.vehicle-type-selector-v6,
+.vehicle-type-selector{
+  display:grid !important;
+  grid-template-columns:repeat(4,minmax(0,1fr)) !important;
+  gap:12px !important;
+  margin-bottom:16px !important;
+}
+.vehicle-type-option-v6,
+.vehicle-type-option{display:block !important;}
+.vehicle-type-option-v6 input,
+.vehicle-type-option input{position:absolute !important;opacity:0 !important;pointer-events:none !important;}
+.vehicle-type-card-v6,
+.vehicle-type-card{
+  min-height:74px !important;
+  border:1.5px solid #dce7f5 !important;
+  border-radius:16px !important;
+  background:linear-gradient(180deg,#fff,#f8fbff) !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:7px !important;
+  color:#071d49 !important;
+  font-size:12px !important;
+  font-weight:900 !important;
+  text-align:center !important;
+  line-height:1.05 !important;
+  cursor:pointer !important;
+  transition:.22s ease !important;
+  box-shadow:0 10px 24px rgba(7,29,73,.04) !important;
+}
+.vehicle-type-card-v6 i,
+.vehicle-type-card i{font-size:20px !important;color:#071d49 !important;}
+.vehicle-type-option-v6 input:checked + .vehicle-type-card-v6,
+.vehicle-type-option input:checked + .vehicle-type-card{
+  border-color:#18b45a !important;
+  background:#f0fdf4 !important;
+  color:#07813e !important;
+  box-shadow:0 16px 34px rgba(24,180,90,.14) !important;
+  transform:translateY(-1px) !important;
+}
+.vehicle-type-option-v6 input:checked + .vehicle-type-card-v6 i,
+.vehicle-type-option input:checked + .vehicle-type-card i{color:#07813e !important;}
+.vehicle-type-card-v6:hover,
+.vehicle-type-card:hover{transform:translateY(-2px);box-shadow:0 18px 38px rgba(7,29,73,.10) !important;}
+.plate-wrap-v6,
+.plate-wrap{
+  display:grid !important;
+  grid-template-columns:70px 1fr 58px !important;
+  align-items:stretch !important;
+  overflow:hidden !important;
+  border:1.5px solid #d7e4f4 !important;
+  border-radius:18px !important;
+  background:#fff !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.8),0 15px 36px rgba(7,29,73,.06) !important;
+  min-height:68px !important;
+  transition:.2s ease !important;
+}
+.plate-wrap-v6:focus-within,
+.plate-wrap:focus-within{
+  border-color:#18b45a !important;
+  box-shadow:0 0 0 5px rgba(24,180,90,.10),0 18px 44px rgba(7,29,73,.08) !important;
+}
+.plate-country-v6,
+.plate-country{
+  background:linear-gradient(180deg,#2563eb,#1852c6) !important;
+  color:#fff !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+  font-weight:900 !important;
+  letter-spacing:.04em !important;
+  font-size:15px !important;
+}
+.plate-country-v6::before,
+.plate-country::before{content:"EU";font-size:9px;font-weight:800;opacity:.9;margin-bottom:2px;}
+.plate-wrap-v6 input,
+.plate-wrap input{
+  border:none !important;
+  outline:none !important;
+  padding:0 22px !important;
+  background:#fff !important;
+  color:#071d49 !important;
+  font-size:26px !important;
+  font-weight:850 !important;
+  letter-spacing:.02em !important;
+  text-transform:uppercase !important;
+  min-width:0 !important;
+}
+.plate-wrap-v6 input::placeholder,
+.plate-wrap input::placeholder{color:#9aa7b8 !important;font-weight:800 !important;}
+.plate-search-icon-dash{
+  display:flex;align-items:center;justify-content:center;
+  color:#18b45a;background:#f8fbff;border-left:1px solid #e5edf7;font-size:20px;
+}
+.dashboard-home-comparator .hero-btn.primary,
+.comparatore-panel-v6 .hero-btn.primary,
+.comparatore-panel .hero-btn.primary{
+  width:100% !important;
+  min-height:58px !important;
+  border-radius:16px !important;
+  background:linear-gradient(135deg,#18b45a,#0f9f4d) !important;
+  color:#fff !important;
+  border:0 !important;
+  box-shadow:0 18px 38px rgba(24,180,90,.24) !important;
+  font-weight:900 !important;
+  text-transform:uppercase !important;
+  letter-spacing:.02em !important;
+  margin-top:16px !important;
+}
+.search-fields-v6,
+.search-fields{margin-top:18px !important;}
+.search-fields-v6.open,
+.search-fields.open{display:block !important;}
+.search-error-v6,
+.search-error{color:#b91c1c !important;font-weight:800 !important;margin-top:10px !important;}
+.ef-comparator-benefits-dash{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:14px;}
+.ef-comparator-benefits-dash span{display:inline-flex;align-items:center;gap:7px;padding:8px 12px;border-radius:999px;background:#f8fbff;border:1px solid #e5edf7;color:#334155;font-size:12px;font-weight:800;}
+@media(max-width:900px){
+  .vehicle-type-selector-v6,.vehicle-type-selector{grid-template-columns:repeat(2,1fr) !important;}
+  .dashboard-home-comparator,.comparatore-panel-v6,.comparatore-panel{padding:22px !important;}
+}
+@media(max-width:560px){
+  .vehicle-type-selector-v6,.vehicle-type-selector{grid-template-columns:1fr !important;}
+  .plate-wrap-v6,.plate-wrap{grid-template-columns:64px 1fr 50px !important;}
+}
+
+</style>
+  <link rel="stylesheet" href="/premium-uniform.css?v=29" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/home-master-header-footer.css?v=63">
+</head>
+
+<body>
+  <div class="private-shell">
+    <aside class="private-sidebar">
+      <div class="sidebar-logo-row">
+        <span class="ef-mini-logo" aria-label="EstendiFacile">EF</span>
+      </div>
+
+      <div class="sidebar-user">
+        <strong id="sidebarUserName">Utente</strong>
+        <span id="sidebarUserEmail">email non disponibile</span>
+      </div>
+
+      <nav class="private-nav">
+        <button class="nav-item active private-section-btn" type="button" data-section="dashboard">
+          <span class="nav-icon"><i class="fa-solid fa-house"></i></span>
+          Dashboard
+        </button>
+
+        <button class="nav-item private-section-btn" type="button" data-section="comparatore">
+          <span class="nav-icon"><i class="fa-solid fa-scale-balanced"></i></span>
+          Comparatore
+        </button>
+
+        <button class="nav-item private-section-btn" type="button" data-section="garanzie">
+          <span class="nav-icon"><i class="fa-solid fa-shield-halved"></i></span>
+          Le mie garanzie
+        </button>
+
+        <button class="nav-item private-section-btn" type="button" data-section="tickets">
+          <span class="nav-icon"><i class="fa-solid fa-ticket"></i></span>
+          Ticket preventivi
+        </button>
+
+        <button class="nav-item private-section-btn" type="button" data-section="richieste">
+          <span class="nav-icon"><i class="fa-solid fa-headset"></i></span>
+          Richieste assistenza
+        </button>
+
+        <button class="nav-item private-section-btn" type="button" data-section="profilo">
+          <span class="nav-icon"><i class="fa-regular fa-user"></i></span>
+          Profilo personale
+        </button>
+
+        <button class="nav-item private-section-btn" type="button" data-section="impostazioni">
+          <span class="nav-icon"><i class="fa-solid fa-gear"></i></span>
+          Profilo utente
+        </button>
+      </nav>
+
+      <div class="sidebar-actions">
+        <a href="/index.html" class="sidebar-btn">
+          Torna al sito <i class="fa-solid fa-arrow-up-right-from-square"></i>
+        </a>
+
+        <button class="sidebar-btn primary" id="logoutBtn" type="button">
+          Logout <i class="fa-solid fa-arrow-right-from-bracket"></i>
+        </button>
+      </div>
+    </aside>
+
+    <main class="private-main">
+      <header class="main-header">
+    <div class="container nav-wrap">
+      <a href="/index.html" class="brand">
+        <span class="ef-logo-wordmark" aria-label="EstendiFacile.it">
+          <span class="ef-logo-symbol">EF</span>
+          <span class="ef-logo-stack">
+            <span class="ef-logo-text">Estendi<span>Facile</span><small>.it</small></span>
+            <span class="ef-logo-payoff">ESTENDI LA TUA SICUREZZA</span>
+          </span>
+        </span>
+      </a>
+
+      <nav class="nav-menu ef-main-nav">
+        <a href="/partner.html"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v5M5 19v-4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v4"/><circle cx="12" cy="4" r="2"/><circle cx="5" cy="20" r="2"/><circle cx="19" cy="20" r="2"/></svg><span>Partner</span></a>
+        <a href="/chi-siamo.html"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v4"/><path d="M8 7h4M8 11h4M8 15h2"/><path d="M18 22s4-2 4-6v-3l-4-2-4 2v3c0 4 4 6 4 6Z"/><path d="m16.8 16 1 1 2.2-2.4"/></svg><span>Chi siamo</span></a>
+        <a href="/come-funziona.html"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="19" r="3"/><circle cx="18" cy="5" r="3"/><path d="M8.2 16.8 15.8 7.2"/></svg><span>Come funziona</span></a>
+        <a href="/faq.html"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.7 9a2.8 2.8 0 0 1 5.3 1.3c0 2.2-3 2.1-3 4"/><path d="M12 18h.01"/></svg><span>FAQ</span></a>
+        <a href="/contatti.html"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13a8 8 0 0 1 16 0"/><path d="M4 13v4a2 2 0 0 0 2 2h1v-7H6a2 2 0 0 0-2 2Z"/><path d="M20 13v4a2 2 0 0 1-2 2h-1v-7h1a2 2 0 0 1 2 2Z"/><path d="M16 19c0 1.1-1.8 2-4 2"/></svg><span>Contatti</span></a>
+      </nav>
+
+      <div class="nav-actions ef-nav-actions" id="navActions">
+        <a href="/normativa.html" class="nav-legal"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M5 6h14M7 6l-4 7h8L7 6ZM17 6l-4 7h8l-4-7Z"/><path d="M8 21h8"/></svg><span>Codice del consumo<br>Normativa vigente</span></a>
+        <a href="/login.html" class="nav-login"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="7" r="4"/><path d="M2.5 21a6.5 6.5 0 0 1 10.8-4.9"/><path d="M18 22s4-2 4-6v-3l-4-2-4 2v3c0 4 4 6 4 6Z"/></svg><span>Accedi</span></a>
+        <a href="/register.html" class="nav-register"><svg class="ef-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="7" r="4"/><path d="M2.5 21a6.5 6.5 0 0 1 11.7-3.9"/><path d="M19 8v6M16 11h6"/></svg><span>Crea account</span></a>
+      </div>
+
+     
+    </div>
+  </header>
+
+      <section class="hero-private" id="privateDashboardHero">
+        <div class="hero-content">
+          <div class="badge">Area privata</div>
+
+          <h1>Ciao <span id="userName">Utente</span></h1>
+
+          <p>
+            Da qui puoi consultare le tue garanzie, seguire eventuali richieste di assistenza
+            e gestire i dati del tuo profilo EstendiFacile.
+          </p>
+
+          <div class="hero-actions">
+            <button class="hero-btn primary" type="button" data-go="comparatore">
+              <i class="fa-solid fa-magnifying-glass-chart"></i>
+              Confronta garanzie
+            </button>
+
+            <button class="hero-btn" type="button" data-go="garanzie">
+              <i class="fa-solid fa-shield-halved"></i>
+              Vedi garanzie
+            </button>
+
+            <button class="hero-btn" type="button" data-go="richieste">
+              <i class="fa-solid fa-headset"></i>
+              Nuova richiesta
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section id="section-dashboard" class="section active">
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-icon"><i class="fa-solid fa-shield-halved"></i></div>
+            <div>
+              <div class="kpi-label">Garanzie attive</div>
+              <div class="kpi-value" id="kpiGaranzie">0</div>
+              <div class="kpi-note">Coperture associate al tuo profilo.</div>
+            </div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-icon"><i class="fa-regular fa-file-lines"></i></div>
+            <div>
+              <div class="kpi-label">Richieste aperte</div>
+              <div class="kpi-value" id="kpiRichieste">0</div>
+              <div class="kpi-note">Pratiche assistenza ancora in lavorazione.</div>
+            </div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-icon"><i class="fa-solid fa-car-side"></i></div>
+            <div>
+              <div class="kpi-label">Veicoli collegati</div>
+              <div class="kpi-value" id="kpiVeicoli">0</div>
+              <div class="kpi-note">Auto e moto presenti nella tua area privata.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel-grid">
+          <div class="panel-card">
+            <div class="panel-head">
+              <h2>Panoramica pratiche</h2>
+              <p>
+                Quando acquisterai o collegherai una garanzia, la troverai qui con stato,
+                veicolo, documento e dettagli della copertura.
+              </p>
+            </div>
+
+            <div class="empty">
+              Nessuna garanzia disponibile al momento.
+            </div>
+          </div>
+
+          <div class="panel-card">
+            <div class="panel-head">
+              <h2>Profilo account</h2>
+            </div>
+
+            <div class="info-list">
+              <div class="info-row">
+                <span>Nome</span>
+                <strong id="infoNome">-</strong>
+              </div>
+
+              <div class="info-row">
+                <span>Email</span>
+                <strong id="infoEmail">-</strong>
+              </div>
+
+              <div class="info-row">
+                <span>Tipologia</span>
+                <strong>Privato</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <section id="section-comparatore" class="section">
+        <div class="comparatore-panel-v6 dashboard-home-comparator">
+          <span class="badge-v6"><i class="fa-solid fa-shield-halved"></i> Comparatore garanzie</span>
+          <h2><span>Comparatore</span> garanzie e servizi</h2>
+          <p>Confronta le migliori garanzie e servizi per il tuo veicolo senza uscire dalla tua area riservata.</p>
+
+          <div class="ef-step-label-dash"><span>1</span> Seleziona il tipo di veicolo</div>
+          <div class="vehicle-type-selector-v6" role="radiogroup" aria-label="Tipologia veicolo">
+            <label class="vehicle-type-option-v6"><input type="radio" name="privCmpVehicleType" value="auto" checked /><span class="vehicle-type-card-v6"><i class="fa-solid fa-car-side"></i> Auto</span></label>
+            <label class="vehicle-type-option-v6"><input type="radio" name="privCmpVehicleType" value="moto" /><span class="vehicle-type-card-v6"><i class="fa-solid fa-motorcycle"></i> Moto</span></label>
+            <label class="vehicle-type-option-v6"><input type="radio" name="privCmpVehicleType" value="commerciale" /><span class="vehicle-type-card-v6"><i class="fa-solid fa-truck"></i> Veicoli<br>commerciali</span></label>
+            <label class="vehicle-type-option-v6"><input type="radio" name="privCmpVehicleType" value="ricreazionale" /><span class="vehicle-type-card-v6"><i class="fa-solid fa-van-shuttle"></i> Ricreazionali</span></label>
+          </div>
+
+          <div class="ef-step-label-dash"><span>2</span> Inserisci la targa del veicolo</div>
+          <div class="plate-wrap-v6">
+            <div class="plate-country-v6">IT</div>
+            <input id="privCmpTargaInput" type="text" placeholder="ES. AB123CD" maxlength="8" />
+            <div class="plate-search-icon-dash"><i class="fa-solid fa-magnifying-glass"></i></div>
+          </div>
+
+          <button class="hero-btn primary" type="button" id="privBtnApriComparatore">Continua</button>
+
+          <div class="search-fields-v6" id="privCmpExtraFields">
+            <div class="form-row-v6">
+              <div class="form-group-v6"><label id="privCmpModelloLabel" for="privCmpModelloInput">Modello autoveicolo</label><input id="privCmpModelloInput" type="text" placeholder="Es. Fiat Panda" /></div>
+              <div class="form-group-v6"><label for="privCmpAnnoInput">Anno immatricolazione</label><input id="privCmpAnnoInput" type="number" placeholder="Es. 2019" /></div>
+            </div>
+            <div class="form-row-v6">
+              <div class="form-group-v6"><label for="privCmpKmInput">Chilometraggio</label><input id="privCmpKmInput" type="number" placeholder="Es. 65000" /></div>
+              <div class="form-group-v6"><label>&nbsp;</label><button class="hero-btn primary" type="button" id="privBtnConfrontaGaranzie">Confronta garanzie</button></div>
+            </div>
+          </div>
+          <div class="ef-comparator-benefits-dash"><span><i class="fa-solid fa-bolt"></i> Attivazione immediata</span><span><i class="fa-solid fa-certificate"></i> Partner certificati</span><span><i class="fa-solid fa-headset"></i> Assistenza dedicata</span></div>
+          <div id="privCmpSearchError" class="search-error-v6"></div>
+        </div>
+        <div id="privInlineResults" class="inline-results"></div>
+      </section>
+
+      <section id="section-tickets" class="section">
+        <div class="section-title">
+          <div><h2>Ticket preventivi</h2><p>Richieste aperte ai partner per veicoli che richiedono valutazione dedicata.</p></div>
+          <button class="hero-btn primary" type="button" id="privBtnRefreshTickets"><i class="fa-solid fa-rotate"></i> Aggiorna</button>
+        </div>
+        <div class="table-card"><div id="privTicketsContainer"><div class="empty-state">Caricamento ticket...</div></div></div>
+      </section>
+
+      <section id="section-garanzie" class="section">
+        <div class="section-title">
+          <div>
+            <h2>Le mie garanzie</h2>
+            <p>Elenco delle coperture associate ai tuoi veicoli.</p>
+          </div>
+        </div>
+
+        <div class="table-card">
+          <table>
+            <thead>
+              <tr>
+                <th>Veicolo</th>
+                <th>Targa</th>
+                <th>Garanzia / servizio</th>
+                <th>Validità</th>
+                <th>Documenti</th>
+              </tr>
+            </thead>
+            <tbody id="garanzieTableBody">
+              <tr>
+                <td colspan="5">
+                  <div class="empty">
+                    Nessuna garanzia presente. Le garanzie acquistate compariranno qui.
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="section-richieste" class="section">
+        <div class="section-title">
+          <div>
+            <h2>Richieste assistenza</h2>
+            <p>Monitora lo stato delle tue richieste e delle pratiche aperte.</p>
+          </div>
+
+          <button class="btn-action primary" type="button">
+            <i class="fa-solid fa-plus"></i>
+            Nuova richiesta
+          </button>
+        </div>
+
+        <div class="panel-card">
+          <div class="panel-head">
+            <h2>Storico richieste</h2>
+          </div>
+
+          <div class="empty">
+            Nessuna richiesta aperta al momento.
+          </div>
+
+          <div class="notice">
+            La funzione “Nuova richiesta” sarà collegata al sistema assistenza nella prossima fase.
+          </div>
+        </div>
+      </section>
+
+      <section id="section-profilo" class="section">
+        <div class="section-title">
+          <div>
+            <h2>Profilo personale</h2>
+            <p>Consulta e aggiorna i dati principali del tuo account.</p>
+          </div>
+        </div>
+
+        <div class="panel-card">
+          <div class="panel-head">
+            <h2>Dati account</h2>
+          </div>
+
+          <form class="profile-form" id="profileForm">
+            <div class="form-group">
+              <label for="profileNome">Nome e cognome</label>
+              <input id="profileNome" type="text" placeholder="Nome e cognome">
+            </div>
+
+            <div class="form-group">
+              <label for="profileEmail">Email</label>
+              <input id="profileEmail" type="email" placeholder="Email">
+            </div>
+
+            <div class="form-group full">
+              <button class="btn-action primary" type="submit">
+                <i class="fa-solid fa-floppy-disk"></i>
+                Salva modifiche
+              </button>
+            </div>
+          </form>
+
+          <div class="notice">
+            Per ora le modifiche vengono salvate localmente nel browser. In seguito collegheremo il salvataggio al backend.
+          </div>
+        </div>
+      </section>
+
+      <section id="section-impostazioni" class="section">
+        <div class="section-title">
+          <div>
+            <h2>Profilo utente</h2>
+            <p>Profilo dell’account e sicurezza.</p>
+          </div>
+        </div>
+
+        <div class="panel-card">
+          <div class="panel-head">
+            <h2>Sicurezza account</h2>
+            <p>Qui potrai gestire password, notifiche e preferenze di comunicazione.</p>
+          </div>
+
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-dot"><i class="fa-solid fa-check"></i></div>
+              <div>
+                <strong>Account privato attivo</strong>
+                <span>Il tuo profilo è stato creato correttamente.</span>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-dot"><i class="fa-solid fa-arrow-right"></i></div>
+              <div>
+                <strong>Prossima integrazione</strong>
+                <span>Gestione notifiche, cambio password e richieste assistenza.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const token = localStorage.getItem("privatoToken");
+    const user = JSON.parse(localStorage.getItem("privatoUser") || "{}");
+
+    if (!token) {
+      window.location.href = "/login.html";
+    }
+
+    const userName = user.nome || "Utente";
+    const userEmail = user.email || "email non disponibile";
+
+    document.getElementById("userName").textContent = userName;
+    document.getElementById("sidebarUserName").textContent = userName;
+    document.getElementById("sidebarUserEmail").textContent = userEmail;
+    document.getElementById("infoNome").textContent = userName;
+    document.getElementById("infoEmail").textContent = userEmail;
+    document.getElementById("profileNome").value = user.nome || "";
+    document.getElementById("profileEmail").value = user.email || "";
+
+    function showSection(sectionName) {
+      document.querySelectorAll(".section").forEach(section => {
+        section.classList.remove("active");
+      });
+
+      document.querySelectorAll(".private-nav button").forEach(btn => {
+        btn.classList.remove("active");
+      });
+
+      const section = document.getElementById("section-" + sectionName);
+      const btn = document.querySelector('.private-nav button[data-section="' + sectionName + '"]');
+      const dashboardHero = document.getElementById("privateDashboardHero");
+      const pageTitle = document.querySelector(".page-title");
+
+      if (section) section.classList.add("active");
+      if (btn) btn.classList.add("active");
+      if (dashboardHero) dashboardHero.style.display = sectionName === "dashboard" ? "block" : "none";
+      if (pageTitle) {
+        const titles = { dashboard: "Dashboard", comparatore: "Comparatore", garanzie: "Le mie garanzie", tickets: "Ticket preventivi", richieste: "Richieste assistenza", profilo: "Profilo personale", impostazioni: "Profilo utente" };
+        pageTitle.textContent = titles[sectionName] || "Dashboard";
+      }
+      if (sectionName === "garanzie") caricaGaranzieAcquistatePrivato();
+      if (window.history && sectionName !== "dashboard") {
+        history.replaceState(null, "", "#" + sectionName);
+      } else if (window.history) {
+        history.replaceState(null, "", window.location.pathname);
+      }
+    }
+
+    document.querySelectorAll(".private-nav button").forEach(btn => {
+      btn.addEventListener("click", () => {
+        showSection(btn.dataset.section);
+      });
+    });
+
+    document.querySelectorAll("[data-go]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        showSection(btn.dataset.go);
+      });
+    });
+
+    const initialPrivateSection = (window.location.hash || "").replace("#", "");
+    if (initialPrivateSection && document.getElementById("section-" + initialPrivateSection)) {
+      showSection(initialPrivateSection);
+    } else {
+      showSection("dashboard");
+    }
+
+    function restorePrivateComparatorIfNeeded() {
+      if (window.location.hash !== "#comparatore" && localStorage.getItem("restoreComparatorResults") !== "1") return;
+      showSection("comparatore");
+      const targa = localStorage.getItem("veicolo_targa") || localStorage.getItem("targa") || "";
+      const modello = localStorage.getItem("veicolo_modello") || "";
+      const anno = localStorage.getItem("veicolo_anno") || "";
+      const km = localStorage.getItem("veicolo_km") || "";
+      const targaEl = document.getElementById("privCmpTargaInput");
+      const modelloEl = document.getElementById("privCmpModelloInput");
+      const annoEl = document.getElementById("privCmpAnnoInput");
+      const kmEl = document.getElementById("privCmpKmInput");
+      const extra = document.getElementById("privCmpExtraFields");
+      const tipo = localStorage.getItem("veicolo_tipo") || "auto";
+      const tipoInput = document.querySelector('input[name="privCmpVehicleType"][value="' + tipo + '"]');
+      if (tipoInput) tipoInput.checked = true;
+      updateComparatorVehicleTypeUIPrivato(false);
+      if (targaEl) targaEl.value = targa;
+      if (modelloEl) modelloEl.value = modello;
+      if (annoEl) annoEl.value = anno;
+      if (kmEl) kmEl.value = km;
+      if (extra && targa) extra.classList.add("open");
+      if (targa && modello && anno && km) {
+        localStorage.removeItem("restoreComparatorResults");
+        setTimeout(confrontaGaranziePrivato, 0);
+      }
+    }
+
+    function euro(cents) { return "€ " + (Number(cents || 0) / 100).toFixed(2).replace(".", ","); }
+    function formatKm(value) { return Number(value || 0).toLocaleString("it-IT") + " km"; }
+    function getVehicleTypeInlinePrivato() {
+      const selected = document.querySelector('input[name="privCmpVehicleType"]:checked');
+      return selected ? selected.value : (localStorage.getItem("veicolo_tipo") || "auto");
+    }
+    function labelTipoVeicoloPrivato(tipo) { if (tipo === "moto") return "Moto"; if (tipo === "commerciale") return "Veicolo commerciale"; if (tipo === "ricreazionale") return "Veicolo ricreazionale"; return "Auto"; }
+
+    function resetComparatorVehicleDataPrivato() {
+      ["privCmpTargaInput", "privCmpModelloInput", "privCmpAnnoInput", "privCmpKmInput"].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = "";
+      });
+      const extra = document.getElementById("privCmpExtraFields");
+      if (extra) extra.classList.remove("open");
+      const error = document.getElementById("privCmpSearchError");
+      if (error) error.textContent = "";
+      const results = document.getElementById("privInlineResults");
+      if (results) { results.classList.remove("open"); results.innerHTML = ""; }
+      ["targa", "veicolo_targa", "veicolo_modello", "veicolo_anno", "veicolo_km"].forEach(key => localStorage.removeItem(key));
+    }
+
+    function updateComparatorVehicleTypeUIPrivato(resetData = false) {
+      const tipo = getVehicleTypeInlinePrivato();
+      const modelloLabel = document.getElementById("privCmpModelloLabel");
+      const modelloInput = document.getElementById("privCmpModelloInput");
+      const annoInput = document.getElementById("privCmpAnnoInput");
+      const kmInput = document.getElementById("privCmpKmInput");
+      const targaInput = document.getElementById("privCmpTargaInput");
+
+      if (modelloLabel) modelloLabel.textContent = tipo === "moto" ? "Modello motoveicolo" : tipo === "commerciale" ? "Modello veicolo commerciale" : tipo === "ricreazionale" ? "Modello veicolo ricreazionale" : "Modello autoveicolo";
+      if (modelloInput) modelloInput.placeholder = tipo === "moto" ? "Es. Yamaha" : tipo === "commerciale" ? "Es. Fiat Ducato" : tipo === "ricreazionale" ? "Es. Camper / Motorhome" : "Es. Fiat Panda";
+      if (annoInput) annoInput.placeholder = "Es. 2019";
+      if (kmInput) kmInput.placeholder = "Es. 65000";
+      if (targaInput) targaInput.placeholder = tipo === "moto" ? "ES. AA12345" : "ES. AB123CD";
+
+      localStorage.setItem("veicolo_tipo", tipo);
+      if (resetData) resetComparatorVehicleDataPrivato();
+    }
+    function validaTarga(targa, tipo = "auto") {
+      if (tipo === "moto") return /^[A-Z0-9]{5,8}$/.test(targa);
+      return /^[A-Z]{2}[0-9]{3}[A-Z]{2}$/.test(targa);
+    }
+    function getVeicoloInline() {
+      return { targa: localStorage.getItem("veicolo_targa") || localStorage.getItem("targa") || "", modello: localStorage.getItem("veicolo_modello") || "", anno: localStorage.getItem("veicolo_anno") || "", km: localStorage.getItem("veicolo_km") || "", tipo: localStorage.getItem("veicolo_tipo") || getVehicleTypeInlinePrivato() };
+    }
+
+    function qualityPriceScoreInlinePrivato(g) {
+      const price = Math.max(Number(g.prezzo || 0), 1);
+      const durata = Math.max(Number(g.durata || 0), 1);
+      const text = String((g.nome || "") + " " + (g.descrizione || "") + " " + (g.copertura || "")).toLowerCase();
+      let coverageScore = 1;
+      if (/premium|completa|full|plus|top/.test(text)) coverageScore += 1.25;
+      if (/motore|cambio/.test(text)) coverageScore += .75;
+      if (/elettric|elettronic|impianto|clima|assistenza|stradale/.test(text)) coverageScore += .5;
+      return (durata * coverageScore) / price;
+    }
+    function garanziaCompatibileInline(g) {
+      const v = getVeicoloInline();
+      if (String(g.stato || "attiva").toLowerCase() === "sospesa") return false;
+      if (Number(g.limiti_attivi || 0) !== 1) return true;
+      if (g.limite_km && Number(v.km || 0) > Number(g.limite_km)) return false;
+      if (g.limite_immatricolazione && Number(v.anno || 0) < Number(g.limite_immatricolazione)) return false;
+      return true;
+    }
+    function apriComparatorePrivato() {
+      const targaInput = document.getElementById("privCmpTargaInput");
+      const errorBox = document.getElementById("privCmpSearchError");
+      const extra = document.getElementById("privCmpExtraFields");
+      const targa = targaInput.value.trim().toUpperCase();
+      errorBox.textContent = "";
+      if (!targa) { errorBox.textContent = "Inserisci la targa per continuare."; return; }
+      const tipoVeicolo = getVehicleTypeInlinePrivato();
+      if (!validaTarga(targa, tipoVeicolo)) { errorBox.textContent = tipoVeicolo === "moto" ? "Inserisci una targa moto valida." : "Inserisci una targa valida nel formato italiano es. AB123CD."; return; }
+      targaInput.value = targa;
+      extra.classList.add("open");
+      document.getElementById("privCmpModelloInput").focus();
+    }
+    async function confrontaGaranziePrivato() {
+      const errorBox = document.getElementById("privCmpSearchError");
+      const targa = document.getElementById("privCmpTargaInput").value.trim().toUpperCase();
+      const modello = document.getElementById("privCmpModelloInput").value.trim();
+      const anno = document.getElementById("privCmpAnnoInput").value.trim();
+      const km = document.getElementById("privCmpKmInput").value.trim();
+      errorBox.textContent = "";
+      if (!targa || !modello || !anno || !km) { errorBox.textContent = "Compila tutti i campi del veicolo."; return; }
+      const tipoVeicolo = getVehicleTypeInlinePrivato();
+      if (!validaTarga(targa, tipoVeicolo)) { errorBox.textContent = tipoVeicolo === "moto" ? "Inserisci una targa moto valida." : "Inserisci una targa valida nel formato italiano es. AB123CD."; return; }
+      if (Number(anno) < 1980 || Number(anno) > new Date().getFullYear()) { errorBox.textContent = "Inserisci un anno di immatricolazione valido."; return; }
+      if (Number(km) < 0) { errorBox.textContent = "Inserisci un chilometraggio valido."; return; }
+      localStorage.setItem("targa", targa); localStorage.setItem("veicolo_targa", targa); localStorage.setItem("veicolo_modello", modello); localStorage.setItem("veicolo_anno", anno); localStorage.setItem("veicolo_km", km); localStorage.setItem("veicolo_tipo", tipoVeicolo);
+      const box = document.getElementById("privInlineResults");
+      box.classList.add("open");
+      box.innerHTML = `<div class="inline-results-head"><div><span class="badge-v6">Soluzioni compatibili</span><h2>Garanzie disponibili per ${targa}</h2><p>${labelTipoVeicoloPrivato(tipoVeicolo)} • ${modello} • ${anno} • ${formatKm(km)}</p></div><div>Caricamento...</div></div>`;
+      try {
+        const res = await fetch(`/api/garanzie?km=${encodeURIComponent(km)}&anno=${encodeURIComponent(anno)}&richiesta_tipo=privato&veicolo_tipo=${encodeURIComponent(tipoVeicolo)}&marca=${encodeURIComponent(modello)}&modello=${encodeURIComponent(modello)}`);
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Errore caricamento garanzie");
+        const compatibili = data.filter(garanziaCompatibileInline).sort((a,b)=>Number(a.prezzo||0)-Number(b.prezzo||0));
+        const blockedList = compatibili.filter(g => g.availability_status === "non_attivabile");
+        const lista = compatibili.filter(g => g.availability_status !== "non_attivabile");
+        const directList = lista.filter(g => g.availability_status !== "preventivo");
+        const bestValue = directList.length ? directList.reduce((best, item) => qualityPriceScoreInlinePrivato(item) > qualityPriceScoreInlinePrivato(best) ? item : best, directList[0]) : null;
+        const bestValueId = bestValue ? String(bestValue.id) : "";
+        if (!lista.length && blockedList.length) { box.innerHTML = `<div class="inline-results-head"><div><span class="badge-v6">Attenzione</span><h2>ATTENZIONE: VEICOLO NON ATTIVABILE</h2><p>Il veicolo inserito risulta non attivabile per i partner disponibili. Non è possibile procedere all'acquisto di una garanzia per questo modello.</p></div></div>`; return; }
+        if (!lista.length) { box.innerHTML = `<div class="inline-results-head"><div><span class="badge-v6">0 risultati</span><h2>Nessuna garanzia compatibile</h2><p>Modifica i dati del veicolo e riprova.</p></div></div>`; return; }
+        box.innerHTML = `<div class="inline-results-head"><div><span class="badge-v6">${lista.length} risultat${lista.length===1?"o":"i"}</span><h2>Soluzioni compatibili</h2><p>${labelTipoVeicoloPrivato(tipoVeicolo)} • ${targa} • ${modello} • ${anno} • ${formatKm(km)}</p></div></div><div class="inline-results-grid">${lista.map(g=>{ const isRecommended = String(g.id) === bestValueId; return `<article class="inline-warranty-card ${isRecommended ? "recommended" : ""}"><div><div class="warranty-topline"><span class="compatibility">${g.availability_status === "preventivo" ? "◇ Richiede preventivo" : "✓ Compatibile"}</span><span class="brand-pill">${g.brand||g.partner_nome||"Partner"}</span>${isRecommended ? `<span class="value-recommended-badge"><i class="fa-solid fa-star"></i> Consigliata</span>` : ""}</div><h3>${g.nome||"Garanzia"}</h3><p>${g.availability_message||g.descrizione||"Soluzione di garanzia disponibile per il veicolo selezionato."}</p><div class="warranty-mini-grid"><span><small>Durata</small><strong>${g.durata||"—"} mesi</strong></span><span><small>Stato</small><strong>${g.stato||"attiva"}</strong></span><span><small>Documento</small><strong>${g.pdf_url?"PDF":"N/D"}</strong></span></div></div><aside class="warranty-price-box">${g.availability_status === "preventivo" ? `<small>Preventivo richiesto</small><strong style="font-size:16px;line-height:1.2;">Costo definito dal partner</strong><button class="hero-btn primary btnTicketPriv" type="button" data-id="${g.id}">Apri ticket preventivo</button>` : `<small>Prezzo base</small><strong>${euro(g.prezzo||0)}</strong><button class="hero-btn primary btnScegliPriv" type="button" data-id="${g.id}">Scegli</button>`}</aside></article>` }).join("")}</div>`;
+        box.querySelectorAll(".btnTicketPriv").forEach(button => button.addEventListener("click", async () => { const garanzia = lista.find(g => Number(g.id) === Number(button.dataset.id)); if (!garanzia) return; button.disabled = true; button.textContent = "Invio ticket..."; try { const resp = await fetch("/api/quote-tickets", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ requester_type: "privato", partner_id: garanzia.partner_id, garanzia_id: garanzia.id, veicolo_tipo: tipoVeicolo, modello, targa, anno, km, messaggio: "Richiesta preventivo dal comparatore privato" }) }); const ticketData = await resp.json(); if (!resp.ok) throw new Error(ticketData.error || "Errore apertura ticket"); button.textContent = "Ticket aperto"; } catch (e) { button.disabled = false; button.textContent = e.message || "Riprova"; } }));
+        box.querySelectorAll(".btnScegliPriv").forEach(button => button.addEventListener("click", () => { const garanzia = lista.find(g => Number(g.id) === Number(button.dataset.id)); if (garanzia) { localStorage.setItem("garanziaSelezionata", JSON.stringify(garanzia)); localStorage.setItem("checkoutReturnContext", "privato"); localStorage.setItem("checkoutReturnUrl", "/profilo.html#comparatore"); localStorage.setItem("restoreComparatorResults", "1"); window.location.href = "/checkout.html?from=privato"; } }));
+        box.scrollIntoView({ behavior:"smooth", block:"start" });
+      } catch (error) { box.innerHTML = `<div class="empty">${error.message || "Errore di connessione al server."}</div>`; }
+    }
+    document.querySelectorAll('input[name="privCmpVehicleType"]').forEach(radio => {
+      radio.addEventListener("change", () => updateComparatorVehicleTypeUIPrivato(true));
+    });
+    updateComparatorVehicleTypeUIPrivato(false);
+
+
+
+    function garanziaDaTicketPreventivoPrivato(t) {
+      return { id: t.garanzia_id || ("ticket-" + t.id), nome: t.garanzia_nome || "Garanzia su preventivo", brand: t.garanzia_brand || t.partner_nome || "Partner", partner_nome: t.partner_nome || t.garanzia_brand || "Partner", partner_id: t.partner_id, prezzo: Number(t.prezzo_preventivo || 0), durata: t.garanzia_durata || "", descrizione: t.risposta || t.garanzia_descrizione || "Preventivo personalizzato approvato dal partner.", quote_ticket_id: t.id, availability_status: "preventivo_accettato" };
+    }
+    async function aggiornaStatoTicketPrivato(id, action) {
+      const resp = await fetch(`/api/quote-tickets/${id}/action`, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ action }) });
+      const data = await resp.json();
+      if (!resp.ok) throw new Error(data.error || "Errore aggiornamento ticket");
+      return data.ticket;
+    }
+    async function accettaPreventivoPrivato(id) {
+      const ticket = await aggiornaStatoTicketPrivato(id, "accettato");
+      localStorage.setItem("garanziaSelezionata", JSON.stringify(garanziaDaTicketPreventivoPrivato(ticket)));
+      localStorage.setItem("targa", ticket.targa || "");
+      localStorage.setItem("veicolo_targa", ticket.targa || "");
+      localStorage.setItem("veicolo_modello", ticket.modello || "");
+      localStorage.setItem("veicolo_anno", ticket.anno || "");
+      localStorage.setItem("veicolo_km", ticket.km || "");
+      localStorage.setItem("veicolo_tipo", ticket.veicolo_tipo || "auto");
+      localStorage.setItem("checkoutReturnContext", "privato");
+      localStorage.setItem("checkoutReturnUrl", "/profilo.html#tickets");
+      localStorage.setItem("restoreComparatorResults", "1");
+      window.location.href = "/checkout.html?from=privato&ticket=" + encodeURIComponent(id);
+    }
+    async function rifiutaPreventivoPrivato(id) {
+      await aggiornaStatoTicketPrivato(id, "rifiutato");
+      await caricaTicketsPrivato();
+    }
+
+
+    function aggiornaBadgeTicketsPrivato(lista) {
+      const risposti = (Array.isArray(lista) ? lista : []).filter(t => String(t.stato || "").toLowerCase() === "risposto").length;
+      const ticketNav = document.querySelector('.nav-item[data-section="tickets"]');
+      if (ticketNav) {
+        let badge = ticketNav.querySelector('.sidebar-badge.ticket-badge-privato');
+        if (!badge) {
+          badge = document.createElement('span');
+          badge.className = 'sidebar-badge ticket-badge-privato';
+          ticketNav.appendChild(badge);
+        }
+        badge.textContent = risposti;
+        badge.classList.toggle('show', risposti > 0);
+      }
+      const dot = document.querySelector('.notification-dot, .top-icon .dot');
+      if (dot) {
+        dot.textContent = risposti;
+        dot.style.display = risposti > 0 ? 'inline-flex' : 'none';
+      }
+    }
+
+    async function caricaTicketsPrivato() {
+      const box = document.getElementById("privTicketsContainer");
+      if (!box) return;
+      box.innerHTML = `<div class="empty-state">Caricamento ticket...</div>`;
+      try {
+        const res = await fetch("/api/quote-tickets?requester_type=privato");
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Errore caricamento ticket");
+        aggiornaBadgeTicketsPrivato(data);
+        if (!data.length) { box.innerHTML = `<div class="empty-state">Non hai ancora aperto ticket preventivi.</div>`; return; }
+        box.innerHTML = data.map(t => { const stato = String(t.stato || "aperto").toLowerCase(); const haPreventivo = Number(t.prezzo_preventivo || 0) > 0 && stato === "risposto"; return `<div class="data-row-card ticket-card-${stato}"><div class="data-row-icon"><i class="fa-solid fa-ticket"></i></div><div><h3>Ticket #${t.id} · ${t.partner_nome || t.garanzia_brand || "Partner"}</h3><p>${t.targa || "—"} · ${t.modello || "—"} · ${t.anno || "—"} · ${t.km ? formatKm(t.km) : "—"}</p>${t.risposta ? `<p><strong>Risposta partner:</strong> ${t.risposta}</p>` : ""}${haPreventivo ? `<div class="form-actions-inline" style="margin-top:12px;"><button class="hero-btn primary btnAccettaTicketPriv" type="button" data-id="${t.id}">Accetta preventivo e acquista</button><button class="hero-btn secondary btnRifiutaTicketPriv" type="button" data-id="${t.id}">Rifiuta e chiudi ticket</button></div>` : ""}</div><div style="text-align:right;display:grid;gap:8px;justify-items:end;"><span class="status-pill ${stato==="aperto" ? "pending" : ""}">${t.stato || "aperto"}</span>${t.prezzo_preventivo ? `<strong>${euro(t.prezzo_preventivo)}</strong>` : `<span class="mini-label">In attesa preventivo</span>`}</div></div>`; }).join("");
+        box.querySelectorAll(".btnAccettaTicketPriv").forEach(btn => btn.addEventListener("click", async () => { btn.disabled = true; try { await accettaPreventivoPrivato(btn.dataset.id); } catch(e){ btn.disabled = false; alert(e.message || "Errore"); } }));
+        box.querySelectorAll(".btnRifiutaTicketPriv").forEach(btn => btn.addEventListener("click", async () => { if (!confirm("Rifiutare e chiudere questo ticket?")) return; btn.disabled = true; try { await rifiutaPreventivoPrivato(btn.dataset.id); } catch(e){ btn.disabled = false; alert(e.message || "Errore"); } }));
+      } catch (error) { box.innerHTML = `<div class="empty-state">${error.message || "Errore di connessione."}</div>`; }
+    }
+
+    document.getElementById("privBtnApriComparatore")?.addEventListener("click", apriComparatorePrivato);
+    document.getElementById("privBtnConfrontaGaranzie")?.addEventListener("click", confrontaGaranziePrivato);
+    document.getElementById("privBtnRefreshTickets")?.addEventListener("click", caricaTicketsPrivato);
+    setInterval(caricaTicketsPrivato, 15000);
+    caricaTicketsPrivato();
+    caricaGaranzieAcquistatePrivato();
+    restorePrivateComparatorIfNeeded();
+
+
+
+    function statoDocumentoGaranzia(o) {
+      const pagato = String(o.stato_pagamento || o.stato || "").toLowerCase() === "pagato";
+      if (o.numero_certificato || o.certificato_pdf_url || o.certificato_emesso_at) return "Certificato emesso";
+      if (pagato) return "In attesa certificato";
+      return "Pagamento da completare";
+    }
+
+    function renderGaranzieAcquistatePrivato(ordini) {
+      const tbody = document.getElementById("garanzieTableBody");
+      if (!tbody) return;
+      const lista = Array.isArray(ordini) ? ordini : [];
+      if (!lista.length) {
+        tbody.innerHTML = `<tr><td colspan="5"><div class="empty">Nessuna garanzia presente. Le garanzie e i servizi acquistati compariranno qui.</div></td></tr>`;
+        return;
+      }
+      tbody.innerHTML = lista.map(o => {
+        const nome = o.garanzia_nome || o.prodotto_nome || "Servizio post vendita";
+        const partner = o.partner_nome || o.garanzia_brand || "Partner";
+        const targa = o.veicolo_targa || "—";
+        const modello = o.veicolo_modello || "—";
+        const inizio = o.garanzia_inizio ? new Date(o.garanzia_inizio).toLocaleDateString("it-IT") : "—";
+        const fine = o.garanzia_fine ? new Date(o.garanzia_fine).toLocaleDateString("it-IT") : "—";
+        const stato = statoDocumentoGaranzia(o);
+        const numero = o.numero_certificato || "";
+        const verificaUrl = numero ? `/verifica-certificato.html?certificato=${encodeURIComponent(numero)}` : "";
+        const pdfUrl = o.certificato_pdf_url || o.garanzia_pdf_url || "";
+        return `<tr>
+          <td><strong>${modello}</strong><br><small>${o.veicolo_anno || ""} ${o.veicolo_km ? " · " + formatKm(o.veicolo_km) : ""}</small></td>
+          <td><strong>${targa}</strong></td>
+          <td><strong>${nome}</strong><br><small>${partner}</small>${numero ? `<br><span class="status-pill">${numero}</span>` : ""}</td>
+          <td><strong>${inizio}</strong><br><small>fino al ${fine}</small></td>
+          <td>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+              <span class="status-pill ${stato === "In attesa certificato" ? "pending" : ""}">${stato}</span>
+              ${pdfUrl ? `<a class="hero-btn" href="${pdfUrl}" target="_blank" rel="noopener"><i class="fa-solid fa-file-pdf"></i> PDF</a>` : ""}
+              ${verificaUrl ? `<a class="hero-btn secondary" href="${verificaUrl}"><i class="fa-solid fa-qrcode"></i> Verifica</a>` : ""}
+            </div>
+          </td>
+        </tr>`;
+      }).join("");
+    }
+
+    async function caricaGaranzieAcquistatePrivato() {
+      const tbody = document.getElementById("garanzieTableBody");
+      if (!tbody) return;
+      tbody.innerHTML = `<tr><td colspan="5"><div class="empty">Caricamento garanzie acquistate...</div></td></tr>`;
+      try {
+        const res = await fetch("/api/miei-ordini", { headers: { Authorization: "Bearer " + token } });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Errore nel caricamento delle garanzie acquistate.");
+        renderGaranzieAcquistatePrivato(data);
+      } catch (error) {
+        tbody.innerHTML = `<tr><td colspan="5"><div class="empty">${error.message || "Errore di connessione al server."}</div></td></tr>`;
+      }
+    }
+
+
+    document.getElementById("profileForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      user.nome = document.getElementById("profileNome").value.trim();
+      user.email = document.getElementById("profileEmail").value.trim();
+
+      localStorage.setItem("privatoUser", JSON.stringify(user));
+
+      document.getElementById("userName").textContent = user.nome || "Utente";
+      document.getElementById("sidebarUserName").textContent = user.nome || "Utente";
+      document.getElementById("sidebarUserEmail").textContent = user.email || "email non disponibile";
+      document.getElementById("infoNome").textContent = user.nome || "-";
+      document.getElementById("infoEmail").textContent = user.email || "-";
+
+      alert("Profilo aggiornato localmente.");
+    });
+
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      localStorage.removeItem("privatoToken");
+      localStorage.removeItem("privatoUser");
+      localStorage.removeItem("tipoUtente");
+
+      window.location.href = "/login.html";
+    });
+  </script>
+
+  <script src="/js/ai-assistant.js?v=20260519"></script>
+  <script src="/js/approved-ui.js?v=20260519-final"></script>
+<footer id="contatti" class="footer">
+  <div class="footer-inner">
+    <div>© EstendiFacile.it</div>
+    <div><strong>Tel.</strong> +39 000 000 0000 · <strong>Email</strong> info@estendifacile.it</div><div><strong>Sede legale</strong> da definire · <strong>Sede operativa</strong> da definire</div>
+    <div class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Termini e Condizioni</a>
+    </div>
+  </div>
+</footer>
+
+</html>
